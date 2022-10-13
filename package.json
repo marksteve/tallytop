@@ -9,8 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/recursive": "^4.5.11",
+    "@heroicons/react": "^2.0.12",
+    "@twind/forms": "^0.1.4",
+    "framer-motion": "^7.5.3",
+    "nanoid": "^4.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.2",
+    "twind": "^0.16.17"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
