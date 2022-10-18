@@ -1,6 +1,8 @@
 import {
   ChevronRightIcon,
+  MinusIcon,
   PlayIcon,
+  PlusIcon,
   UserPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
@@ -150,7 +152,7 @@ function Root() {
       <ul className={tw(components.list)}>
         <li>
           <Link to="/divisions" className={tw(components.item)}>
-            <span className={tw`px-5`}>Divisions</span>
+            <span className={tw`px-5`}>Judge</span>
           </Link>
         </li>
       </ul>
@@ -376,8 +378,20 @@ function Routes() {
   );
 }
 
-async function loadAttempts({ request }) {
-  const number = new URL(request.url).searchParams.get("competitor");
+async function fetchRoute(id: number) {
+  const { data: route, error } = await supabase
+    .from("routes")
+    .select("*, rounds(type)")
+    .eq("id", id)
+    .single();
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return route;
+}
+
+async function fetchCompetitor(number: string) {
   const { data: competitor, error } = await supabase
     .from("competitors")
     .select()
@@ -387,7 +401,14 @@ async function loadAttempts({ request }) {
     console.error(error);
     return;
   }
-  return { competitor };
+  return competitor;
+}
+
+async function loadAttempts({ params, request }) {
+  const number = new URL(request.url).searchParams.get("competitor");
+  const route = await fetchRoute(params.routeId);
+  const competitor = await fetchCompetitor(number);
+  return { route, competitor };
 }
 
 async function writeAttempt({ params, request }) {
@@ -395,7 +416,10 @@ async function writeAttempt({ params, request }) {
   const { error } = await supabase.from("attempts").insert({
     competitor_id: formData.get("competitor_id"),
     route_id: formData.get("route_id"),
+    is_zone: formData.get("is_zone") === "true",
     is_top: formData.get("is_top") === "true",
+    hold: formData.get("hold"),
+    is_plus: formData.get("is_plus") === "true",
   });
   if (error) {
     throw error;
@@ -404,35 +428,61 @@ async function writeAttempt({ params, request }) {
 }
 
 function Attempt() {
-  const { competitor } = useLoaderData();
-  const { routeId } = useParams();
+  const { route, competitor } = useLoaderData();
   const navigate = useNavigate();
   const submit = useSubmit();
+  const [hold, setHold] = React.useState(0);
+
+  const includeIds = (formData) => {
+    formData.append("competitor_id", competitor.id);
+    formData.append("route_id", route.id);
+  };
+
+  const includeHold = (formData) => {
+    if (route.rounds.type === "sport") {
+      formData.append("hold", hold);
+    }
+  };
 
   const handleFall = () => {
     const formData = new FormData();
-    formData.append("competitor_id", competitor.id);
-    formData.append("route_id", routeId);
+    includeIds(formData);
+    includeHold(formData);
     submit(formData, { method: "post" });
   };
 
   const handleTop = () => {
     const formData = new FormData();
-    formData.append("competitor_id", competitor.id);
-    formData.append("route_id", routeId);
+    includeIds(formData);
+    includeHold(formData);
     formData.append("is_top", true);
     submit(formData, { method: "post" });
   };
 
-  return useOutlet() ? (
-    <Outlet />
-  ) : (
+  return (
     <>
       <h2 className={tw`p-3 text-2xl flex gap-5 items-center`}>
         <span className={tw(components.number)}>{competitor.number}</span>
         {competitor.name}
       </h2>
       <ul className={tw(components.list)}>
+        {route.rounds.type === "sport" ? (
+          <li className={tw(components.item, `p-5`)}>
+            <button
+              className={tw(components.button, `bg-pink-500`)}
+              onClick={() => setHold(Math.max(0, hold - 1))}
+            >
+              <MinusIcon className={tw`h-10`} />
+            </button>
+            <span className={tw`text-2xl`}>{hold}</span>
+            <button
+              className={tw(components.button, `bg-emerald-500`)}
+              onClick={() => setHold(hold + 1)}
+            >
+              <PlusIcon className={tw`h-10`} />
+            </button>
+          </li>
+        ) : null}
         <li
           className={tw(components.item, `bg-pink-500 text-white text-2xl`)}
           onClick={handleFall}
