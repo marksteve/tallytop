@@ -12,6 +12,7 @@ import {
   createBrowserRouter,
   Link,
   Outlet,
+  redirect,
   RouterProvider,
   useLoaderData,
   useNavigate,
@@ -19,6 +20,7 @@ import {
   useParams,
   useRouteLoaderData,
   useSearchParams,
+  useSubmit,
 } from "react-router-dom";
 import { apply, tw } from "twind";
 import supabase from "./lib/supabase";
@@ -58,6 +60,7 @@ const router = createBrowserRouter([
                         path: ":routeId/attempt",
                         loader: loadAttempts,
                         element: <Attempt />,
+                        action: writeAttempt,
                       },
                     ],
                   },
@@ -387,9 +390,40 @@ async function loadAttempts({ request }) {
   return { competitor };
 }
 
+async function writeAttempt({ params, request }) {
+  const formData = await request.formData();
+  const { error } = await supabase.from("attempts").insert({
+    competitor_id: formData.get("competitor_id"),
+    route_id: formData.get("route_id"),
+    is_top: formData.get("is_top") === "true",
+  });
+  if (error) {
+    throw error;
+  }
+  return redirect(`/divisions/${params.divisionId}/rounds/${params.roundId}`);
+}
+
 function Attempt() {
   const { competitor } = useLoaderData();
+  const { routeId } = useParams();
   const navigate = useNavigate();
+  const submit = useSubmit();
+
+  const handleFall = () => {
+    const formData = new FormData();
+    formData.append("competitor_id", competitor.id);
+    formData.append("route_id", routeId);
+    submit(formData, { method: "post" });
+  };
+
+  const handleTop = () => {
+    const formData = new FormData();
+    formData.append("competitor_id", competitor.id);
+    formData.append("route_id", routeId);
+    formData.append("is_top", true);
+    submit(formData, { method: "post" });
+  };
+
   return useOutlet() ? (
     <Outlet />
   ) : (
@@ -399,11 +433,15 @@ function Attempt() {
         {competitor.name}
       </h2>
       <ul className={tw(components.list)}>
-        <li className={tw(components.item, `bg-pink-500 text-white text-2xl`)}>
+        <li
+          className={tw(components.item, `bg-pink-500 text-white text-2xl`)}
+          onClick={handleFall}
+        >
           <span className={tw`px-5`}>Fall</span>
         </li>
         <li
           className={tw(components.item, `bg-emerald-500 text-white text-2xl`)}
+          onClick={handleTop}
         >
           <span className={tw`px-5`}>Top</span>
         </li>
