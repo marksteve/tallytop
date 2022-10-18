@@ -1,4 +1,4 @@
-import { PlayIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { PlayIcon, UserPlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Reorder } from "framer-motion";
 import { nanoid } from "nanoid";
 import * as React from "react";
@@ -14,7 +14,7 @@ import { apply, tw } from "twind";
 import supabase from "./lib/supabase";
 
 const router = createBrowserRouter([
-  { path: "/", loader: loadSession, element: <SignIn /> },
+  { path: "/", loader: loadSession, element: <Root /> },
   { path: "/divisions", loader: loadDivisions, element: <Divisions /> },
   {
     path: "/divisions/:divisionId/rounds",
@@ -31,11 +31,13 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <div className={tw`w-screen h-screen flex flex-col text-gray-700`}>
-      <header
-        className={tw`bg-purple-500 text-yellow-400 text-3xl text-center leading-relaxed font-black`}
-      >
-        Ale!
-      </header>
+      <a href="/">
+        <header
+          className={tw`bg-purple-500 text-yellow-400 text-3xl text-center leading-relaxed font-black`}
+        >
+          Ale!
+        </header>
+      </a>
       <RouterProvider router={router} />
     </div>
   );
@@ -49,15 +51,15 @@ async function loadSession() {
     }
     return;
   }
-  return redirect("/divisions");
+  return data.session;
 }
 
-function SignIn() {
-  useLoaderData();
+function Root() {
+  const session = useLoaderData();
 
   const [magicLinkSent, setMagicLinkSent] = React.useState(false);
 
-  async function handleSignIn(e) {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const { error } = await supabase.auth.signInWithOtp({
@@ -68,9 +70,17 @@ function SignIn() {
       return;
     }
     setMagicLinkSent(true);
-  }
+  };
 
-  return (
+  return session ? (
+    <ul className={tw(components.list)}>
+      <li>
+        <Link to="/divisions" className={tw(components.item)}>
+          <span className={tw`px-5`}>Divisions</span>
+        </Link>
+      </li>
+    </ul>
+  ) : (
     <form
       onSubmit={handleSignIn}
       className={tw`flex-1 flex flex-col gap-5 justify-center items-center`}
@@ -110,9 +120,9 @@ function Divisions() {
         <li key={division.id}>
           <Link
             to={`/divisions/${division.id}/rounds`}
-            className={tw(components.item, `h-24`)}
+            className={tw(components.item)}
           >
-            {division.name}
+            <span className={tw`px-5`}>{division.name}</span>
           </Link>
         </li>
       ))}
@@ -138,9 +148,9 @@ function Rounds() {
         <li key={round.id}>
           <Link
             to={`/divisions/${divisionId}/rounds/${round.id}`}
-            className={tw(components.item, `h-24`)}
+            className={tw(components.item)}
           >
-            {round.name}
+            <span className={tw`px-5`}>{round.name}</span>
           </Link>
         </li>
       ))}
@@ -185,6 +195,10 @@ function Round() {
     input.value = "";
   };
 
+  const handleDelete = (selectedItem) => {
+    setQueue(queue.filter((item) => item.id !== selectedItem.id));
+  };
+
   return (
     <>
       {queue.length > 0 ? (
@@ -199,13 +213,21 @@ function Round() {
               value={item}
               className={tw(components.item)}
             >
-              <span
-                className={tw`text-gray-500 w-10 text-center border-1 rounded leading-loose`}
-              >
-                {item.number}
-              </span>
+              <div className={tw`px-5`}>
+                <span
+                  className={tw`text-gray-500 px-3 py-2 text-center border-1 rounded leading-loose`}
+                >
+                  {item.number}
+                </span>
+              </div>
               <span className={tw`flex-1`}>{item.name}</span>
-              <button className={tw`p-5 bg-purple-50`}>
+              <button
+                className={tw`p-5 bg-pink-500 text-white`}
+                onClick={() => handleDelete(item)}
+              >
+                <XMarkIcon className={tw`w-5`} />
+              </button>
+              <button className={tw`p-5 bg-purple-500 text-white`}>
                 <PlayIcon className={tw`w-5`} />
               </button>
             </Reorder.Item>
@@ -240,10 +262,10 @@ const components = {
     bg-white
     border
     flex
-    gap-5
     items-center
     justify-between
-    pl-5
+    min-h-[3.5em]
+    overflow-hidden
     rounded
   `,
   button: apply`
