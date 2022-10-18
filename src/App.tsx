@@ -1,4 +1,9 @@
-import { PlayIcon, UserPlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronRightIcon,
+  PlayIcon,
+  UserPlusIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { ascending } from "d3-array";
 import { Reorder } from "framer-motion";
 import { nanoid } from "nanoid";
@@ -6,31 +11,63 @@ import * as React from "react";
 import {
   createBrowserRouter,
   Link,
+  Outlet,
   RouterProvider,
   useLoaderData,
+  useNavigate,
+  useOutlet,
   useParams,
+  useRouteLoaderData,
   useSearchParams,
 } from "react-router-dom";
 import { apply, tw } from "twind";
 import supabase from "./lib/supabase";
 
 const router = createBrowserRouter([
-  { path: "/", loader: loadSession, element: <Root /> },
-  { path: "/divisions", loader: loadDivisions, element: <Divisions /> },
   {
-    path: "/divisions/:divisionId/rounds",
-    loader: loadRounds,
-    element: <Rounds />,
-  },
-  {
-    path: "/divisions/:divisionId/rounds/:roundId",
-    loader: loadRound,
-    element: <Round />,
-  },
-  {
-    path: "/divisions/:divisionId/rounds/:roundId/routes",
-    loader: loadRoutes,
-    element: <Routes />,
+    path: "/",
+    loader: loadSession,
+    element: <Root />,
+    children: [
+      {
+        id: "divisions",
+        path: "divisions",
+        loader: loadDivisions,
+        element: <Divisions />,
+        children: [
+          {
+            id: "rounds",
+            path: ":divisionId/rounds",
+            loader: loadRounds,
+            element: <Rounds />,
+            children: [
+              {
+                id: "round",
+                path: ":roundId",
+                loader: loadRound,
+                element: <Round />,
+                children: [
+                  {
+                    id: "routes",
+                    path: "routes",
+                    loader: loadRoutes,
+                    element: <Routes />,
+                    children: [
+                      {
+                        id: "route",
+                        path: ":routeId/attempt",
+                        loader: loadAttempts,
+                        element: <Attempt />,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ]);
 
@@ -38,11 +75,11 @@ export default function App() {
   return (
     <div className={tw`w-screen h-screen flex flex-col text-gray-700`}>
       <a href="/">
-        <header
+        <h1
           className={tw`bg-purple-500 text-yellow-400 text-3xl text-center leading-relaxed font-black`}
         >
           Ale!
-        </header>
+        </h1>
       </a>
       <RouterProvider router={router} />
     </div>
@@ -62,7 +99,20 @@ async function loadSession() {
 
 function Root() {
   const session = useLoaderData();
-
+  const { divisionId, roundId, routeId } = useParams();
+  const breadcrumbs = [
+    ...(divisionId
+      ? useRouteLoaderData("divisions").filter(
+          (d) => d.id === Number(divisionId)
+        )
+      : []),
+    ...(roundId
+      ? useRouteLoaderData("rounds").filter((d) => d.id === Number(roundId))
+      : []),
+    ...(routeId
+      ? useRouteLoaderData("routes").filter((d) => d.id === Number(routeId))
+      : []),
+  ];
   const [magicLinkSent, setMagicLinkSent] = React.useState(false);
 
   const handleSignIn = async (e) => {
@@ -79,13 +129,29 @@ function Root() {
   };
 
   return session ? (
-    <ul className={tw(components.list)}>
-      <li>
-        <Link to="/divisions" className={tw(components.item)}>
-          <span className={tw`px-5`}>Divisions</span>
-        </Link>
-      </li>
-    </ul>
+    useOutlet() ? (
+      <>
+        <div className={tw`flex text-sm text-gray-500 border-b`}>
+          {breadcrumbs.map(({ name }, i) => (
+            <React.Fragment key={i}>
+              <div className={tw`p-3`}>{name}</div>
+              {i + 1 < breadcrumbs.length ? (
+                <ChevronRightIcon className={tw`w-5`} />
+              ) : null}
+            </React.Fragment>
+          ))}
+        </div>
+        <Outlet />
+      </>
+    ) : (
+      <ul className={tw(components.list)}>
+        <li>
+          <Link to="/divisions" className={tw(components.item)}>
+            <span className={tw`px-5`}>Divisions</span>
+          </Link>
+        </li>
+      </ul>
+    )
   ) : (
     <form
       onSubmit={handleSignIn}
@@ -120,7 +186,9 @@ async function loadDivisions() {
 
 function Divisions() {
   const divisions = useLoaderData();
-  return (
+  return useOutlet() ? (
+    <Outlet />
+  ) : (
     <ul className={tw(components.list)}>
       {divisions.map((division) => (
         <li key={division.id}>
@@ -146,9 +214,11 @@ async function loadRounds() {
 }
 
 function Rounds() {
-  const { divisionId } = useParams();
   const rounds = useLoaderData();
-  return (
+  const { divisionId } = useParams();
+  return useOutlet() ? (
+    <Outlet />
+  ) : (
     <ul className={tw(components.list)}>
       {rounds.map((round) => (
         <li key={round.id}>
@@ -206,7 +276,9 @@ function Round() {
     setQueue(queue.filter((item) => item.id !== selectedItem.id));
   };
 
-  return (
+  return useOutlet() ? (
+    <Outlet />
+  ) : (
     <>
       {queue.length > 0 ? (
         <Reorder.Group
@@ -221,11 +293,7 @@ function Round() {
               className={tw(components.item)}
             >
               <div className={tw`px-5`}>
-                <span
-                  className={tw`text-gray-500 px-3 py-2 text-center border-1 rounded leading-loose`}
-                >
-                  {item.number}
-                </span>
+                <span className={tw(components.number)}>{item.number}</span>
               </div>
               <span className={tw`flex-1`}>{item.name}</span>
               <button
@@ -283,7 +351,9 @@ function Routes() {
   const [searchParams] = useSearchParams();
   const { divisionId, roundId } = useParams();
   const routes = useLoaderData() as any[];
-  return (
+  return useOutlet() ? (
+    <Outlet />
+  ) : (
     <ul className={tw(components.list)}>
       {routes
         .sort((a, b) => ascending(a.score, b.score))
@@ -300,6 +370,51 @@ function Routes() {
           </li>
         ))}
     </ul>
+  );
+}
+
+async function loadAttempts({ request }) {
+  const number = new URL(request.url).searchParams.get("competitor");
+  const { data: competitor, error } = await supabase
+    .from("competitors")
+    .select()
+    .eq("number", number)
+    .single();
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return { competitor };
+}
+
+function Attempt() {
+  const { competitor } = useLoaderData();
+  const navigate = useNavigate();
+  return useOutlet() ? (
+    <Outlet />
+  ) : (
+    <>
+      <h2 className={tw`p-3 text-2xl flex gap-5 items-center`}>
+        <span className={tw(components.number)}>{competitor.number}</span>
+        {competitor.name}
+      </h2>
+      <ul className={tw(components.list)}>
+        <li className={tw(components.item, `bg-pink-500 text-white text-2xl`)}>
+          <span className={tw`px-5`}>Fall</span>
+        </li>
+        <li
+          className={tw(components.item, `bg-emerald-500 text-white text-2xl`)}
+        >
+          <span className={tw`px-5`}>Top</span>
+        </li>
+        <li
+          className={tw(components.item, `text-2xl`)}
+          onClick={() => navigate(-1)}
+        >
+          <span className={tw`px-5`}>Back</span>
+        </li>
+      </ul>
+    </>
   );
 }
 
@@ -322,4 +437,5 @@ const components = {
     rounded
     text-white
   `,
+  number: apply`text-gray-500 px-3 py-2 text-center border-1 rounded leading-loose`,
 };
