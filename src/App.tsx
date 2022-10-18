@@ -1,14 +1,15 @@
 import { PlayIcon, UserPlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ascending } from "d3-array";
 import { Reorder } from "framer-motion";
 import { nanoid } from "nanoid";
 import * as React from "react";
 import {
   createBrowserRouter,
   Link,
-  redirect,
   RouterProvider,
   useLoaderData,
   useParams,
+  useSearchParams,
 } from "react-router-dom";
 import { apply, tw } from "twind";
 import supabase from "./lib/supabase";
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
     path: "/divisions/:divisionId/rounds/:roundId",
     loader: loadRound,
     element: <Round />,
+  },
+  {
+    path: "/divisions/:divisionId/rounds/:roundId/routes",
+    loader: loadRoutes,
+    element: <Routes />,
   },
 ]);
 
@@ -171,6 +177,7 @@ async function loadRound({ params }) {
 }
 
 function Round() {
+  const { divisionId, roundId } = useParams();
   const { competitors } = useLoaderData();
 
   const competitorsByNumber = competitors.reduce(
@@ -227,9 +234,13 @@ function Round() {
               >
                 <XMarkIcon className={tw`w-5`} />
               </button>
-              <button className={tw`p-5 bg-purple-500 text-white`}>
-                <PlayIcon className={tw`w-5`} />
-              </button>
+              <Link
+                to={`/divisions/${divisionId}/rounds/${roundId}/routes?competitor=${item.number}`}
+              >
+                <button className={tw`p-5 bg-purple-500 text-white`}>
+                  <PlayIcon className={tw`w-5`} />
+                </button>
+              </Link>
             </Reorder.Item>
           ))}
         </Reorder.Group>
@@ -253,6 +264,42 @@ function Round() {
         </button>
       </form>
     </>
+  );
+}
+
+async function loadRoutes({ params }) {
+  const { data, error } = await supabase
+    .from("routes")
+    .select()
+    .eq("round_id", Number(params.roundId));
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return data;
+}
+
+function Routes() {
+  const [searchParams] = useSearchParams();
+  const { divisionId, roundId } = useParams();
+  const routes = useLoaderData() as any[];
+  return (
+    <ul className={tw(components.list)}>
+      {routes
+        .sort((a, b) => ascending(a.score, b.score))
+        .map((route) => (
+          <li key={route.id}>
+            <Link
+              to={`/divisions/${divisionId}/rounds/${roundId}/routes/${
+                route.id
+              }/attempt?${searchParams.toString()}`}
+              className={tw(components.item)}
+            >
+              <span className={tw`px-5`}>{route.name}</span>
+            </Link>
+          </li>
+        ))}
+    </ul>
   );
 }
 

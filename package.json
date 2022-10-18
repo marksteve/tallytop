@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.0.12",
     "@supabase/supabase-js": "^2.0.0",
     "@twind/forms": "^0.1.4",
+    "d3-array": "^3.2.0",
     "framer-motion": "^7.5.3",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "twind": "^0.16.17"
   },
   "devDependencies": {
+    "@types/d3-array": "^3.0.3",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
