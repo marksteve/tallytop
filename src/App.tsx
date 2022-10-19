@@ -17,6 +17,7 @@ import {
   redirect,
   RouterProvider,
   useLoaderData,
+  useLocation,
   useMatches,
   useNavigate,
   useParams,
@@ -59,8 +60,12 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "",
+                element: <Scoring />,
+              },
+              {
+                path: "queue",
                 loader: loadCompetitors,
-                element: <Round />,
+                element: <Queue />,
               },
               {
                 path: "routes",
@@ -79,6 +84,11 @@ const router = createBrowserRouter([
                     action: writeAttempt,
                   },
                 ],
+              },
+              {
+                path: "batch",
+                loader: loadBatch,
+                element: <Batch />,
               },
             ],
           },
@@ -265,6 +275,24 @@ async function loadRound({ params }) {
   return data;
 }
 
+function Scoring() {
+  const location = useLocation();
+  return (
+    <ul className={tw(components.list)}>
+      <li>
+        <Link to={`${location.pathname}/queue`} className={tw(components.item)}>
+          <span className={tw`px-5`}>Realtime</span>
+        </Link>
+      </li>
+      <li>
+        <Link to={`${location.pathname}/batch`} className={tw(components.item)}>
+          <span className={tw`px-5`}>Batch</span>
+        </Link>
+      </li>
+    </ul>
+  );
+}
+
 async function loadCompetitors({ params }) {
   const { data, error } = await supabase
     .from("competitors")
@@ -276,7 +304,7 @@ async function loadCompetitors({ params }) {
   return data;
 }
 
-function Round() {
+function Queue() {
   const { divisionId, roundId } = useParams();
   const competitors = useLoaderData();
 
@@ -538,4 +566,15 @@ function Attempt() {
       </ul>
     </>
   );
+}
+
+async function loadBatch({ params }) {
+  const competitors = await loadCompetitors({ params });
+  const routes = await loadRoutes({ params });
+  return { competitors, routes };
+}
+
+function Batch() {
+  const { competitors, routes } = useLoaderData();
+  return <div>{JSON.stringify({ competitors, routes })}</div>;
 }
