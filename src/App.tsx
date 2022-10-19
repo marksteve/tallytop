@@ -17,6 +17,7 @@ import {
   redirect,
   RouterProvider,
   useLoaderData,
+  useMatches,
   useNavigate,
   useParams,
   useSearchParams,
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: "divisions/:divisionId",
+        loader: loadDivision,
         element: <Outlet />,
         children: [
           {
@@ -52,11 +54,12 @@ const router = createBrowserRouter([
           },
           {
             path: "rounds/:roundId",
+            loader: loadRound,
             element: <Outlet />,
             children: [
               {
                 path: "",
-                loader: loadRound,
+                loader: loadCompetitors,
                 element: <Round />,
               },
               {
@@ -67,6 +70,7 @@ const router = createBrowserRouter([
               {
                 path: "routes/:routeId",
                 element: <Outlet />,
+                loader: loadRoute,
                 children: [
                   {
                     path: "attempt",
@@ -85,7 +89,9 @@ const router = createBrowserRouter([
 ]);
 
 function Root() {
-  const breadcrumbs = [];
+  const breadcrumbs = useMatches()
+    .filter((m) => m.data?.name)
+    .map((m) => m.data);
 
   return (
     <>
@@ -111,7 +117,7 @@ export default function App() {
         <h1
           className={tw`bg-purple-500 text-yellow-400 text-3xl text-center leading-relaxed font-black`}
         >
-          Ale!
+          ale!
         </h1>
       </a>
       <RouterProvider router={router} />
@@ -187,6 +193,19 @@ async function loadDivisions() {
   return data;
 }
 
+async function loadDivision({ params }) {
+  const { data, error } = await supabase
+    .from("divisions")
+    .select()
+    .eq("id", params.divisionId)
+    .single();
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return data;
+}
+
 function Divisions() {
   const divisions = useLoaderData();
   return (
@@ -234,20 +253,32 @@ function Rounds() {
 }
 
 async function loadRound({ params }) {
-  const { data: competitors, error } = await supabase
+  const { data, error } = await supabase
+    .from("rounds")
+    .select()
+    .eq("id", params.roundId)
+    .single();
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return data;
+}
+
+async function loadCompetitors({ params }) {
+  const { data, error } = await supabase
     .from("competitors")
     .select()
     .eq("division_id", params.divisionId);
   if (error) {
     console.error(error);
-    return {};
   }
-  return { competitors };
+  return data;
 }
 
 function Round() {
   const { divisionId, roundId } = useParams();
-  const { competitors } = useLoaderData();
+  const competitors = useLoaderData();
 
   const competitorsByNumber = competitors.reduce(
     (prev, curr) => ({ ...prev, [curr.number]: curr }),
@@ -330,6 +361,19 @@ function Round() {
       </form>
     </>
   );
+}
+
+async function loadRoute({ params }) {
+  const { data, error } = await supabase
+    .from("routes")
+    .select()
+    .eq("id", Number(params.routeId))
+    .single();
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return data;
 }
 
 async function loadRoutes({ params }) {
