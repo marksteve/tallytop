@@ -104,6 +104,7 @@ async function loadSession() {
 
 function Root() {
   const session = useLoaderData();
+  const outlet = useOutlet();
   const { divisionId, roundId, routeId } = useParams();
   const breadcrumbs = [
     ...(divisionId
@@ -134,7 +135,7 @@ function Root() {
   };
 
   return session ? (
-    useOutlet() ? (
+    outlet ? (
       <>
         <div className={tw`flex text-sm text-gray-500 border-b`}>
           {breadcrumbs.map(({ name }, i) => (
