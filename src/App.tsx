@@ -18,53 +18,61 @@ import {
   RouterProvider,
   useLoaderData,
   useNavigate,
-  useOutlet,
   useParams,
-  useRouteLoaderData,
   useSearchParams,
   useSubmit,
 } from "react-router-dom";
-import { apply, tw } from "twind";
+import { tw } from "twind";
+import * as components from "./components";
 import supabase from "./lib/supabase";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    loader: loadSession,
     element: <Root />,
     children: [
       {
-        id: "divisions",
+        path: "",
+        loader: loadSession,
+        element: <SignIn />,
+      },
+      {
         path: "divisions",
         loader: loadDivisions,
         element: <Divisions />,
+      },
+      {
+        path: "divisions/:divisionId",
+        element: <Outlet />,
         children: [
           {
-            id: "rounds",
-            path: ":divisionId/rounds",
+            path: "rounds",
             loader: loadRounds,
             element: <Rounds />,
+          },
+          {
+            path: "rounds/:roundId",
+            element: <Outlet />,
             children: [
               {
-                id: "round",
-                path: ":roundId",
+                path: "",
                 loader: loadRound,
                 element: <Round />,
+              },
+              {
+                path: "routes",
+                loader: loadRoutes,
+                element: <Routes />,
+              },
+              {
+                path: "routes/:routeId",
+                element: <Outlet />,
                 children: [
                   {
-                    id: "routes",
-                    path: "routes",
-                    loader: loadRoutes,
-                    element: <Routes />,
-                    children: [
-                      {
-                        id: "route",
-                        path: ":routeId/attempt",
-                        loader: loadAttempts,
-                        element: <Attempt />,
-                        action: writeAttempt,
-                      },
-                    ],
+                    path: "attempt",
+                    loader: loadAttempts,
+                    element: <Attempt />,
+                    action: writeAttempt,
                   },
                 ],
               },
@@ -75,6 +83,26 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+function Root() {
+  const breadcrumbs = [];
+
+  return (
+    <>
+      <div className={tw`flex text-sm text-gray-500 border-b`}>
+        {breadcrumbs.map(({ name }, i) => (
+          <React.Fragment key={i}>
+            <div className={tw`p-3`}>{name}</div>
+            {i + 1 < breadcrumbs.length ? (
+              <ChevronRightIcon className={tw`w-5`} />
+            ) : null}
+          </React.Fragment>
+        ))}
+      </div>
+      <Outlet />
+    </>
+  );
+}
 
 export default function App() {
   return (
@@ -102,23 +130,8 @@ async function loadSession() {
   return data.session;
 }
 
-function Root() {
+function SignIn() {
   const session = useLoaderData();
-  const outlet = useOutlet();
-  const { divisionId, roundId, routeId } = useParams();
-  const breadcrumbs = [
-    ...(divisionId
-      ? useRouteLoaderData("divisions").filter(
-          (d) => d.id === Number(divisionId)
-        )
-      : []),
-    ...(roundId
-      ? useRouteLoaderData("rounds").filter((d) => d.id === Number(roundId))
-      : []),
-    ...(routeId
-      ? useRouteLoaderData("routes").filter((d) => d.id === Number(routeId))
-      : []),
-  ];
   const [magicLinkSent, setMagicLinkSent] = React.useState(false);
 
   const handleSignIn = async (e) => {
@@ -135,29 +148,13 @@ function Root() {
   };
 
   return session ? (
-    outlet ? (
-      <>
-        <div className={tw`flex text-sm text-gray-500 border-b`}>
-          {breadcrumbs.map(({ name }, i) => (
-            <React.Fragment key={i}>
-              <div className={tw`p-3`}>{name}</div>
-              {i + 1 < breadcrumbs.length ? (
-                <ChevronRightIcon className={tw`w-5`} />
-              ) : null}
-            </React.Fragment>
-          ))}
-        </div>
-        <Outlet />
-      </>
-    ) : (
-      <ul className={tw(components.list)}>
-        <li>
-          <Link to="/divisions" className={tw(components.item)}>
-            <span className={tw`px-5`}>Judge</span>
-          </Link>
-        </li>
-      </ul>
-    )
+    <ul className={tw(components.list)}>
+      <li>
+        <Link to="/divisions" className={tw(components.item)}>
+          <span className={tw`px-5`}>Judge</span>
+        </Link>
+      </li>
+    </ul>
   ) : (
     <form
       onSubmit={handleSignIn}
@@ -192,9 +189,7 @@ async function loadDivisions() {
 
 function Divisions() {
   const divisions = useLoaderData();
-  return useOutlet() ? (
-    <Outlet />
-  ) : (
+  return (
     <ul className={tw(components.list)}>
       {divisions.map((division) => (
         <li key={division.id}>
@@ -222,9 +217,7 @@ async function loadRounds() {
 function Rounds() {
   const rounds = useLoaderData();
   const { divisionId } = useParams();
-  return useOutlet() ? (
-    <Outlet />
-  ) : (
+  return (
     <ul className={tw(components.list)}>
       {rounds.map((round) => (
         <li key={round.id}>
@@ -282,9 +275,7 @@ function Round() {
     setQueue(queue.filter((item) => item.id !== selectedItem.id));
   };
 
-  return useOutlet() ? (
-    <Outlet />
-  ) : (
+  return (
     <>
       {queue.length > 0 ? (
         <Reorder.Group
@@ -357,9 +348,7 @@ function Routes() {
   const [searchParams] = useSearchParams();
   const { divisionId, roundId } = useParams();
   const routes = useLoaderData() as any[];
-  return useOutlet() ? (
-    <Outlet />
-  ) : (
+  return (
     <ul className={tw(components.list)}>
       {routes
         .sort((a, b) => ascending(a.score, b.score))
@@ -506,25 +495,3 @@ function Attempt() {
     </>
   );
 }
-
-const components = {
-  list: apply`flex-1 flex flex-col p-3 gap-3 overflow-y-auto`,
-  item: apply`
-    bg-white
-    border
-    flex
-    items-center
-    justify-between
-    min-h-[3.5em]
-    overflow-hidden
-    rounded
-  `,
-  button: apply`
-    border-1
-    border-white
-    px-5
-    rounded
-    text-white
-  `,
-  number: apply`text-gray-500 px-3 py-2 text-center border-1 rounded leading-loose`,
-};
