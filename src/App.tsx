@@ -6,10 +6,13 @@ import {
   UserPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
+import produce from "immer";
 import { ascending } from "d3-array";
 import { Reorder } from "framer-motion";
 import { nanoid } from "nanoid";
 import * as React from "react";
+import create from "zustand";
+import { persist } from "zustand/middleware";
 import {
   createBrowserRouter,
   Link,
@@ -97,6 +100,49 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+const useStore = create<{
+  queue: any[];
+  setQueue: (items: any[]) => void;
+  enqueue: (item: any) => void;
+  dequeue: (item: any) => void;
+  onDeck: any;
+  setOnDeck: (item: any) => void;
+}>(
+  persist(
+    (set) => ({
+      queue: [],
+      setQueue: (queue) => set({ queue }),
+      enqueue: ({ number, name }) =>
+        set(
+          produce((state) => {
+            state.queue.push({
+              id: nanoid(),
+              number,
+              name,
+            });
+          })
+        ),
+      dequeue: ({ id }) =>
+        set(
+          produce((state) => {
+            state.queue = state.queue.filter((item) => item.id !== id);
+          })
+        ),
+      onDeck: null,
+      setOnDeck: (item) =>
+        set(
+          produce((state) => {
+            state.onDeck = item;
+          })
+        ),
+    }),
+    {
+      name: "tallytop",
+      getStorage: () => sessionStorage,
+    }
+  )
+);
 
 function Root() {
   const breadcrumbs = useMatches()
@@ -312,9 +358,11 @@ function Queue() {
     (prev, curr) => ({ ...prev, [curr.number]: curr }),
     {}
   );
-  const [queue, setQueue] = React.useState<
-    { id: string; number: number; name: string }[]
-  >([]);
+  const queue = useStore((state) => state.queue);
+  const setQueue = useStore((state) => state.setQueue);
+  const enqueue = useStore((state) => state.enqueue);
+  const dequeue = useStore((state) => state.dequeue);
+  const setOnDeck = useStore((state) => state.setOnDeck);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -323,16 +371,11 @@ function Queue() {
     if (!competitorsByNumber[number]) {
       return;
     }
-    setQueue([
-      ...queue,
-      { id: nanoid(), number, name: competitorsByNumber[number].name },
-    ]);
+    enqueue({ number, name: competitorsByNumber[number].name });
     input.value = "";
   };
 
-  const handleDelete = (selectedItem) => {
-    setQueue(queue.filter((item) => item.id !== selectedItem.id));
-  };
+  const handleDelete = (selectedItem) => dequeue(selectedItem);
 
   return (
     <>
@@ -360,6 +403,7 @@ function Queue() {
               </button>
               <Link
                 to={`/divisions/${divisionId}/rounds/${roundId}/routes?competitor=${item.number}`}
+                onClick={() => setOnDeck(item.id)}
               >
                 <button className={tw`p-5 bg-purple-500 text-white`}>
                   <PlayIcon className={tw`w-5`} />
@@ -486,7 +530,9 @@ async function writeAttempt({ params, request }) {
   if (error) {
     throw error;
   }
-  return redirect(`/divisions/${params.divisionId}/rounds/${params.roundId}`);
+  return redirect(
+    `/divisions/${params.divisionId}/rounds/${params.roundId}/queue`
+  );
 }
 
 function Attempt() {
@@ -494,6 +540,8 @@ function Attempt() {
   const navigate = useNavigate();
   const submit = useSubmit();
   const [hold, setHold] = React.useState(0);
+  const dequeue = useStore((state) => state.dequeue);
+  const onDeck = useStore((state) => state.onDeck);
 
   const includeIds = (formData) => {
     formData.append("competitor_id", competitor.id);
@@ -511,6 +559,7 @@ function Attempt() {
     includeIds(formData);
     includeHold(formData);
     submit(formData, { method: "post" });
+    dequeue({ id: onDeck });
   };
 
   const handleTop = () => {
@@ -519,6 +568,7 @@ function Attempt() {
     includeHold(formData);
     formData.append("is_top", true);
     submit(formData, { method: "post" });
+    dequeue({ id: onDeck });
   };
 
   return (

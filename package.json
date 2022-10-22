@@ -15,11 +15,13 @@
     "@twind/forms": "^0.1.4",
     "d3-array": "^3.2.0",
     "framer-motion": "^7.5.3",
+    "immer": "^9.0.15",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
-    "twind": "^0.16.17"
+    "twind": "^0.16.17",
+    "zustand": "^4.1.2"
   },
   "devDependencies": {
     "@types/d3-array": "^3.0.3",
