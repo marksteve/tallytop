@@ -840,7 +840,7 @@ function Competitor({ competitor, groupedRoutes }) {
                       `w-5 h-5 rounded-full`,
                       route.color === "rainbow"
                         ? `bg-gradient-to-r from-red-500 via-green-500 to-blue-500`
-                        : `bg-${route.color}-500`
+                        : `bg-${route.color}`
                     )}
                   />
                 ) : null}
