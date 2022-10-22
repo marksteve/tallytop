@@ -257,8 +257,10 @@ function Landing() {
                 {competitors
                   .sort((a, b) =>
                     descending(
-                      groupedScores.get(round.id)?.get(a.id)?.[0].total_score,
-                      groupedScores.get(round.id)?.get(b.id)?.[0].total_score
+                      groupedScores.get(round.id)?.get(a.id)?.[0].total_score ??
+                        -a.number,
+                      groupedScores.get(round.id)?.get(b.id)?.[0].total_score ??
+                        -b.number
                     )
                   )
                   .map((competitor) => (
