@@ -255,6 +255,11 @@ function Landing() {
               <React.Fragment key={round.id}>
                 <h3 className={tw`text-lg border-b`}>{round.name}</h3>
                 {competitors
+                  .filter(
+                    (competitor) =>
+                      groupedScores.get(round.id)?.get(competitor.id)?.[0]
+                        .total_score
+                  )
                   .sort((a, b) =>
                     descending(
                       groupedScores.get(round.id)?.get(a.id)?.[0].total_score ??
