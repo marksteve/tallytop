@@ -577,9 +577,10 @@ function Routes() {
             to={`/divisions/${divisionId}/rounds/${roundId}/routes/${
               route.id
             }/attempt?${searchParams.toString()}`}
-            className={tw(components.item, `px-5`)}
+            className={tw(components.item, `px-5 gap-5`)}
           >
-            {route.name}
+            <Color color={route.color} />
+            <span className={tw`flex-1`}>{route.name}</span>
           </Link>
         </li>
       ))}
@@ -834,16 +835,7 @@ function Competitor({ competitor, groupedRoutes }) {
                 )}
                 onClick={() => toggleAttempt(route.id)}
               >
-                {route.color ? (
-                  <span
-                    className={tw(
-                      `w-5 h-5 rounded-full border`,
-                      route.color === "rainbow"
-                        ? `bg-gradient-to-r from-red-500 via-green-500 to-blue-500`
-                        : `bg-${route.color}`
-                    )}
-                  />
-                ) : null}
+                <Color color={route.color} />
                 {route.name.split(ROUTE_NAME_SPLITTER)[1]}
               </li>
             ))}
@@ -851,5 +843,21 @@ function Competitor({ competitor, groupedRoutes }) {
         </div>
       ))}
     </li>
+  );
+}
+
+function Color({ color }) {
+  if (!color) {
+    return null;
+  }
+  return (
+    <span
+      className={tw(
+        `w-5 h-5 rounded-full border`,
+        color === "rainbow"
+          ? `bg-gradient-to-r from-red-500 via-green-500 to-blue-500`
+          : `bg-${color}`
+      )}
+    />
   );
 }
