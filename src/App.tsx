@@ -6,19 +6,18 @@ import {
   UserPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import produce from "immer";
-import { ascending } from "d3-array";
+import { ascending, groups } from "d3-array";
 import { Reorder } from "framer-motion";
+import produce from "immer";
 import { nanoid } from "nanoid";
 import * as React from "react";
-import create from "zustand";
-import { persist } from "zustand/middleware";
 import {
   createBrowserRouter,
   Link,
   Outlet,
   redirect,
   RouterProvider,
+  useFetcher,
   useLoaderData,
   useLocation,
   useMatches,
@@ -28,8 +27,12 @@ import {
   useSubmit,
 } from "react-router-dom";
 import { tw } from "twind";
+import create from "zustand";
+import { persist } from "zustand/middleware";
 import * as components from "./components";
 import supabase from "./lib/supabase";
+
+const ROUTE_NAME_SPLITTER = /\s*\/\s*/;
 
 const router = createBrowserRouter([
   {
@@ -82,9 +85,9 @@ const router = createBrowserRouter([
                 children: [
                   {
                     path: "attempt",
-                    loader: loadAttempts,
+                    loader: loadAttemptDetails,
                     element: <Attempt />,
-                    action: writeAttempt,
+                    action: writeQueuedAttempt,
                   },
                 ],
               },
@@ -92,6 +95,11 @@ const router = createBrowserRouter([
                 path: "batch",
                 loader: loadBatch,
                 element: <Batch />,
+              },
+              {
+                path: "batch/attempts",
+                loader: loadAttempts,
+                action: writeAttempt,
               },
             ],
           },
@@ -212,8 +220,8 @@ function SignIn() {
   return session ? (
     <ul className={tw(components.list)}>
       <li>
-        <Link to="/divisions" className={tw(components.item)}>
-          <span className={tw`px-5`}>Judge</span>
+        <Link to="/divisions" className={tw(components.item, `px-5`)}>
+          Judge
         </Link>
       </li>
     </ul>
@@ -270,9 +278,9 @@ function Divisions() {
         <li key={division.id}>
           <Link
             to={`/divisions/${division.id}/rounds`}
-            className={tw(components.item)}
+            className={tw(components.item, `px-5`)}
           >
-            <span className={tw`px-5`}>{division.name}</span>
+            {division.name}
           </Link>
         </li>
       ))}
@@ -298,9 +306,9 @@ function Rounds() {
         <li key={round.id}>
           <Link
             to={`/divisions/${divisionId}/rounds/${round.id}`}
-            className={tw(components.item)}
+            className={tw(components.item, `px-5`)}
           >
-            <span className={tw`px-5`}>{round.name}</span>
+            {round.name}
           </Link>
         </li>
       ))}
@@ -326,13 +334,19 @@ function Scoring() {
   return (
     <ul className={tw(components.list)}>
       <li>
-        <Link to={`${location.pathname}/queue`} className={tw(components.item)}>
-          <span className={tw`px-5`}>Realtime</span>
+        <Link
+          to={`${location.pathname}/queue`}
+          className={tw(components.item, `px-5`)}
+        >
+          Realtime
         </Link>
       </li>
       <li>
-        <Link to={`${location.pathname}/batch`} className={tw(components.item)}>
-          <span className={tw`px-5`}>Batch</span>
+        <Link
+          to={`${location.pathname}/batch`}
+          className={tw(components.item, `px-5`)}
+        >
+          Batch
         </Link>
       </li>
     </ul>
@@ -452,7 +466,8 @@ async function loadRoutes({ params }) {
   const { data, error } = await supabase
     .from("routes")
     .select()
-    .eq("round_id", Number(params.roundId));
+    .eq("round_id", Number(params.roundId))
+    .order("created_at");
   if (error) {
     console.error(error);
     return;
@@ -466,20 +481,18 @@ function Routes() {
   const routes = useLoaderData() as any[];
   return (
     <ul className={tw(components.list)}>
-      {routes
-        .sort((a, b) => ascending(a.score, b.score))
-        .map((route) => (
-          <li key={route.id}>
-            <Link
-              to={`/divisions/${divisionId}/rounds/${roundId}/routes/${
-                route.id
-              }/attempt?${searchParams.toString()}`}
-              className={tw(components.item)}
-            >
-              <span className={tw`px-5`}>{route.name}</span>
-            </Link>
-          </li>
-        ))}
+      {routes.map((route) => (
+        <li key={route.id}>
+          <Link
+            to={`/divisions/${divisionId}/rounds/${roundId}/routes/${
+              route.id
+            }/attempt?${searchParams.toString()}`}
+            className={tw(components.item, `px-5`)}
+          >
+            {route.name}
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 }
@@ -510,14 +523,14 @@ async function fetchCompetitor(number: string) {
   return competitor;
 }
 
-async function loadAttempts({ params, request }) {
+async function loadAttemptDetails({ params, request }) {
   const number = new URL(request.url).searchParams.get("competitor");
   const route = await fetchRoute(params.routeId);
   const competitor = await fetchCompetitor(number);
   return { route, competitor };
 }
 
-async function writeAttempt({ params, request }) {
+async function writeQueuedAttempt({ params, request }) {
   const formData = await request.formData();
   const { error } = await supabase.from("attempts").insert({
     competitor_id: formData.get("competitor_id"),
@@ -596,22 +609,28 @@ function Attempt() {
           </li>
         ) : null}
         <li
-          className={tw(components.item, `bg-pink-500 text-white text-2xl`)}
+          className={tw(
+            components.item,
+            `bg-pink-500 text-white text-2xl px-5`
+          )}
           onClick={handleFall}
         >
-          <span className={tw`px-5`}>Fall</span>
+          Fall
         </li>
         <li
-          className={tw(components.item, `bg-emerald-500 text-white text-2xl`)}
+          className={tw(
+            components.item,
+            `bg-emerald-500 text-white text-2xl px-5`
+          )}
           onClick={handleTop}
         >
-          <span className={tw`px-5`}>Top</span>
+          Top
         </li>
         <li
-          className={tw(components.item, `text-2xl`)}
+          className={tw(components.item, `text-2xl px-5`)}
           onClick={() => navigate(-1)}
         >
-          <span className={tw`px-5`}>Back</span>
+          Back
         </li>
       </ul>
     </>
@@ -626,5 +645,121 @@ async function loadBatch({ params }) {
 
 function Batch() {
   const { competitors, routes } = useLoaderData();
-  return <div>{JSON.stringify({ competitors, routes })}</div>;
+  const sortedCompetitors = competitors.sort((a, b) =>
+    ascending(a.number, b.number)
+  );
+  const groupedRoutes = groups(
+    routes,
+    (d) => d.name.split(ROUTE_NAME_SPLITTER)[0]
+  ).sort((a, b) => ascending(a[0], b[0]));
+  return (
+    <ul className={tw`flex flex-col`}>
+      {sortedCompetitors.map((competitor) => (
+        <Competitor
+          key={competitor.id}
+          competitor={competitor}
+          groupedRoutes={groupedRoutes}
+        />
+      ))}
+    </ul>
+  );
+}
+
+async function loadAttempts({ params, request }) {
+  const competitorId = new URL(request.url).searchParams.get("competitor");
+  const { data, error } = await supabase
+    .from("attempts")
+    .select("*, routes(*)")
+    .eq("routes.round_id", Number(params.roundId))
+    .eq("competitor_id", Number(competitorId));
+  if (error) {
+    console.error(error);
+    return;
+  }
+  const attemptsMap = data.reduce(
+    (prev, curr) => ({ ...prev, [curr.route_id]: curr }),
+    {}
+  );
+  return attemptsMap;
+}
+
+async function writeAttempt({ request }) {
+  const formData = await request.formData();
+  await supabase.from("attempts").upsert({
+    id: formData.get("id") ?? undefined,
+    route_id: formData.get("route_id"),
+    competitor_id: formData.get("competitor_id"),
+    is_top: formData.get("is_top") === "true",
+  });
+}
+
+function Competitor({ competitor, groupedRoutes }) {
+  const fetcher = useFetcher();
+  const { divisionId, roundId } = useParams();
+  const attemptsUrl = `/divisions/${divisionId}/rounds/${roundId}/batch/attempts`;
+
+  React.useEffect(() => {
+    if (fetcher.state === "idle" && !fetcher.data) {
+      fetcher.load(`${attemptsUrl}?competitor=${competitor.id}`);
+    }
+  }, [fetcher]);
+
+  const toggleAttempt = async (routeId) => {
+    const attempt = attemptsMap[routeId];
+    const isTop = attempt ? !attempt.is_top : true;
+    const formData = new FormData();
+    if (attempt) {
+      formData.append("id", attempt.id);
+    }
+    formData.append("route_id", routeId);
+    formData.append("competitor_id", competitor.id);
+    formData.append("is_top", isTop);
+    fetcher.submit(formData, { method: "post", action: attemptsUrl });
+  };
+
+  const attemptsMap = fetcher.data;
+
+  return (
+    <li key={competitor.id} className={tw`p-5 flex flex-col gap-5 border-b`}>
+      <div className={tw`flex gap-5 items-center`}>
+        <span className={tw(components.number)}>{competitor.number}</span>
+        <span className={tw`flex-1 text-2xl`}>{competitor.name}</span>
+      </div>
+      {groupedRoutes.map(([group, groupRoutes], i) => (
+        <div key={i}>
+          <strong>{group}</strong>
+          <ul
+            className={tw(`flex gap-5 overflow-x-auto py-5`, {
+              "opacity-50": fetcher.state === "loading",
+            })}
+          >
+            {groupRoutes.map((route) => (
+              <li
+                key={route.id}
+                className={tw(
+                  `whitespace-nowrap p-3 flex gap-3 items-center border border-transparent rounded cursor-pointer`,
+                  {
+                    "!border-black": (attemptsMap ?? {})[route.id]?.is_top,
+                  }
+                )}
+                onClick={() => toggleAttempt(route.id)}
+              >
+                {route.color ? (
+                  <span
+                    className={tw(
+                      `w-5 h-5 rounded-full`,
+                      route.color === "rainbow"
+                        ? `bg-gradient-to-r from-red-500 via-green-500 to-blue-500`
+                        : `bg-${route.color}-500`
+                    )}
+                  />
+                ) : null}
+                {route.name.split(ROUTE_NAME_SPLITTER)[1]}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </li>
+  );
 }
