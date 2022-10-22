@@ -183,12 +183,8 @@ function Root() {
 export default function App() {
   return (
     <div className={tw`w-screen h-screen flex flex-col text-gray-700`}>
-      <a href="/">
-        <h1
-          className={tw`bg-purple-500 text-yellow-400 text-3xl text-center leading-relaxed font-black`}
-        >
-          ale!
-        </h1>
+      <a href="/" className={tw`bg-purple-500 flex justify-center`}>
+        <img src="/logo-ale.svg" className={tw`h-20`} />
       </a>
       <RouterProvider router={router} />
     </div>
