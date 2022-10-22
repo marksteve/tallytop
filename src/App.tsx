@@ -6,7 +6,7 @@ import {
   UserPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { ascending, group, groups } from "d3-array";
+import { ascending, descending, group, groups } from "d3-array";
 import { Reorder } from "framer-motion";
 import produce from "immer";
 import { nanoid } from "nanoid";
@@ -254,25 +254,32 @@ function Landing() {
             {rounds.map((round) => (
               <React.Fragment key={round.id}>
                 <h3 className={tw`text-lg border-b`}>{round.name}</h3>
-                {competitors.map((competitor) => (
-                  <div
-                    key={competitor.id}
-                    className={tw`flex items-center gap-5`}
-                  >
-                    <span className={tw(components.number)}>
-                      {competitor.number}
-                    </span>
-                    <span className={tw`flex-1 text-2xl`}>
-                      {competitor.name}
-                    </span>
-                    <span className={tw`text-2xl`}>
-                      {
-                        groupedScores.get(round.id)?.get(competitor.id)?.[0]
-                          .total_score
-                      }
-                    </span>
-                  </div>
-                ))}
+                {competitors
+                  .sort((a, b) =>
+                    descending(
+                      groupedScores.get(round.id)?.get(a.id)?.[0].total_score,
+                      groupedScores.get(round.id)?.get(b.id)?.[0].total_score
+                    )
+                  )
+                  .map((competitor) => (
+                    <div
+                      key={competitor.id}
+                      className={tw`flex items-center gap-5`}
+                    >
+                      <span className={tw(components.number)}>
+                        {competitor.number}
+                      </span>
+                      <span className={tw`flex-1 text-2xl`}>
+                        {competitor.name}
+                      </span>
+                      <span className={tw`text-2xl`}>
+                        {
+                          groupedScores.get(round.id)?.get(competitor.id)?.[0]
+                            .total_score
+                        }
+                      </span>
+                    </div>
+                  ))}
               </React.Fragment>
             ))}
           </div>
