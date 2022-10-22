@@ -6,7 +6,7 @@ import {
   UserPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { ascending, groups } from "d3-array";
+import { ascending, group, groups } from "d3-array";
 import { Reorder } from "framer-motion";
 import produce from "immer";
 import { nanoid } from "nanoid";
@@ -14,6 +14,7 @@ import * as React from "react";
 import {
   createBrowserRouter,
   Link,
+  Navigate,
   Outlet,
   redirect,
   RouterProvider,
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
+        loader: loadLanding,
+        element: <Landing />,
+      },
+      {
+        path: "sign-in",
         loader: loadSession,
         element: <SignIn />,
       },
@@ -200,6 +206,93 @@ async function loadSession() {
   return data.session;
 }
 
+async function fetchCompetitors() {
+  const { data, error } = await supabase
+    .from("competitors")
+    .select("*, divisions(*)");
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return data;
+}
+
+async function fetchScores() {
+  const { data, error } = await supabase.from("scores").select();
+  if (error) {
+    console.error(error);
+    return;
+  }
+  return data;
+}
+
+async function loadLanding() {
+  const session = await loadSession();
+  const rounds = await loadRounds();
+
+  const competitors = await fetchCompetitors();
+  const groupedCompetitors = competitors
+    ? groups(competitors, (d) => d.divisions.name)
+    : [];
+
+  const scores = await fetchScores();
+  const groupedScores = group(
+    scores,
+    (d) => d.round_id,
+    (d) => d.competitor_id
+  );
+
+  return { session, rounds, groupedCompetitors, groupedScores };
+}
+
+function Landing() {
+  const { session, rounds, groupedCompetitors, groupedScores } =
+    useLoaderData();
+
+  return (
+    <ul className={tw(components.list)}>
+      {groupedCompetitors.map(([division, competitors]) => (
+        <li key={division} className={tw`p-5 bg-purple-50 rounded`}>
+          <div className={tw`flex-1 flex flex-col gap-5`}>
+            <h2 className={tw`text-xl`}>{division}</h2>
+            {rounds.map((round) => (
+              <React.Fragment key={round.id}>
+                <h3 className={tw`text-lg border-b`}>{round.name}</h3>
+                {competitors.map((competitor) => (
+                  <div
+                    key={competitor.id}
+                    className={tw`flex items-center gap-5`}
+                  >
+                    <span className={tw(components.number)}>
+                      {competitor.number}
+                    </span>
+                    <span className={tw`flex-1 text-2xl`}>
+                      {competitor.name}
+                    </span>
+                    <span className={tw`text-2xl`}>
+                      {
+                        groupedScores.get(round.id)?.get(competitor.id)?.[0]
+                          .total_score
+                      }
+                    </span>
+                  </div>
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
+        </li>
+      ))}
+      <li className={tw`text-sm text-center opacity-50`}>
+        {session ? (
+          <Link to="/divisions">Judge</Link>
+        ) : (
+          <Link to="/sign-in">Sign-in</Link>
+        )}
+      </li>
+    </ul>
+  );
+}
+
 function SignIn() {
   const session = useLoaderData();
   const [magicLinkSent, setMagicLinkSent] = React.useState(false);
@@ -218,13 +311,7 @@ function SignIn() {
   };
 
   return session ? (
-    <ul className={tw(components.list)}>
-      <li>
-        <Link to="/divisions" className={tw(components.item, `px-5`)}>
-          Judge
-        </Link>
-      </li>
-    </ul>
+    <Navigate to="/divisions" />
   ) : (
     <form
       onSubmit={handleSignIn}

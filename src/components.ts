@@ -21,4 +21,13 @@ export const button = apply`
   text-white
 `;
 
-export const number = apply`text-gray-500 px-3 py-2 text-center border-1 rounded leading-loose`;
+export const number = apply`
+  bg-white
+  border-1
+  leading-loose
+  px-3
+  py-2
+  rounded
+  text-center
+  text-gray-500
+`;
