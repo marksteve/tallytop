@@ -685,7 +685,7 @@ function Attempt() {
             <span className={tw`text-2xl`}>{hold}</span>
             <button
               className={tw(components.button, `bg-emerald-500`)}
-              onClick={() => setHold(hold + 1)}
+              onClick={() => setHold(hold + 0.5)}
             >
               <PlusIcon className={tw`h-10`} />
             </button>
