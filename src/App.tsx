@@ -267,7 +267,7 @@ function Landing() {
                       className={tw`flex items-center gap-5`}
                     >
                       <span className={tw(components.number)}>
-                        {competitor.number}
+                        #{competitor.number}
                       </span>
                       <span className={tw`flex-1 text-2xl`}>
                         {competitor.name}
@@ -677,7 +677,7 @@ function Attempt() {
   return (
     <>
       <h2 className={tw`p-3 text-2xl flex gap-5 items-center`}>
-        <span className={tw(components.number)}>{competitor.number}</span>
+        <span className={tw(components.number)}>#{competitor.number}</span>
         {competitor.name}
       </h2>
       <ul className={tw(components.list)}>
@@ -812,7 +812,7 @@ function Competitor({ competitor, groupedRoutes }) {
   return (
     <li key={competitor.id} className={tw`p-5 flex flex-col gap-5 border-b`}>
       <div className={tw`flex gap-5 items-center`}>
-        <span className={tw(components.number)}>{competitor.number}</span>
+        <span className={tw(components.number)}>#{competitor.number}</span>
         <span className={tw`flex-1 text-2xl`}>{competitor.name}</span>
       </div>
       {groupedRoutes.map(([group, groupRoutes], i) => (
@@ -837,7 +837,7 @@ function Competitor({ competitor, groupedRoutes }) {
                 {route.color ? (
                   <span
                     className={tw(
-                      `w-5 h-5 rounded-full`,
+                      `w-5 h-5 rounded-full border`,
                       route.color === "rainbow"
                         ? `bg-gradient-to-r from-red-500 via-green-500 to-blue-500`
                         : `bg-${route.color}`
