@@ -4,7 +4,7 @@ import {
   type ActionFunction,
   type LoaderFunction,
 } from '@remix-run/node'
-import { Form } from '@remix-run/react'
+import { Form, Link } from '@remix-run/react'
 import { loadSession } from '~/loaders'
 import { serverClient } from '~/supabase'
 
@@ -40,13 +40,16 @@ export default function SignUp() {
   return (
     <Form
       method="post"
-      className="flex-1 flex flex-col gap-5 justify-center items-center"
+      className="flex h-full flex-1 flex-col items-center justify-center gap-5"
     >
       <input name="email" type="text" placeholder="Email" />
       <input name="password" type="password" placeholder="Password" />
-      <button type="submit" className="button bg-pink-500">
+      <button type="submit" className="button">
         Sign Up
       </button>
+      <Link to="/sign-in" className="text-sm underline">
+        Already have an account? Sign in instead.
+      </Link>
     </Form>
   )
 }

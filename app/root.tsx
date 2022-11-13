@@ -5,7 +5,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
 } from '@remix-run/react'
 import styles from '~/styles/app.css'
 
@@ -27,7 +27,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <main className="h-screen w-screen flex justify-center items-center">
+        <main className="h-screen w-screen overflow-x-hidden">
           <Outlet />
         </main>
         <ScrollRestoration />

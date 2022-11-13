@@ -2,9 +2,9 @@ import {
   json,
   redirect,
   type ActionFunction,
-  type LoaderFunction,
+  type LoaderFunction
 } from '@remix-run/node'
-import { Form } from '@remix-run/react'
+import { Form, Link } from '@remix-run/react'
 import { loadSession } from '~/loaders'
 import { serverClient } from '~/supabase'
 
@@ -12,17 +12,17 @@ export const action: ActionFunction = async ({ request }) => {
   const { email, password } = Object.fromEntries(await request.formData())
   const response = new Response()
   const supabaseClient = serverClient(request, response)
-  const { error } = await supabaseClient.auth.signInWithPassword({
+  const { data: { session }, error } = await supabaseClient.auth.signInWithPassword({
     email: String(email),
     password: String(password),
   })
 
-  if (error) {
+  if (error || !session) {
     // TODO: Do something
     throw new Error('Invalid credentials')
   }
 
-  return redirect('/')
+  return json({ session }, { headers: response.headers })
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -40,13 +40,16 @@ export default function SignIn() {
   return (
     <Form
       method="post"
-      className="flex-1 flex flex-col gap-5 justify-center items-center"
+      className="flex h-full flex-1 flex-col items-center justify-center gap-5"
     >
       <input name="email" type="text" placeholder="Email" />
       <input name="password" type="password" placeholder="Password" />
-      <button type="submit" className="button bg-pink-500">
-        Sign Up
+      <button type="submit" className="button">
+        Sign In
       </button>
+      <Link to="/sign-up" className="text-sm underline">
+        No account yet? Sign up now!
+      </Link>
     </Form>
   )
 }
