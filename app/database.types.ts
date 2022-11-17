@@ -9,148 +9,168 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      advancements: {
+        Row: {
+          division_id: string | null
+          round_id: string | null
+          id: string
+          created_at: string | null
+          order: number
+        }
+        Insert: {
+          division_id?: string | null
+          round_id?: string | null
+          id?: string
+          created_at?: string | null
+          order?: number
+        }
+        Update: {
+          division_id?: string | null
+          round_id?: string | null
+          id?: string
+          created_at?: string | null
+          order?: number
+        }
+      }
       attempts: {
         Row: {
-          competitor_id: number
-          route_id: number
+          competitor_id: string
+          climb_id: string
           is_zone: boolean | null
           is_top: boolean | null
           hold: number | null
           is_plus: boolean | null
+          id: string
           created_at: string | null
-          id: number
         }
         Insert: {
-          competitor_id: number
-          route_id: number
+          competitor_id: string
+          climb_id: string
           is_zone?: boolean | null
           is_top?: boolean | null
           hold?: number | null
           is_plus?: boolean | null
+          id?: string
           created_at?: string | null
-          id?: number
         }
         Update: {
-          competitor_id?: number
-          route_id?: number
+          competitor_id?: string
+          climb_id?: string
           is_zone?: boolean | null
           is_top?: boolean | null
           hold?: number | null
           is_plus?: boolean | null
+          id?: string
           created_at?: string | null
-          id?: number
+        }
+      }
+      climbs: {
+        Row: {
+          name: string | null
+          color: string | null
+          score: number | null
+          round_id: string | null
+          id: string
+          created_at: string | null
+        }
+        Insert: {
+          name?: string | null
+          color?: string | null
+          score?: number | null
+          round_id?: string | null
+          id?: string
+          created_at?: string | null
+        }
+        Update: {
+          name?: string | null
+          color?: string | null
+          score?: number | null
+          round_id?: string | null
+          id?: string
+          created_at?: string | null
         }
       }
       competitors: {
         Row: {
-          division_id: number
+          id: string
+          division_id: string
           number: string
-          name: string | null
+          advancement_id: string | null
           created_at: string | null
-          id: number
         }
         Insert: {
-          division_id: number
+          id: string
+          division_id: string
           number: string
-          name?: string | null
+          advancement_id?: string | null
           created_at?: string | null
-          id?: number
         }
         Update: {
-          division_id?: number
+          id?: string
+          division_id?: string
           number?: string
-          name?: string | null
+          advancement_id?: string | null
           created_at?: string | null
-          id?: number
         }
       }
       comps: {
         Row: {
           name: string
+          id: string
           created_at: string | null
-          id: number
         }
         Insert: {
           name: string
+          id?: string
           created_at?: string | null
-          id?: number
         }
         Update: {
           name?: string
+          id?: string
           created_at?: string | null
-          id?: number
         }
       }
       divisions: {
         Row: {
-          comp_id: number
+          comp_id: string
           name: string
+          id: string
           created_at: string | null
-          id: number
         }
         Insert: {
-          comp_id: number
+          comp_id: string
           name: string
+          id?: string
           created_at?: string | null
-          id?: number
         }
         Update: {
-          comp_id?: number
+          comp_id?: string
           name?: string
+          id?: string
           created_at?: string | null
-          id?: number
         }
       }
       rounds: {
         Row: {
-          comp_id: number
+          comp_id: string
           name: string
           type: string
+          id: string
           created_at: string | null
-          id: number
         }
         Insert: {
-          comp_id: number
+          comp_id: string
           name: string
           type: string
+          id?: string
           created_at?: string | null
-          id?: number
         }
         Update: {
-          comp_id?: number
+          comp_id?: string
           name?: string
           type?: string
+          id?: string
           created_at?: string | null
-          id?: number
-        }
-      }
-      routes: {
-        Row: {
-          round_id: number
-          name: string | null
-          color: string | null
-          score: number | null
-          judge_id: string | null
-          created_at: string | null
-          id: number
-        }
-        Insert: {
-          round_id: number
-          name?: string | null
-          color?: string | null
-          score?: number | null
-          judge_id?: string | null
-          created_at?: string | null
-          id?: number
-        }
-        Update: {
-          round_id?: number
-          name?: string | null
-          color?: string | null
-          score?: number | null
-          judge_id?: string | null
-          created_at?: string | null
-          id?: number
         }
       }
     }
@@ -165,3 +185,4 @@ export interface Database {
     }
   }
 }
+
