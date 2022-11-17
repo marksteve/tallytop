@@ -12,11 +12,11 @@ import { serverClient } from '~/supabase'
 export const action: ActionFunction = async ({ request }) => {
   const { email, password } = Object.fromEntries(await request.formData())
   const response = new Response()
-  const supabaseClient = serverClient(request, response)
+  const supabase = serverClient(request, response)
   const {
     data: { session },
     error,
-  } = await supabaseClient.auth.signInWithPassword({
+  } = await supabase.auth.signInWithPassword({
     email: String(email),
     password: String(password),
   })
@@ -31,8 +31,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const response = new Response()
-  const supabaseClient = serverClient(request, response)
-  const session = await loadSession(supabaseClient)
+  const supabase = serverClient(request, response)
+  const session = await loadSession(supabase)
 
   if (session) {
     return redirect('/')

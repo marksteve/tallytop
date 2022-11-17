@@ -12,8 +12,8 @@ import { browserClient, serverClient } from '~/supabase'
 export const action: ActionFunction = async ({ request }) => {
   const { password } = Object.fromEntries(await request.formData())
   const response = new Response()
-  const supabaseClient = serverClient(request, response)
-  const { error } = await supabaseClient.auth.updateUser({
+  const supabase = serverClient(request, response)
+  const { error } = await supabase.auth.updateUser({
     password: String(password),
   })
 
@@ -27,17 +27,17 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const response = new Response()
-  const supabaseClient = serverClient(request, response)
-  const session = await loadSession(supabaseClient)
+  const supabase = serverClient(request, response)
+  const session = await loadSession(supabase)
   return json({ env: process.env, session }, { headers: response.headers })
 }
 
 export default function UpdatePassword() {
   const { env } = useLoaderData()
-  const supabaseClient = browserClient(env)
+  const supabase = browserClient(env)
 
   useEffect(() => {
-    supabaseClient.auth.onAuthStateChange(() => {})
+    supabase.auth.onAuthStateChange(() => {})
   })
 
   return (
