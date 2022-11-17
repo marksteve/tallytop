@@ -2,16 +2,22 @@ import { Link } from '@remix-run/react'
 
 export default function Index() {
   const linkClassName =
-    'flex flex-1 items-center justify-center hover:bg-white/50'
+    'flex flex-1 items-center justify-center hover:opacity-50'
   return (
-    <div className="flex flex-1 flex-col text-[8vw]">
-      <Link className={linkClassName} to="/leaderboard">
-        LEADERBOARD
+    <div className="flex flex-1 flex-col items-center text-[8vw]">
+      <Link className={linkClassName} to="/climb">
+        CLIMB!
       </Link>
-      <Link className={linkClassName} to="/boulders">
-        BOULDERS
+      <img src="/images/snow-mountain.svg" alt="Divider" />
+      <Link className={linkClassName} to="/qualifiers">
+        QUALIFIERS
       </Link>
-      <Link className={linkClassName} to="/finals">
+      <img src="/images/snow-mountain.svg" alt="Divider" />
+      <Link className={linkClassName} to="/problems">
+        PROBLEMS
+      </Link>
+      <img src="/images/snow-mountain.svg" alt="Divider" />
+      <Link className={linkClassName} to="/final">
         FINALS
       </Link>
     </div>

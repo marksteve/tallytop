@@ -16,6 +16,7 @@ import styles from '~/styles/app.css'
 import { browserClient, serverClient } from '~/supabase'
 
 export const links: LinksFunction = () => [
+  { rel: 'icon', href: '/images/qdb-logo.svg', type: 'image/svg+xml' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
   {
@@ -27,7 +28,7 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'Tallytop',
+  title: 'Queso de Boulder 2022',
   viewport: 'width=device-width,initial-scale=1',
 })
 
@@ -61,7 +62,8 @@ export default function App() {
             radius={[2, 12]}
           />
           <header className="flex flex-col items-center gap-2 p-5">
-            <h1 className="flex-1 font-cursive text-4xl">
+            <h1 className="flex flex-1 items-center gap-2 font-cursive text-4xl">
+              <img src="/images/qdb-logo.svg" alt="Queso" width="64" />
               <span className="text-yellow">Queso</span>{' '}
               <span className="text-white">de Boulder</span>
             </h1>
