@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fontsource/recursive": "^4.5.11",
+    "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.12",
     "@remix-run/node": "^1.7.4",
     "@remix-run/react": "^1.7.4",
