@@ -1,4 +1,5 @@
-import type { MetaFunction } from '@remix-run/node'
+import type { LinksFunction, MetaFunction } from '@remix-run/node'
+import Snowfall from 'react-snowfall'
 import { json, type LoaderFunction } from '@remix-run/node'
 import {
   Link,
@@ -14,9 +15,15 @@ import { loadUser } from '~/loaders'
 import styles from '~/styles/app.css'
 import { browserClient, serverClient } from '~/supabase'
 
-export function links() {
-  return [{ rel: 'stylesheet', href: styles }]
-}
+export const links: LinksFunction = () => [
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap',
+  },
+  { rel: 'stylesheet', href: styles },
+]
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -47,10 +54,18 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <main className="h-screen w-screen overflow-x-hidden">
-          <header className="flex items-center gap-2 bg-slate-500 p-2 text-white">
-            <h1 className="flex-1 font-bold">Tallytop</h1>
-            {user ? `Hello ${user.email}` : <Link to="/sign-in">Sign in</Link>}
+        <main className="relative flex h-screen w-screen flex-col overflow-x-hidden bg-teal">
+          <Snowfall
+            color="rgba(255, 255, 255, 0.8)"
+            snowflakeCount={20}
+            radius={[2, 12]}
+          />
+          <header className="flex flex-col items-center gap-2 p-5">
+            <h1 className="flex-1 font-cursive text-4xl">
+              <span className="text-yellow">Queso</span>{' '}
+              <span className="text-white">de Boulder</span>
+            </h1>
+            {user ? user.email : <Link to="/sign-in">Sign in</Link>}
             {user ? (
               <button
                 className="button px-2 py-1 text-sm"

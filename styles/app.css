@@ -2,15 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'CS Gordon Rounded';
+  src: url('/fonts/cs_gordon_rounded-webfont.woff2') format('woff2'),
+    url('/fonts/cs_gordon_rounded-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer components {
   .button {
-    @apply border
-      border-white
-      bg-slate-500
+    @apply rounded-full
+      bg-red
       px-5
       py-2
       text-white
-      hover:bg-slate-400
       disabled:cursor-not-allowed
       disabled:opacity-50;
   }
