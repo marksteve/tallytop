@@ -1,5 +1,5 @@
-export async function loadSession(client) {
-  const { data, error } = await client.auth.getSession()
+export async function loadSession(supabase) {
+  const { data, error } = await supabase.auth.getSession()
   if (error || !data.session) {
     if (error) {
       console.error(error)
@@ -9,8 +9,8 @@ export async function loadSession(client) {
   return data.session
 }
 
-export async function loadUser(client) {
-  const { data, error } = await client.auth.getUser()
+export async function loadUser(supabase) {
+  const { data, error } = await supabase.auth.getUser()
   if (error || !data.user) {
     if (error) {
       console.error(error)
@@ -19,3 +19,4 @@ export async function loadUser(client) {
   }
   return data.user
 }
+
