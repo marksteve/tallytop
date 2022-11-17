@@ -6,7 +6,6 @@ import {
 } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import { useEffect } from 'react'
-import { loadSession } from '~/loaders'
 import { browserClient, serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -25,11 +24,8 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect('/')
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const response = new Response()
-  const supabase = serverClient(request, response)
-  const session = await loadSession(supabase)
-  return json({ env: process.env, session }, { headers: response.headers })
+export const loader: LoaderFunction = async () => {
+  return json({ env: process.env })
 }
 
 export default function UpdatePassword() {

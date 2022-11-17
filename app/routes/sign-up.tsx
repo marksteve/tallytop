@@ -33,7 +33,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (session) {
     return redirect('/')
   }
-  return json({ session }, { headers: response.headers })
+
+  return json({ session })
 }
 
 export default function SignUp() {
