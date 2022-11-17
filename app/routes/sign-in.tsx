@@ -69,9 +69,16 @@ export default function SignIn() {
                 className="flex flex-col items-center justify-center gap-5"
               >
                 <input name="email" type="text" placeholder="Email" />
-                <button type="submit" className="button">
+                <button
+                  type="submit"
+                  className="button"
+                  disabled={forgotPassword.state !== 'idle'}
+                >
                   Send reset link
                 </button>
+                {forgotPassword.type === 'done'
+                  ? 'Check your email. Maybe look at your spam folder too!'
+                  : null}
               </forgotPassword.Form>
             </Disclosure.Panel>
             <Disclosure.Button className="text-sm underline">
