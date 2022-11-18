@@ -16,7 +16,7 @@ import styles from '~/styles/app.css'
 import { browserClient, serverClient } from '~/supabase'
 
 export const links: LinksFunction = () => [
-  { rel: 'icon', href: '/images/qdb-logo.svg', type: 'image/svg+xml' },
+  { rel: 'icon', href: '/images/favicon.svg', type: 'image/svg+xml' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
   {
