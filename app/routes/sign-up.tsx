@@ -25,18 +25,6 @@ export const action: ActionFunction = async ({ request }) => {
   )
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const response = new Response()
-  const supabase = serverClient(request, response)
-  const session = await loadSession(supabase)
-
-  if (session) {
-    return redirect('/')
-  }
-
-  return json({ session })
-}
-
 export default function SignUp() {
   return (
     <Form
