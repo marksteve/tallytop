@@ -1,15 +1,10 @@
 import { Disclosure } from '@headlessui/react'
-import {
-  json,
-  redirect,
-  type ActionFunction,
-  type LoaderFunction,
-} from '@remix-run/node'
+import { json, redirect, type ActionFunction } from '@remix-run/node'
 import { Form, Link, useFetcher } from '@remix-run/react'
-import { loadSession } from '~/loaders'
 import { serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
+  const redirectTo = new URL(request.url).searchParams.get('redirectTo')
   const { email, password } = Object.fromEntries(await request.formData())
   const response = new Response()
   const supabase = serverClient(request, response)
@@ -24,6 +19,10 @@ export const action: ActionFunction = async ({ request }) => {
   if (error || !session) {
     // TODO: Do something
     throw new Error('Invalid credentials')
+  }
+
+  if (redirectTo) {
+    return redirect(redirectTo, { headers: response.headers })
   }
 
   return json({ session }, { headers: response.headers })
