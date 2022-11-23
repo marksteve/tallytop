@@ -1,5 +1,6 @@
 import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { ascending } from 'd3-array'
 import { QRCodeSVG } from 'qrcode.react'
 import { type Database } from '~/database.types'
 import { serverClient } from '~/supabase'
@@ -25,19 +26,46 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function Labels() {
   const { climbs } = useLoaderData<LoaderData>()
   return (
-    <div className="flex flex-1 flex-wrap gap-1 p-10">
-      {climbs.map((climb) => (
-        <div key={climb.id} className="flex flex-col gap-5 border p-10">
-          <div className="flex items-center gap-2">
-            <div
-              className={`h-5 w-5 rounded-full`}
-              style={{ backgroundColor: climb.color ?? 'transparent' }}
+    <div className="flex flex-1 flex-wrap justify-center gap-1 p-10">
+      {climbs
+        .sort((a, b) => ascending(parseInt(a.name, 10), parseInt(b.name, 10)))
+        .map((climb) => (
+          <div
+            key={climb.id}
+            className="flex items-center gap-10 bg-white px-10 py-8 text-black"
+          >
+            <div className="flex flex-col items-center gap-5">
+              <div className="font-cursive leading-[0.5em]">
+                <span
+                  className="text-4xl text-yellow"
+                  style={{
+                    textShadow: '2px 2px 0 black',
+                    WebkitTextStroke: '1px black',
+                  }}
+                >
+                  Queso
+                </span>
+                <br />
+                <span className="pl-7">de Boulder</span>
+              </div>
+              <div className="flex h-32 w-32 flex-col  items-center justify-center rounded-full bg-red text-6xl text-white">
+                {climb.name}
+              </div>
+            </div>
+            <QRCodeSVG
+              value={climb.id}
+              imageSettings={{
+                src: '/images/qdb-logo.svg',
+                width: 32,
+                height: 32,
+                excavate: true,
+              }}
+              bgColor="transparent"
+              fgColor="currentColor"
+              size={192}
             />
-            {climb.name}
           </div>
-          <QRCodeSVG value={climb.id} />
-        </div>
-      ))}
+        ))}
     </div>
   )
 }
