@@ -21,11 +21,7 @@ export const action: ActionFunction = async ({ request }) => {
     throw new Error('Invalid credentials')
   }
 
-  if (redirectTo) {
-    return redirect(redirectTo, { headers: response.headers })
-  }
-
-  return json({ session }, { headers: response.headers })
+  return redirect(redirectTo ?? '/', { headers: response.headers })
 }
 
 export default function SignIn() {
