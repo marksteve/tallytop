@@ -8,6 +8,7 @@
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css"
   },
   "dependencies": {
+    "@andreekeberg/imagedata": "^1.0.2",
     "@fontsource/recursive": "^4.5.11",
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.12",
@@ -20,6 +21,7 @@
     "d3-array": "^3.2.0",
     "framer-motion": "^7.5.3",
     "immer": "^9.0.15",
+    "jsqr": "^1.4.0",
     "nanoid": "^4.0.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
