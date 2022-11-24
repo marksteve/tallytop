@@ -20,4 +20,16 @@
       disabled:cursor-not-allowed
       disabled:opacity-50;
   }
+  .climb-number {
+    @apply flex
+      h-32
+      w-32
+      flex-col
+      items-center
+      justify-center
+      rounded-full
+      bg-red
+      text-6xl
+      text-white;
+  }
 }

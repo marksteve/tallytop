@@ -47,7 +47,7 @@ export default function Labels() {
                 <br />
                 <span className="pl-7">de Boulder</span>
               </div>
-              <div className="flex h-32 w-32 flex-col  items-center justify-center rounded-full bg-red text-6xl text-white">
+              <div className="climb-number">
                 {climb.name}
               </div>
             </div>

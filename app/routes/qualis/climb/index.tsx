@@ -55,7 +55,7 @@ export default function ClimbIndex() {
         replace
       >
         <label>
-          <div className="button cursor-pointer bg-red text-4xl">CLIMB!</div>
+          <div className="button cursor-pointer text-4xl">CLIMB!</div>
           <input
             type="file"
             name="capture"
