@@ -11,8 +11,7 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { roundId } = params
-  const response = new Response()
-  const supabase = serverClient(request, response)
+  const supabase = serverClient(request)
   const { data: climbs, error } = await supabase
     .from('climbs')
     .select()

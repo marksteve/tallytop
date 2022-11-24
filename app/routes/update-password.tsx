@@ -10,8 +10,7 @@ import { browserClient, serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
   const { password } = Object.fromEntries(await request.formData())
-  const response = new Response()
-  const supabase = serverClient(request, response)
+  const supabase = serverClient(request)
   const { error } = await supabase.auth.updateUser({
     password: String(password),
   })

@@ -1,11 +1,5 @@
-import {
-  json,
-  redirect,
-  type ActionFunction,
-  type LoaderFunction,
-} from '@remix-run/node'
+import { json, type ActionFunction } from '@remix-run/node'
 import { Form, Link } from '@remix-run/react'
-import { loadSession } from '~/loaders'
 import { serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {

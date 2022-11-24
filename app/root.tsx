@@ -34,8 +34,7 @@ export const meta: MetaFunction = () => ({
 })
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const response = new Response()
-  const supabase = serverClient(request, response)
+  const supabase = serverClient(request)
   const user = await loadUser(supabase)
   return json({ env: process.env, user })
 }

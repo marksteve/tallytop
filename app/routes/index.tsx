@@ -3,8 +3,7 @@ import { Link, useLoaderData } from '@remix-run/react'
 import { serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const response = new Response()
-  const supabase = serverClient(request, response)
+  const supabase = serverClient(request)
   const {
     data: { rounds: currentRound },
     error,

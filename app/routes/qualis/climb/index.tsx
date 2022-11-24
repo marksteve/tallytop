@@ -12,9 +12,9 @@ import QR from 'jsqr'
 import { requireSignIn } from '~/loaders'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const redirectParams = await requireSignIn(request)
-  if (redirectParams) {
-    return redirectParams
+  const shouldRedirect = await requireSignIn(request)
+  if (shouldRedirect) {
+    return shouldRedirect
   }
 
   return json({

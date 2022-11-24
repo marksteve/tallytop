@@ -3,8 +3,7 @@ import { serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
   const { email } = Object.fromEntries(await request.formData())
-  const response = new Response()
-  const supabase = serverClient(request, response)
+  const supabase = serverClient(request)
   const { error } = await supabase.auth.resetPasswordForEmail(
     String(email),
     {
