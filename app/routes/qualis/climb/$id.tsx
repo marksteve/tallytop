@@ -32,6 +32,7 @@ export default function Climb() {
   return (
     <div className="flex flex-1 flex-col items-center justify-around">
       <div className="climb-number">{climb.name}</div>
+      <div className="text-2xl">100 points</div>
       <div className="flex flex-col gap-20 text-4xl">
         <button className="button bg-black">Top</button>
         <button className="button">Flash</button>
