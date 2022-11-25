@@ -74,7 +74,9 @@ export default function Climb() {
   return (
     <div className="flex flex-1 flex-col items-center justify-around gap-10">
       <div className="climb-number">{climb.name}</div>
-      <div className="text-2xl">100 points</div>
+      <div className={`text-2xl ${isTop || isFlash ? 'opacity-20' : ''}`}>
+        100 points
+      </div>
       <div className="flex flex-1 flex-col justify-around text-4xl">
         <button
           className={`button bg-black ${isTop ? activeClass : ''}`}
