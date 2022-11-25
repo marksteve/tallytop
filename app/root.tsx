@@ -60,8 +60,8 @@ export default function App() {
           {pathname.startsWith('/labels') ? null : (
             <Snowfall
               color="rgba(255, 255, 255, 0.8)"
-              snowflakeCount={20}
-              radius={[2, 12]}
+              snowflakeCount={100}
+              radius={[2, 6]}
             />
           )}
           <header className="flex flex-col items-center gap-2 p-5">
