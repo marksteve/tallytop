@@ -68,14 +68,16 @@ export default function App() {
               radius={[2, 6]}
             />
             <header className="flex flex-col items-center gap-2 p-5">
-              <h1 className="flex flex-1 items-center">
-                <div className="font-cursive leading-[0.5em]">
-                  <span className="text-4xl text-yellow">Queso</span>
-                  <br />
-                  <span className="pl-7 text-white">de Boulder</span>
-                </div>
-                <img src="/images/qdb-logo.svg" alt="Queso" width="72" />
-              </h1>
+              <Link to="/">
+                <h1 className="flex items-center">
+                  <div className="font-cursive leading-[0.5em]">
+                    <span className="text-4xl text-yellow">Queso</span>
+                    <br />
+                    <span className="pl-7 text-white">de Boulder</span>
+                  </div>
+                  <img src="/images/qdb-logo.svg" alt="Queso" width="72" />
+                </h1>
+              </Link>
               {user ? user.email : <Link to="/sign-in">Sign in</Link>}
               {user ? (
                 <button
