@@ -9,7 +9,8 @@ import {
 } from '@remix-run/node'
 import { Form, useLoaderData, useSubmit } from '@remix-run/react'
 import QR from 'jsqr'
-import { requireSignIn } from '~/loaders'
+import { loadUser, requireSignIn } from '~/loaders'
+import { serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const shouldRedirect = await requireSignIn(request)
@@ -17,9 +18,17 @@ export const loader: LoaderFunction = async ({ request }) => {
     return shouldRedirect
   }
 
-  return json({
-    score: 100,
-  })
+  const supabase = serverClient(request)
+  const user = await loadUser(supabase)
+
+  const { data: tops } = await supabase
+    .from('qualis_tops')
+    .select('score')
+    .eq('competitor_id', user.id)
+
+  const score = tops?.reduce((total, { score }) => total + score, 0)
+
+  return json({ score })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -64,9 +73,9 @@ export default function ClimbIndex() {
           />
         </label>
       </Form>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col items-center gap-5">
         <div className="text-2xl text-red">Your Points</div>
-        <div className="text-8xl">{score}</div>
+        <div className="text-6xl">{score}</div>
       </div>
     </div>
   )
