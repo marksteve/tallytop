@@ -44,7 +44,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       .delete()
       .eq('competitor_id', user.id)
       .eq('climb_id', params['id'])
-    return json({ ok: true })
+    return redirect('/qualis/climb')
   }
   const { error } = await supabase
     .from('attempts')
