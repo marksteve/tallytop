@@ -56,35 +56,39 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <main className="relative flex h-screen w-screen flex-col overflow-x-hidden bg-teal">
-          {pathname.startsWith('/labels') ? null : (
+        {pathname.startsWith('/labels') ? (
+          <Outlet />
+        ) : (
+          <main
+            className={`relative flex h-screen w-screen flex-col overflow-x-hidden bg-teal`}
+          >
             <Snowfall
               color="rgba(255, 255, 255, 0.8)"
               snowflakeCount={100}
               radius={[2, 6]}
             />
-          )}
-          <header className="flex flex-col items-center gap-2 p-5">
-            <h1 className="flex flex-1 items-center">
-              <div className="font-cursive leading-[0.5em]">
-                <span className="text-4xl text-yellow">Queso</span>
-                <br />
-                <span className="pl-7 text-white">de Boulder</span>
-              </div>
-              <img src="/images/qdb-logo.svg" alt="Queso" width="72" />
-            </h1>
-            {user ? user.email : <Link to="/sign-in">Sign in</Link>}
-            {user ? (
-              <button
-                className="button px-2 py-1 text-sm"
-                onClick={handleSignOut}
-              >
-                Sign out
-              </button>
-            ) : null}
-          </header>
-          <Outlet />
-        </main>
+            <header className="flex flex-col items-center gap-2 p-5">
+              <h1 className="flex flex-1 items-center">
+                <div className="font-cursive leading-[0.5em]">
+                  <span className="text-4xl text-yellow">Queso</span>
+                  <br />
+                  <span className="pl-7 text-white">de Boulder</span>
+                </div>
+                <img src="/images/qdb-logo.svg" alt="Queso" width="72" />
+              </h1>
+              {user ? user.email : <Link to="/sign-in">Sign in</Link>}
+              {user ? (
+                <button
+                  className="button px-2 py-1 text-sm"
+                  onClick={handleSignOut}
+                >
+                  Sign out
+                </button>
+              ) : null}
+            </header>
+            <Outlet />
+          </main>
+        )}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

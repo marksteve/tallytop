@@ -25,13 +25,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function Labels() {
   const { climbs } = useLoaderData<LoaderData>()
   return (
-    <div className="flex flex-1 flex-wrap justify-center gap-1 p-10">
+    <div className="flex flex-1 flex-wrap justify-center gap-x-1 gap-y-20 p-10">
       {climbs
         .sort((a, b) => ascending(parseInt(a.name, 10), parseInt(b.name, 10)))
         .map((climb) => (
           <div
             key={climb.id}
-            className="flex items-center gap-10 bg-white px-10 py-8 text-black"
+            className="flex flex-col justify-center gap-10 border border-black bg-white px-10 py-8 text-black"
           >
             <div className="flex flex-col items-center gap-5">
               <div className="font-cursive leading-[0.5em]">
@@ -47,9 +47,7 @@ export default function Labels() {
                 <br />
                 <span className="pl-7">de Boulder</span>
               </div>
-              <div className="climb-number">
-                {climb.name}
-              </div>
+              <div className="climb-number">{climb.name}</div>
             </div>
             <QRCodeSVG
               value={climb.id}
