@@ -16,10 +16,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const supabase = serverClient(request)
   const user = await loadUser(supabase)
+  const { data: competitor } = await supabase
+    .from('competitors')
+    .select('division_id')
+    .eq('id', user.id)
+    .single()
   const { data: climb } = await supabase
     .from('climbs')
-    .select('*, attempts(*)')
+    .select(`*, attempts(competitors(*))`)
     .eq('id', params['id'])
+    .eq('attempts.competitors.division_id', competitor.division_id)
     .single()
   const { data: top } = await supabase
     .from('qualis_tops')
@@ -29,7 +35,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .maybeSingle()
   const nextScore =
     parseFloat(process.env.QUALIS_MAX_SCORE) /
-    ((climb?.attempts ?? []).length + 1)
+    Math.max(
+      (climb?.attempts?.filter(({ competitors }) => !!competitors) ?? [])
+        .length + 1,
+      1
+    )
+
+  console.log(climb.attempts)
 
   return json({ climb, top, nextScore })
 }
