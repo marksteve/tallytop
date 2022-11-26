@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from '@remix-run/node'
+import { redirect, type ActionFunction } from '@remix-run/node'
 import { Form, Link } from '@remix-run/react'
 import { serverClient } from '~/supabase'
 
@@ -6,17 +6,15 @@ export const action: ActionFunction = async ({ request }) => {
   const { email, password } = Object.fromEntries(await request.formData())
   const response = new Response()
   const supabase = serverClient(request, response)
-  const { data, error } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email: String(email),
     password: String(password),
   })
+  if (error) {
+    throw error
+  }
 
-  return json(
-    { data, error },
-    {
-      headers: response.headers,
-    }
-  )
+  return redirect('/', { headers: response.headers })
 }
 
 export default function SignUp() {
