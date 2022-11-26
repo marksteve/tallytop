@@ -14,7 +14,7 @@ export async function requireSignIn(request) {
 export async function loadSession(supabase) {
   const { data, error } = await supabase.auth.getSession()
   if (error) {
-    throw error
+    console.warn(error)
   }
   return data.session
 }
@@ -22,7 +22,7 @@ export async function loadSession(supabase) {
 export async function loadUser(supabase) {
   const { data, error } = await supabase.auth.getUser()
   if (error) {
-    throw error
+    console.warn(error)
   }
   return data.user
 }
