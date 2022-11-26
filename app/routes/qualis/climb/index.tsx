@@ -23,10 +23,15 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const { data: tops } = await supabase
     .from('qualis_tops')
-    .select('score')
+    .select('score, is_flash')
     .eq('competitor_id', user.id)
 
-  const score = tops?.reduce((total, { score }) => total + score, 0)
+  const score = tops?.reduce(
+    (total, { score, is_flash }) =>
+      total +
+      score * (is_flash ? parseFloat(process.env.QUALIS_FLASH_MULTIPLIER) : 1),
+    0
+  )
 
   return json({ score })
 }

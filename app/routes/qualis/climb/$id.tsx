@@ -15,21 +15,23 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   const supabase = serverClient(request)
-  const { data: climb, error } = await supabase
+  const user = await loadUser(supabase)
+  const { data: climb } = await supabase
     .from('climbs')
-    .select(
-      `
-      *,
-      attempts(*)
-      `
-    )
+    .select('*, attempts(*)')
     .eq('id', params['id'])
     .single()
-  if (error) {
-    throw error
-  }
+  const { data: top } = await supabase
+    .from('qualis_tops')
+    .select(`is_flash`)
+    .eq('climb_id', params['id'])
+    .eq('competitor_id', user.id)
+    .maybeSingle()
+  const nextScore =
+    parseFloat(process.env.QUALIS_MAX_SCORE) /
+    ((climb?.attempts ?? []).length + 1)
 
-  return json({ climb })
+  return json({ climb, top, nextScore })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -63,29 +65,31 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 export default function Climb() {
-  const { climb } = useLoaderData()
+  const { climb, top, nextScore } = useLoaderData()
   const submit = useSubmit()
   const handleTop = () => submit({ isTop: 'true' }, { method: 'post' })
   const handleFlash = () => submit({ isFlash: 'true' }, { method: 'post' })
   const handleClear = () => submit({ clear: 'true' }, { method: 'post' })
-  const isTop = climb.attempts[0]?.is_top && climb.attempts[0].count > 1
-  const isFlash = climb.attempts[0]?.is_top && climb.attempts[0].count === 1
+
   const activeClass = 'border-4 border-white'
+
   return (
     <div className="flex flex-1 flex-col items-center justify-around gap-10">
       <div className="climb-number">{climb.name}</div>
-      <div className={`text-2xl ${isTop || isFlash ? 'opacity-20' : ''}`}>
-        100 points
+      <div className={`text-2xl ${top ? 'opacity-20' : ''}`}>
+        {nextScore.toFixed(0)} points
       </div>
       <div className="flex flex-1 flex-col justify-around text-4xl">
         <button
-          className={`button bg-black ${isTop ? activeClass : ''}`}
+          className={`button bg-black ${
+            top && !top.is_flash ? activeClass : ''
+          }`}
           onClick={handleTop}
         >
           Top
         </button>
         <button
-          className={`button ${isFlash ? activeClass : ''}`}
+          className={`button ${top?.is_flash ? activeClass : ''}`}
           onClick={handleFlash}
         >
           Flash
