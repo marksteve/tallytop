@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     0
   )
 
-  return json({ score })
+  return json({ tops, score })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -55,7 +55,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function ClimbIndex() {
-  const { score } = useLoaderData()
+  const { tops, score } = useLoaderData()
   const submit = useSubmit()
 
   const handleCapture = (e) => submit(e.currentTarget)
@@ -81,6 +81,7 @@ export default function ClimbIndex() {
       <div className="flex flex-col items-center gap-5">
         <div className="text-2xl text-red">Your Points</div>
         <div className="text-6xl">{score}</div>
+        <div>{tops.length} tops</div>
       </div>
     </div>
   )
