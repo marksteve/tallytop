@@ -1,14 +1,7 @@
-import { getSync as getImageData } from '@andreekeberg/imagedata'
-import {
-  json,
-  redirect,
-  unstable_createMemoryUploadHandler,
-  unstable_parseMultipartFormData,
-  type ActionFunction,
-  type LoaderFunction,
-} from '@remix-run/node'
-import { Form, useLoaderData, useSubmit } from '@remix-run/react'
+import { json, type LoaderFunction } from '@remix-run/node'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 import QR from 'jsqr'
+import { useRef, useState } from 'react'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
 
@@ -36,48 +29,61 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json({ tops, score })
 }
 
-export const action: ActionFunction = async ({ request }) => {
-  const redirectParams = await requireSignIn(request)
-  if (redirectParams) {
-    return redirectParams
-  }
-
-  const uploadHandler = unstable_createMemoryUploadHandler()
-  const formData = await unstable_parseMultipartFormData(request, uploadHandler)
-  const blob = formData.get('capture')
-  const imageData = getImageData(Buffer.from(await blob.arrayBuffer()))
-  const results = await QR(imageData.data, imageData.width, imageData.height)
-  if (!results) {
-    throw new Error('Invalid code')
-  }
-  const { data: id } = results
-  return redirect(`/qualis/climb/${id}`)
-}
-
 export default function ClimbIndex() {
   const { tops, score } = useLoaderData()
-  const submit = useSubmit()
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const navigate = useNavigate()
+  const [error, setError] = useState<string | null>(null)
+  const [isParsing, setIsParsing] = useState(false)
 
-  const handleCapture = (e) => submit(e.currentTarget)
+  const handleCapture = (e) => {
+    setError(null)
+    setIsParsing(true)
+    const reader = new FileReader()
+    reader.addEventListener('loadend', () => {
+      const img = new Image()
+      const canvas = canvasRef.current!
+      img.addEventListener('load', async () => {
+        canvas.width = img.width
+        canvas.height = img.height
+        const context = canvas.getContext('2d')
+        context?.drawImage(img, 0, 0)
+        const imgData = context?.getImageData(0, 0, img.width, img.height)!
+        const results = await QR(imgData.data, imgData.width, imgData.height)
+        if (!results) {
+          setError('Invalid code')
+          setIsParsing(false)
+          return
+        }
+        const { data: id } = results
+        navigate(`/qualis/climb/${id}`)
+      })
+      img.addEventListener('error', () => {
+        setError('Invalid image')
+        setIsParsing(false)
+      })
+      img.src = reader.result as string
+    })
+    reader.readAsDataURL(e.target.files[0])
+  }
 
   return (
     <div className="flex flex-1 flex-col items-center justify-around">
-      <Form
-        method="post"
-        encType="multipart/form-data"
-        onChange={handleCapture}
-        replace
-      >
-        <label>
-          <div className="button cursor-pointer text-4xl">CLIMB!</div>
-          <input
-            type="file"
-            name="capture"
-            accept="image/*;capture=camera"
-            className="hidden"
-          />
-        </label>
-      </Form>
+      <label className="flex flex-col items-center gap-5">
+        <div className="button cursor-pointer text-4xl">
+          {isParsing ? 'WAIT!' : 'CLIMB!'}
+        </div>
+        {error ? <div className="error">{error}</div> : null}
+        <input
+          type="file"
+          name="capture"
+          accept="image/*;capture=camera"
+          className="hidden"
+          onChange={handleCapture}
+          disabled={isParsing}
+        />
+        <canvas className="hidden" ref={canvasRef} />
+      </label>
       <div className="flex flex-col items-center gap-5">
         <div className="text-2xl text-red">Your Points</div>
         <div className="text-6xl">{score}</div>
