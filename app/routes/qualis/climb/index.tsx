@@ -39,7 +39,7 @@ export default function ClimbIndex() {
   const [isParsing, setIsParsing] = useState(false)
   const worker = useWorker(createWorker)
 
-  const handleCapture = (e) => {
+  const handleCapture = async (e) => {
     setError(null)
     setIsParsing(true)
     const reader = new FileReader()
@@ -67,7 +67,7 @@ export default function ClimbIndex() {
       })
       img.src = reader.result as string
     })
-    reader.readAsDataURL(e.target.files[0])
+    reader.readAsDataURL(await worker.reduceBlob(e.target.files[0]))
   }
 
   return (

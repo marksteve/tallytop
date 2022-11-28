@@ -20,6 +20,7 @@
     "@vercel/node": "^2.4.4",
     "d3-array": "^3.2.0",
     "framer-motion": "^7.5.3",
+    "image-blob-reduce": "^4.1.0",
     "immer": "^9.0.15",
     "jsqr": "^1.4.0",
     "nanoid": "^4.0.0",
