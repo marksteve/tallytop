@@ -87,7 +87,7 @@ export default function App() {
                 </h1>
               </Link>
               {user ? (
-                <div className="font-input">{user.email}</div>
+                user.user_metadata.name
               ) : (
                 <Link to="/sign-in" className="button px-2 py-1 text-sm">
                   Sign in

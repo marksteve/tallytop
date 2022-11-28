@@ -9,8 +9,8 @@ export const getClientEnv = (env) =>
   [env.SUPABASE_URL, env.SUPABASE_ANON_KEY] as const
 
 export const serverClient = (
-  request: Request,
-  response: Response | null = null
+  request: globalThis.Request,
+  response: globalThis.Response | null = null
 ) => {
   const [url, key] = getClientEnv(process.env)
   return createServerClient<Database>(url, key, {

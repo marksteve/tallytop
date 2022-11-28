@@ -3,12 +3,13 @@ import { Form, Link } from '@remix-run/react'
 import { serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
-  const { email, password } = Object.fromEntries(await request.formData())
+  const { name, email, password } = Object.fromEntries(await request.formData())
   const response = new Response()
   const supabase = serverClient(request, response)
   const { error } = await supabase.auth.signUp({
     email: String(email),
     password: String(password),
+    options: { data: { name } },
   })
   if (error) {
     throw error
