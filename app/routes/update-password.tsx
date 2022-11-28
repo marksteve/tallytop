@@ -40,7 +40,13 @@ export default function UpdatePassword() {
       method="post"
       className="flex h-full flex-1 flex-col items-center justify-center gap-5"
     >
-      <input name="password" type="password" placeholder="New Password" />
+      <input
+        className="text-input"
+        name="password"
+        type="password"
+        placeholder="New Password"
+        required
+      />
       <button type="submit" className="button">
         Update password
       </button>

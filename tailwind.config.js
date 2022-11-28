@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['CS Gordon Rounded', 'sans-serif'],
+        input: ['Dekko', 'sans-serif'],
         cursive: ['Oleo Script', 'cursive'],
       },
       colors: {

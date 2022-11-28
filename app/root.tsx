@@ -23,7 +23,7 @@ export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap',
+    href: 'https://fonts.googleapis.com/css2?family=Dekko&family=Oleo+Script&display=swap',
   },
   { rel: 'stylesheet', href: styles },
 ]

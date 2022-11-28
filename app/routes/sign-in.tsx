@@ -27,7 +27,7 @@ export const action: ActionFunction = async ({ request }) => {
 export default function SignIn() {
   const forgotPassword = useFetcher()
   return (
-    <div className="flex h-full flex-1 flex-col items-center justify-center">
+    <div className="flex h-full flex-1 flex-col items-center justify-center gap-5 p-10">
       <Disclosure>
         {({ open }) => (
           <>
@@ -36,13 +36,25 @@ export default function SignIn() {
                 method="post"
                 className="flex flex-col items-center justify-center gap-5"
               >
-                <input name="email" type="text" placeholder="Email" />
-                <input name="password" type="password" placeholder="Password" />
+                <input
+                  className="font-input"
+                  name="email"
+                  type="text"
+                  placeholder="Email"
+                  required
+                />
+                <input
+                  className="font-input"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  required
+                />
                 <button type="submit" className="button">
                   Sign In
                 </button>
-                <Link to="/sign-up" className="text-sm underline">
-                  No account yet? Sign up now!
+                <Link to="/sign-up" className="text-center text-sm underline">
+                  No account yet? Sign up!
                 </Link>
               </Form>
             )}
@@ -52,7 +64,13 @@ export default function SignIn() {
                 action="/forgot-password"
                 className="flex flex-col items-center justify-center gap-5"
               >
-                <input name="email" type="text" placeholder="Email" />
+                <input
+                  className="font-input"
+                  name="email"
+                  type="text"
+                  placeholder="Email"
+                  required
+                />
                 <button
                   type="submit"
                   className="button"

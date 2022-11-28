@@ -21,15 +21,34 @@ export default function SignUp() {
   return (
     <Form
       method="post"
-      className="flex h-full flex-1 flex-col items-center justify-center gap-5"
+      className="flex h-full flex-1 flex-col items-center justify-center gap-5 p-10"
     >
-      <input name="email" type="text" placeholder="Email" />
-      <input name="password" type="password" placeholder="Password" />
+      <input
+        className="font-input"
+        name="name"
+        type="text"
+        placeholder="Name"
+        required
+      />
+      <input
+        className="font-input"
+        name="email"
+        type="text"
+        placeholder="Email"
+        required
+      />
+      <input
+        className="font-input"
+        name="password"
+        type="password"
+        placeholder="Password"
+        required
+      />
       <button type="submit" className="button">
         Sign Up
       </button>
-      <Link to="/sign-in" className="text-sm underline">
-        Already have an account? Sign in instead.
+      <Link to="/sign-in" className="text-center text-sm underline">
+        Already have an account?
       </Link>
     </Form>
   )
