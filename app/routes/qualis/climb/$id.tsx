@@ -110,7 +110,7 @@ export default function Climb() {
           Clear
         </button>
       </div>
-      {state === 'submitting' ? <Loading /> : null}
+      {state !== 'idle' ? <Loading /> : null}
     </div>
   )
 }
