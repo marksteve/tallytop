@@ -41,8 +41,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       1
     )
 
-  console.log(climb.attempts)
-
   return json({ climb, top, nextScore })
 }
 

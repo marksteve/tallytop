@@ -1,6 +1,6 @@
 import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
-import QR from 'jsqr'
+import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
 import { useRef, useState } from 'react'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
@@ -29,12 +29,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json({ tops, score })
 }
 
+const createWorker = createWorkerFactory(() => import('~/worker'))
+
 export default function ClimbIndex() {
   const { tops, score } = useLoaderData()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
   const [isParsing, setIsParsing] = useState(false)
+  const worker = useWorker(createWorker)
 
   const handleCapture = (e) => {
     setError(null)
@@ -49,7 +52,7 @@ export default function ClimbIndex() {
         const context = canvas.getContext('2d')
         context?.drawImage(img, 0, 0)
         const imgData = context?.getImageData(0, 0, img.width, img.height)!
-        const results = await QR(imgData.data, imgData.width, imgData.height)
+        const results = await worker.parseQR(imgData)
         if (!results) {
           setError('Invalid code')
           setIsParsing(false)
