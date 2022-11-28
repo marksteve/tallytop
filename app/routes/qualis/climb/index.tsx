@@ -76,12 +76,14 @@ export default function ClimbIndex() {
       requestAnimationFrame(tick)
     }
 
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-      video.srcObject = stream
-      video.setAttribute('playsinline', 'true')
-      video.play()
-      requestAnimationFrame(tick)
-    })
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: { ideal: 'environment' } } })
+      .then((stream) => {
+        video.srcObject = stream
+        video.setAttribute('playsinline', 'true')
+        video.play()
+        requestAnimationFrame(tick)
+      })
   }, [worker, navigate, canvasRef])
 
   return (
