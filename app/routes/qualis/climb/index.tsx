@@ -4,10 +4,10 @@ import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
 import { useEffect, useRef } from 'react'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
+import { QrCodeIcon } from '@heroicons/react/24/solid'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const shouldRedirect = await requireSignIn(request)
-  console.log({ shouldRedirect })
   if (shouldRedirect) {
     return shouldRedirect
   }
@@ -91,7 +91,10 @@ export default function ClimbIndex() {
     <div className="flex flex-1 flex-col items-center justify-around">
       <div className="flex flex-col items-center gap-5 p-10">
         <div className="flex flex-col items-center gap-5 p-10">
-          <canvas ref={canvasRef} className="w-full border-8 border-white" />
+          <div className="relative flex aspect-square w-full items-center justify-center rounded-3xl border-8 border-white">
+            <canvas ref={canvasRef} className="absolute inset-0 w-full rounded-2xl" />
+            <QrCodeIcon className="w-32 text-white" />
+          </div>
           SCAN BOULDER QR
         </div>
         <div className="text-2xl text-red">Your Points</div>
