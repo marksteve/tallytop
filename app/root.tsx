@@ -32,6 +32,7 @@ export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   title: 'Queso de Boulder 2022',
   description: `A BHive Pamaskomp! Feeling inspired after Asian Cup Manila? Now's your chance to show what you're made of at our yearly Christmas fun comp!`,
+  'og:image': '/images/og-image.webp',
   viewport: 'width=device-width,initial-scale=1',
 })
 
