@@ -12,7 +12,9 @@ export async function requireSignIn(request) {
 }
 
 export async function loadSession(supabase) {
-  const { data: session } = await supabase.auth.getSession()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
   return session
 }
 

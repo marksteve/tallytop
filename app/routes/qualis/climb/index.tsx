@@ -7,6 +7,7 @@ import { serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const shouldRedirect = await requireSignIn(request)
+  console.log({ shouldRedirect })
   if (shouldRedirect) {
     return shouldRedirect
   }
