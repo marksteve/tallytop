@@ -7,7 +7,7 @@ export const action: ActionFunction = async ({ request }) => {
   const { error } = await supabase.auth.resetPasswordForEmail(
     String(email),
     {
-      redirectTo: `${process.env.APP_HOST}/update-password`,
+      redirectTo: `${process.env.SITE_URL}/update-password`,
     }
   )
   if (error) {
