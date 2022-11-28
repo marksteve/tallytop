@@ -1,8 +1,7 @@
 import { json, type LoaderFunction } from '@remix-run/node'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData, useNavigate, useTransition } from '@remix-run/react'
 import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
-import { useRef, useState } from 'react'
-import Error from '~/components/error'
+import { useEffect, useRef } from 'react'
 import Loading from '~/components/loading'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
@@ -37,62 +36,66 @@ export default function ClimbIndex() {
   const { tops, score } = useLoaderData()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const navigate = useNavigate()
-  const [error, setError] = useState<string | null>(null)
-  const [isParsing, setIsParsing] = useState(false)
   const worker = useWorker(createWorker)
+  const { state } = useTransition()
 
-  const handleCapture = async (e) => {
-    setError(null)
-    setIsParsing(true)
-    const reader = new FileReader()
-    reader.addEventListener('loadend', () => {
-      const img = new Image()
-      const canvas = canvasRef.current!
-      img.addEventListener('load', async () => {
-        canvas.width = img.width
-        canvas.height = img.height
-        const context = canvas.getContext('2d')
-        context?.drawImage(img, 0, 0)
-        const imgData = context?.getImageData(0, 0, img.width, img.height)!
-        const results = await worker.parseQR(imgData)
-        if (!results) {
-          setError('Invalid code')
-          setIsParsing(false)
+  useEffect(() => {
+    if (!worker || !canvasRef.current) {
+      return
+    }
+
+    const canvas = canvasRef.current!
+    const context = canvas.getContext('2d', { willReadFrequently: true })!
+    const video = document.createElement('video')
+
+    const tick = async () => {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.height = video.videoHeight
+        canvas.width = video.videoWidth
+        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+        const imageData = context.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        )
+        const results = await worker.parseQR(
+          imageData.data,
+          imageData.width,
+          imageData.height,
+          {
+            inversionAttempts: 'dontInvert',
+          }
+        )
+        if (results) {
+          const { data: id } = results
+          navigate(`/qualis/climb/${id}`)
           return
         }
-        const { data: id } = results
-        navigate(`/qualis/climb/${id}`)
-      })
-      img.addEventListener('error', () => {
-        setError('Invalid image')
-        setIsParsing(false)
-      })
-      img.src = reader.result as string
+      }
+      requestAnimationFrame(tick)
+    }
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      video.srcObject = stream
+      video.setAttribute('playsinline', 'true')
+      video.play()
+      requestAnimationFrame(tick)
     })
-    reader.readAsDataURL(await worker.reduceBlob(e.target.files[0]))
-  }
+  }, [worker, navigate, canvasRef])
 
   return (
     <div className="flex flex-1 flex-col items-center justify-around">
-      <label className="flex flex-col items-center gap-5">
-        <div className="button cursor-pointer text-4xl">CLIMB!</div>
-        <Error>{error}</Error>
-        <input
-          type="file"
-          name="capture"
-          accept="image/*;capture=camera"
-          className="hidden"
-          onChange={handleCapture}
-          disabled={isParsing}
-        />
-        <canvas className="hidden" ref={canvasRef} />
-      </label>
-      <div className="flex flex-col items-center gap-5">
+      <div className="flex flex-col items-center gap-5 p-10">
+        <div className="flex flex-col items-center gap-5 p-10">
+          <canvas ref={canvasRef} className="w-full border-8 border-white" />
+          SCAN BOULDER QR
+        </div>
         <div className="text-2xl text-red">Your Points</div>
         <div className="text-6xl">{score}</div>
         <div>{tops.length} tops</div>
       </div>
-      {isParsing ? <Loading /> : null}
+      {state === 'loading' ? <Loading /> : null}
     </div>
   )
 }
