@@ -4,7 +4,12 @@ import {
   type LoaderFunction,
   redirect,
 } from '@remix-run/node'
-import { useLoaderData, useSubmit, useTransition } from '@remix-run/react'
+import {
+  useLoaderData,
+  useNavigate,
+  useSubmit,
+  useTransition,
+} from '@remix-run/react'
 import Loading from '~/components/loading'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
@@ -78,12 +83,13 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function Climb() {
   const { climb, top, nextScore } = useLoaderData()
   const { state } = useTransition()
+  const navigate = useNavigate()
   const submit = useSubmit()
   const handleTop = () => submit({ isTop: 'true' }, { method: 'post' })
   const handleFlash = () => submit({ isFlash: 'true' }, { method: 'post' })
   const handleClear = () => submit({ clear: 'true' }, { method: 'post' })
 
-  const activeClass = 'border-4 border-white'
+  const activeClass = '!border-white'
 
   return (
     <div className="flex flex-1 flex-col items-center justify-around gap-10">
@@ -91,9 +97,9 @@ export default function Climb() {
       <div className={`text-2xl ${top ? 'opacity-20' : ''}`}>
         {nextScore.toFixed(0)} points
       </div>
-      <div className="flex flex-1 flex-col justify-around text-4xl">
+      <div className="flex flex-1 flex-col justify-around py-10 text-4xl">
         <button
-          className={`button bg-black ${
+          className={`button border-8 border-transparent bg-black ${
             top && !top.is_flash ? activeClass : ''
           }`}
           onClick={handleTop}
@@ -101,10 +107,18 @@ export default function Climb() {
           Top
         </button>
         <button
-          className={`button ${top?.is_flash ? activeClass : ''}`}
+          className={`button border-8 border-transparent ${
+            top?.is_flash ? activeClass : ''
+          }`}
           onClick={handleFlash}
         >
           Flash
+        </button>
+        <button
+          className="button bg-white text-black"
+          onClick={() => navigate(-1)}
+        >
+          Back
         </button>
         <button className="button bg-white text-black" onClick={handleClear}>
           Clear
