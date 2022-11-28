@@ -36,6 +36,8 @@ export default function Index() {
             </>
           ) : null}
           <IndexLink to="/qualis/scores">SCORES</IndexLink>
+          <Divider />
+          <IndexLink to="/qualis/boulders">BOULDERS</IndexLink>
         </>
       ) : null}
     </div>
