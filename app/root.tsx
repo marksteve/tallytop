@@ -86,7 +86,13 @@ export default function App() {
                   <img src="/images/qdb-logo.svg" alt="Queso" width="72" />
                 </h1>
               </Link>
-              {user ? user.email : <Link to="/sign-in">Sign in</Link>}
+              {user ? (
+                <div className="font-input">{user.email}</div>
+              ) : (
+                <Link to="/sign-in" className="button px-2 py-1 text-sm">
+                  Sign in
+                </Link>
+              )}
               {user ? (
                 <button
                   className="button px-2 py-1 text-sm"
