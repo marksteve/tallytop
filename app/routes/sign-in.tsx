@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { json, redirect, type ActionFunction } from '@remix-run/node'
-import { Form, Link, useFetcher } from '@remix-run/react'
+import { Form, Link, useActionData, useFetcher } from '@remix-run/react'
 import { serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -8,17 +8,13 @@ export const action: ActionFunction = async ({ request }) => {
   const { email, password } = Object.fromEntries(await request.formData())
   const response = new Response()
   const supabase = serverClient(request, response)
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email: String(email),
     password: String(password),
   })
 
-  if (error || !session) {
-    // TODO: Do something
-    throw new Error('Invalid credentials')
+  if (error) {
+    return json({ error: error.message })
   }
 
   return redirect(redirectTo ?? '/', { headers: response.headers })
@@ -26,44 +22,53 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SignIn() {
   const forgotPassword = useFetcher()
+  const actionData = useActionData()
   return (
-    <div className="flex h-full flex-1 flex-col items-center justify-center gap-5 p-10">
+    <div className="flex flex-1 flex-col items-center justify-center gap-5 p-10">
+      {actionData?.error ? (
+        <div className="error">{actionData.error}</div>
+      ) : null}
       <Disclosure>
         {({ open }) => (
           <>
             {open ? null : (
               <Form
                 method="post"
-                className="flex flex-col items-center justify-center gap-5"
+                className="flex w-full max-w-screen-sm flex-col justify-center gap-5"
               >
+                Email
                 <input
                   className="font-input"
                   name="email"
                   type="text"
-                  placeholder="Email"
+                  placeholder="boulderista@gmail.com"
                   required
                 />
+                Password
                 <input
                   className="font-input"
                   name="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="cute@123!"
                   required
                 />
                 <button type="submit" className="button">
                   Sign In
                 </button>
-                <Link to="/sign-up" className="text-center text-sm underline">
-                  No account yet? Sign up!
-                </Link>
               </Form>
             )}
-            <Disclosure.Panel className="py-5">
+            <Disclosure.Panel className="w-full max-w-screen-sm py-5">
+              {forgotPassword.type === 'done' ? (
+                <div className="text-input p-10 text-xs">
+                  Check your email. Maybe look at your spam folder too!
+                </div>
+              ) : null}
               <forgotPassword.Form
                 method="post"
                 action="/forgot-password"
-                className="flex flex-col items-center justify-center gap-5"
+                className="flex flex-col justify-center gap-5"
               >
+                Email
                 <input
                   className="font-input"
                   name="email"
@@ -78,11 +83,11 @@ export default function SignIn() {
                 >
                   Send reset link
                 </button>
-                {forgotPassword.type === 'done'
-                  ? 'Check your email. Maybe look at your spam folder too!'
-                  : null}
               </forgotPassword.Form>
             </Disclosure.Panel>
+            <Link to="/sign-up" className="text-center text-sm underline">
+              No account yet? Sign up!
+            </Link>
             <Disclosure.Button className="text-sm underline">
               {open ? 'Back to sign in' : 'Forgot password?'}
             </Disclosure.Button>

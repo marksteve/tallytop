@@ -12,17 +12,13 @@ export async function requireSignIn(request) {
 }
 
 export async function loadSession(supabase) {
-  const { data, error } = await supabase.auth.getSession()
-  if (error) {
-    console.warn(error)
-  }
-  return data.session
+  const { data: session } = await supabase.auth.getSession()
+  return session
 }
 
 export async function loadUser(supabase) {
-  const { data, error } = await supabase.auth.getUser()
-  if (error) {
-    console.warn(error)
-  }
-  return data.user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  return user
 }

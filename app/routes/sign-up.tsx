@@ -78,51 +78,53 @@ export default function SignUp() {
   }
 
   return (
-    <Form
-      method="post"
-      className="flex h-full flex-1 flex-col justify-center gap-5 p-10"
-    >
+    <div className="flex flex-1 flex-col items-center justify-center gap-5 p-10">
       {actionData?.error ? (
         <div className="error">{actionData.error}</div>
       ) : null}
-      Division
-      <select name="divisionId" onChange={handleChangeDivision}>
-        {divisions.map((division) => (
-          <option key={division.id} value={division.id}>
-            {division.name}
-          </option>
-        ))}
-      </select>
-      Name
-      <input
-        className="font-input"
-        name="name"
-        type="text"
-        placeholder={placeholderName}
-        required
-      />
-      Email
-      <input
-        className="font-input"
-        name="email"
-        type="text"
-        placeholder="boulderista@gmail.com"
-        required
-      />
-      Password
-      <input
-        className="font-input"
-        name="password"
-        type="password"
-        placeholder="cute@123!"
-        required
-      />
-      <button type="submit" className="button">
-        Sign Up
-      </button>
+      <Form
+        method="post"
+        className="flex w-full max-w-screen-sm flex-col justify-center gap-5"
+      >
+        Division
+        <select name="divisionId" onChange={handleChangeDivision}>
+          {divisions.map((division) => (
+            <option key={division.id} value={division.id}>
+              {division.name}
+            </option>
+          ))}
+        </select>
+        Name
+        <input
+          className="font-input"
+          name="name"
+          type="text"
+          placeholder={placeholderName}
+          required
+        />
+        Email
+        <input
+          className="font-input"
+          name="email"
+          type="text"
+          placeholder="boulderista@gmail.com"
+          required
+        />
+        Password
+        <input
+          className="font-input"
+          name="password"
+          type="password"
+          placeholder="cute@123!"
+          required
+        />
+        <button type="submit" className="button">
+          Sign Up
+        </button>
+      </Form>
       <Link to="/sign-in" className="text-center text-sm underline">
         Already have an account?
       </Link>
-    </Form>
+    </div>
   )
 }

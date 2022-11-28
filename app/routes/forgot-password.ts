@@ -4,12 +4,9 @@ import { serverClient } from '~/supabase'
 export const action: ActionFunction = async ({ request }) => {
   const { email } = Object.fromEntries(await request.formData())
   const supabase = serverClient(request)
-  const { error } = await supabase.auth.resetPasswordForEmail(
-    String(email),
-    {
-      redirectTo: `${process.env.SITE_URL}/update-password`,
-    }
-  )
+  const { error } = await supabase.auth.resetPasswordForEmail(String(email), {
+    redirectTo: `${process.env.SITE_URL}/update-password`,
+  })
   if (error) {
     return json({ error })
   }

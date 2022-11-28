@@ -36,20 +36,23 @@ export default function UpdatePassword() {
   })
 
   return (
-    <Form
-      method="post"
-      className="flex h-full flex-1 flex-col items-center justify-center gap-5"
-    >
-      <input
-        className="text-input"
-        name="password"
-        type="password"
-        placeholder="New Password"
-        required
-      />
-      <button type="submit" className="button">
-        Update password
-      </button>
-    </Form>
+    <div className="flex flex-1 flex-col items-center p-10">
+      <Form
+        method="post"
+        className="flex w-full max-w-screen-sm flex-col justify-center gap-5"
+      >
+        New Password
+        <input
+          className="text-input"
+          name="password"
+          type="password"
+          placeholder="cutest@321?!"
+          required
+        />
+        <button type="submit" className="button">
+          Update password
+        </button>
+      </Form>
+    </div>
   )
 }
