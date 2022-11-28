@@ -6,6 +6,7 @@ import {
 } from '@remix-run/node'
 import { Form, Link, useActionData, useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
+import Error from '~/components/error'
 import { serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -79,9 +80,7 @@ export default function SignUp() {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-5 p-10">
-      {actionData?.error ? (
-        <div className="error">{actionData.error}</div>
-      ) : null}
+      <Error>{actionData?.error}</Error>
       <Form
         method="post"
         className="flex w-full max-w-screen-sm flex-col justify-center gap-5"

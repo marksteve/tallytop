@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { json, redirect, type ActionFunction } from '@remix-run/node'
 import { Form, Link, useActionData, useFetcher } from '@remix-run/react'
+import Error from '~/components/error'
 import { serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -25,9 +26,7 @@ export default function SignIn() {
   const actionData = useActionData()
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-5 p-10">
-      {actionData?.error ? (
-        <div className="error">{actionData.error}</div>
-      ) : null}
+      <Error>{actionData?.error}</Error>
       <Disclosure>
         {({ open }) => (
           <>

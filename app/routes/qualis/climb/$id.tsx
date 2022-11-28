@@ -4,7 +4,8 @@ import {
   type LoaderFunction,
   redirect,
 } from '@remix-run/node'
-import { useLoaderData, useSubmit } from '@remix-run/react'
+import { useLoaderData, useSubmit, useTransition } from '@remix-run/react'
+import Loading from '~/components/loading'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
 
@@ -76,6 +77,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function Climb() {
   const { climb, top, nextScore } = useLoaderData()
+  const { state } = useTransition()
   const submit = useSubmit()
   const handleTop = () => submit({ isTop: 'true' }, { method: 'post' })
   const handleFlash = () => submit({ isFlash: 'true' }, { method: 'post' })
@@ -108,6 +110,7 @@ export default function Climb() {
           Clear
         </button>
       </div>
+      {state === 'submitting' ? <Loading /> : null}
     </div>
   )
 }

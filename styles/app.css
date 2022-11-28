@@ -20,13 +20,6 @@
       disabled:cursor-not-allowed
       disabled:opacity-50;
   }
-  .error {
-    @apply rounded-3xl
-      bg-yellow
-      p-5
-      text-xs
-      text-red;
-  }
   .climb-number {
     @apply flex
       h-32
