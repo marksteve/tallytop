@@ -45,7 +45,7 @@ export default function Boulders() {
           </option>
         ))}
       </select>
-      <table>
+      <table className='leading-loose'>
         <thead>
           <tr className="text-left text-red">
             <th>Boulder</th>

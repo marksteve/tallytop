@@ -29,7 +29,7 @@ export default function Scores() {
     .on(
       'postgres_changes',
       { event: '*', schema: 'public', table: 'attempts' },
-      async (payload) => {
+      async () => {
         const { data: rankings } = await supabase
           .from('qualis_rankings')
           .select()
@@ -47,7 +47,7 @@ export default function Scores() {
           </option>
         ))}
       </select>
-      <table>
+      <table className='leading-loose'>
         <thead>
           <tr className="text-left text-red">
             <th>Name</th>
@@ -59,7 +59,7 @@ export default function Scores() {
             .filter((c) => c.division_id === selectedDivision)
             .map((competitor) => (
               <tr key={competitor.id}>
-                <td>{competitor.id}</td>
+                <td>{competitor.name}</td>
                 <td>{competitor.score}</td>
               </tr>
             ))}
