@@ -15,6 +15,7 @@ import {
 import { loadUser } from '~/loaders'
 import styles from '~/styles/app.css'
 import { browserClient, serverClient } from '~/supabase'
+import { useEffect, useState } from 'react'
 
 export const links: LinksFunction = () => [
   { rel: 'icon', href: '/images/favicon.svg', type: 'image/svg+xml' },
@@ -43,6 +44,11 @@ export default function App() {
   const { env, user } = useLoaderData()
   const supabase = browserClient(env)
   const { pathname } = useLocation()
+  const [snowVisible, setSnowVisible] = useState(false)
+
+  useEffect(() => {
+    setSnowVisible(true)
+  }, [])
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -62,11 +68,13 @@ export default function App() {
           <main
             className={`relative flex h-screen w-screen flex-col overflow-x-hidden bg-teal`}
           >
-            <Snowfall
-              color="rgba(255, 255, 255, 0.8)"
-              snowflakeCount={100}
-              radius={[2, 6]}
-            />
+            {snowVisible ? (
+              <Snowfall
+                color="rgba(255, 255, 255, 0.8)"
+                snowflakeCount={100}
+                radius={[2, 6]}
+              />
+            ) : null}
             <header className="flex flex-col items-center gap-2 p-5">
               <Link to="/">
                 <h1 className="flex items-center">

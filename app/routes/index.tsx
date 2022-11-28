@@ -29,6 +29,10 @@ export default function Index() {
           <Link className={linkClassName} to="/qualis/climb">
             CLIMB!
           </Link>
+          <img src="/images/snow-mountain.svg" alt="Divider" />
+          <Link className={linkClassName} to="/qualis/scores">
+            SCORES
+          </Link>
         </>
       ) : null}
     </div>
