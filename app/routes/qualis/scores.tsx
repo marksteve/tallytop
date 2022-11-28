@@ -1,7 +1,7 @@
 import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
-import { serverClient } from '~/supabase'
+import { browserClient, getClientEnv, serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const supabase = serverClient(request)
@@ -11,20 +11,32 @@ export const loader: LoaderFunction = async ({ request }) => {
     .select()
     .eq('comp_id', process.env.COMP_ID)
   const { data: rankings } = await supabase.from('qualis_rankings').select()
+  const clientEnv = getClientEnv(process.env)
 
-  return json({ divisions, rankings })
+  return json({ divisions, rankings, clientEnv })
 }
 
 export default function Scores() {
-  const { divisions, rankings } = useLoaderData()
+  const { divisions, rankings, clientEnv } = useLoaderData()
   const [selectedDivision, selectDivision] = useState(divisions[0].id)
+  const [liveRankings, setLiveRankings] = useState(rankings)
   const handleSelectDivision = (e) => {
     selectDivision(e.target.value)
   }
-  console.log(
-    selectedDivision,
-    rankings.filter((c) => c.division_id === selectedDivision)
-  )
+  const supabase = browserClient(...clientEnv)
+  supabase
+    .channel('public:attempts')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'attempts' },
+      async (payload) => {
+        const { data: rankings } = await supabase
+          .from('qualis_rankings')
+          .select()
+        setLiveRankings(rankings)
+      }
+    )
+    .subscribe()
   return (
     <div className="flex flex-1 flex-col gap-5 p-10">
       <select value={selectedDivision} onChange={handleSelectDivision}>
@@ -36,13 +48,13 @@ export default function Scores() {
       </select>
       <table>
         <thead>
-          <tr className="text-red text-left">
+          <tr className="text-left text-red">
             <th>Name</th>
             <th>Score</th>
           </tr>
         </thead>
         <tbody>
-          {rankings
+          {liveRankings
             .filter((c) => c.division_id === selectedDivision)
             .map((competitor) => (
               <tr key={competitor.id}>
