@@ -1,16 +1,10 @@
 import {
-  type ActionFunction,
   json,
-  type LoaderFunction,
   redirect,
+  type ActionFunction,
+  type LoaderFunction,
 } from '@remix-run/node'
-import {
-  useLoaderData,
-  useNavigate,
-  useSubmit,
-  useTransition,
-} from '@remix-run/react'
-import Loading from '~/components/loading'
+import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
 
@@ -82,7 +76,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function Climb() {
   const { climb, top, nextScore } = useLoaderData()
-  const { state } = useTransition()
   const navigate = useNavigate()
   const submit = useSubmit()
   const handleTop = () => submit({ isTop: 'true' }, { method: 'post' })
@@ -124,7 +117,6 @@ export default function Climb() {
           Clear
         </button>
       </div>
-      {state !== 'idle' ? <Loading /> : null}
     </div>
   )
 }

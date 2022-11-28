@@ -11,11 +11,13 @@ import {
   ScrollRestoration,
   useLoaderData,
   useLocation,
+  useTransition,
 } from '@remix-run/react'
 import { loadUser } from '~/loaders'
 import styles from '~/styles/app.css'
 import { browserClient, getClientEnv, serverClient } from '~/supabase'
 import { useEffect, useState } from 'react'
+import Loading from './components/loading'
 
 export const links: LinksFunction = () => [
   { rel: 'icon', href: '/images/favicon.svg', type: 'image/svg+xml' },
@@ -44,9 +46,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function App() {
   const { clientEnv, user } = useLoaderData()
-  const supabase = browserClient(...clientEnv)
   const { pathname } = useLocation()
+  const transition = useTransition()
   const [snowVisible, setSnowVisible] = useState(false)
+  const supabase = browserClient(...clientEnv)
 
   useEffect(() => {
     setSnowVisible(true)
@@ -105,6 +108,7 @@ export default function App() {
               ) : null}
             </header>
             <Outlet />
+            {transition.state !== 'idle' ? <Loading /> : null}
           </main>
         )}
         <ScrollRestoration />

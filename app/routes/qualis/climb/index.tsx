@@ -1,8 +1,7 @@
 import { json, type LoaderFunction } from '@remix-run/node'
-import { useLoaderData, useNavigate, useTransition } from '@remix-run/react'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
 import { useEffect, useRef } from 'react'
-import Loading from '~/components/loading'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
 
@@ -37,7 +36,6 @@ export default function ClimbIndex() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const navigate = useNavigate()
   const worker = useWorker(createWorker)
-  const { state } = useTransition()
 
   useEffect(() => {
     if (!worker || !canvasRef.current) {
@@ -99,7 +97,6 @@ export default function ClimbIndex() {
         <div className="text-6xl">{score}</div>
         <div>{tops.length} tops</div>
       </div>
-      {state === 'loading' ? <Loading /> : null}
     </div>
   )
 }
