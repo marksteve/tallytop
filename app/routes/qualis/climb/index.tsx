@@ -2,6 +2,7 @@ import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
 import { useRef, useState } from 'react'
+import Error from '~/components/error'
 import Loading from '~/components/loading'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
@@ -75,6 +76,7 @@ export default function ClimbIndex() {
     <div className="flex flex-1 flex-col items-center justify-around">
       <label className="flex flex-col items-center gap-5">
         <div className="button cursor-pointer text-4xl">CLIMB!</div>
+        <Error>{error}</Error>
         <input
           type="file"
           name="capture"
