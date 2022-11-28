@@ -39,6 +39,7 @@ export default function Scores() {
     .subscribe()
   return (
     <div className="flex flex-1 flex-col gap-5 p-10">
+      <h2 className="text-4xl">Scores</h2>
       <select value={selectedDivision} onChange={handleSelectDivision}>
         {divisions.map((division) => (
           <option key={division.id} value={division.id}>

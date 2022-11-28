@@ -30,15 +30,14 @@ export default function Boulders() {
       'postgres_changes',
       { event: '*', schema: 'public', table: 'attempts' },
       async (payload) => {
-        const { data: climbs } = await supabase
-          .from('qualis_climbs')
-          .select()
+        const { data: climbs } = await supabase.from('qualis_climbs').select()
         setLiveClimbs(climbs)
       }
     )
     .subscribe()
   return (
     <div className="flex flex-1 flex-col gap-5 p-10">
+      <h2 className="text-4xl">Boulders</h2>
       <select value={selectedDivision} onChange={handleSelectDivision}>
         {divisions.map((division) => (
           <option key={division.id} value={division.id}>
