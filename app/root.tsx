@@ -14,7 +14,7 @@ import {
 } from '@remix-run/react'
 import { loadUser } from '~/loaders'
 import styles from '~/styles/app.css'
-import { browserClient, serverClient } from '~/supabase'
+import { browserClient, getClientEnv, serverClient } from '~/supabase'
 import { useEffect, useState } from 'react'
 
 export const links: LinksFunction = () => [
@@ -37,12 +37,12 @@ export const meta: MetaFunction = () => ({
 export const loader: LoaderFunction = async ({ request }) => {
   const supabase = serverClient(request)
   const user = await loadUser(supabase)
-  return json({ env: process.env, user })
+  return json({ clientEnv: getClientEnv(process.env), user })
 }
 
 export default function App() {
-  const { env, user } = useLoaderData()
-  const supabase = browserClient(env)
+  const { clientEnv, user } = useLoaderData()
+  const supabase = browserClient(...clientEnv)
   const { pathname } = useLocation()
   const [snowVisible, setSnowVisible] = useState(false)
 

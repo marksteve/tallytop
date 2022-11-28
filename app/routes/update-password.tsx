@@ -6,7 +6,7 @@ import {
 } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import { useEffect } from 'react'
-import { browserClient, serverClient } from '~/supabase'
+import { browserClient, getClientEnv, serverClient } from '~/supabase'
 
 export const action: ActionFunction = async ({ request }) => {
   const { password } = Object.fromEntries(await request.formData())
@@ -24,12 +24,12 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export const loader: LoaderFunction = async () => {
-  return json({ env: process.env })
+  return json({ clientEnv: getClientEnv(process.env) })
 }
 
 export default function UpdatePassword() {
-  const { env } = useLoaderData()
-  const supabase = browserClient(env)
+  const { clientEnv } = useLoaderData()
+  const supabase = browserClient(...clientEnv)
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(() => {})

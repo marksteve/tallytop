@@ -19,7 +19,6 @@ export const serverClient = (
   })
 }
 
-export const browserClient = (env) => {
-  const [url, key] = getClientEnv(env)
+export const browserClient = (url, key) => {
   return createBrowserClient<Database>(url, key)
 }

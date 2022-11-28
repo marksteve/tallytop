@@ -1,5 +1,5 @@
 import { json, type LoaderFunction } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData, useMatches } from '@remix-run/react'
 import { serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -20,21 +20,36 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   const { currentRound } = useLoaderData()
-  const linkClassName =
-    'flex flex-1 items-center justify-center hover:opacity-50'
+  const [
+    {
+      data: { user },
+    },
+  ] = useMatches()
   return (
     <div className="flex flex-1 flex-col items-center text-[8vw]">
       {currentRound.name === 'Qualifiers' ? (
         <>
-          <Link className={linkClassName} to="/qualis/climb">
-            CLIMB!
-          </Link>
-          <img src="/images/snow-mountain.svg" alt="Divider" />
-          <Link className={linkClassName} to="/qualis/scores">
-            SCORES
-          </Link>
+          {user ? (
+            <>
+              <IndexLink to="/qualis/climb">CLIMB!</IndexLink>
+              <Divider />
+            </>
+          ) : null}
+          <IndexLink to="/qualis/scores">SCORES</IndexLink>
         </>
       ) : null}
     </div>
   )
 }
+
+const IndexLink = ({ children, to, ...params }) => (
+  <Link
+    className="flex flex-1 items-center justify-center hover:opacity-50"
+    to={to}
+    {...params}
+  >
+    {children}
+  </Link>
+)
+
+const Divider = () => <img src="/images/snow-mountain.svg" alt="Divider" />
