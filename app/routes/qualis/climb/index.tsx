@@ -77,7 +77,9 @@ export default function ClimbIndex() {
     }
 
     navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: { ideal: 'environment' } } })
+      .getUserMedia({
+        video: { aspectRatio: 1, facingMode: { ideal: 'environment' } },
+      })
       .then((stream) => {
         video.srcObject = stream
         video.setAttribute('playsinline', 'true')
