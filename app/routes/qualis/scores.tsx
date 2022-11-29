@@ -1,6 +1,6 @@
 import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { browserClient, getClientEnv, serverClient } from '~/supabase'
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -23,20 +23,23 @@ export default function Scores() {
   const handleSelectDivision = (e) => {
     selectDivision(e.target.value)
   }
-  const supabase = browserClient(...clientEnv)
-  supabase
-    .channel('public:attempts')
-    .on(
-      'postgres_changes',
-      { event: '*', schema: 'public', table: 'attempts' },
-      async () => {
-        const { data: rankings } = await supabase
-          .from('qualis_rankings')
-          .select()
-        setLiveRankings(rankings)
-      }
-    )
-    .subscribe()
+  useEffect(() => {
+    const supabase = browserClient(...clientEnv)
+    const channel = supabase
+      .channel('public:attempts')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'attempts' },
+        async () => {
+          const { data: rankings } = await supabase
+            .from('qualis_rankings')
+            .select()
+          setLiveRankings(rankings)
+        }
+      )
+      .subscribe()
+    return () => channel.unsubscribe()
+  })
   return (
     <div className="flex flex-1 flex-col gap-5 p-10">
       <h2 className="text-4xl">Scores</h2>
@@ -47,7 +50,7 @@ export default function Scores() {
           </option>
         ))}
       </select>
-      <table className='leading-loose'>
+      <table className="leading-loose">
         <thead>
           <tr className="text-left text-red">
             <th>Name</th>
