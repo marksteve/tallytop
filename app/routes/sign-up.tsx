@@ -47,7 +47,6 @@ export const action: ActionFunction = async ({ request }) => {
   const { count } = await supabase
     .from('competitors')
     .select('id', { count: 'exact' })
-    .maybeSingle()
   const { error: competitorInsertError } = await supabase
     .from('competitors')
     .insert({
