@@ -1,6 +1,7 @@
 import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import Snowfall from 'react-snowfall'
 import { json, type LoaderFunction } from '@remix-run/node'
+import { CloudSnow } from 'lucide-react'
 import {
   Link,
   Links,
@@ -52,8 +53,13 @@ export default function App() {
   const supabase = browserClient(...clientEnv)
 
   useEffect(() => {
-    setSnowVisible(true)
+    setSnowVisible(localStorage.getItem('qdb-snow') !== 'false')
   }, [])
+
+  const handleToggleSnow = () => {
+    localStorage.setItem('qdb-snow', snowVisible ? 'false' : 'true')
+    setSnowVisible(!snowVisible)
+  }
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -73,6 +79,12 @@ export default function App() {
           <main
             className={`relative flex h-screen w-screen flex-col overflow-x-hidden bg-teal`}
           >
+            <button
+              className="absolute top-5 left-5 text-white"
+              onClick={handleToggleSnow}
+            >
+              <CloudSnow className={snowVisible ? '' : 'opacity-50'} />
+            </button>
             {snowVisible ? (
               <Snowfall
                 color="rgba(255, 255, 255, 0.8)"

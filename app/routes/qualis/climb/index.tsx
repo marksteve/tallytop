@@ -1,10 +1,10 @@
 import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
+import { QrCode } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { loadUser, requireSignIn } from '~/loaders'
 import { serverClient } from '~/supabase'
-import { QrCodeIcon } from '@heroicons/react/24/solid'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const shouldRedirect = await requireSignIn(request)
@@ -92,8 +92,11 @@ export default function ClimbIndex() {
       <div className="flex flex-col items-center gap-5 p-10">
         <div className="flex flex-col items-center gap-5 p-10">
           <div className="relative flex aspect-square w-full items-center justify-center rounded-3xl border-8 border-white">
-            <canvas ref={canvasRef} className="absolute inset-0 w-full rounded-2xl" />
-            <QrCodeIcon className="w-32 text-white" />
+            <canvas
+              ref={canvasRef}
+              className="absolute inset-0 w-full rounded-2xl"
+            />
+            <QrCode className="text-white" size={128} />
           </div>
           SCAN BOULDER QR
         </div>
