@@ -1,7 +1,16 @@
 import parseMs from 'parse-ms'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-const defaultBeeps = [2 * 60 * 60, 1 * 60 * 60, 60, 5, 4, 3, 2, 1]
+const defaultBeeps = [
+  2 * 60 * 60, // 2:00:00
+  1 * 60 * 60, // 1:00:00
+  60,          // 0:01:00
+  5,           // 0:00:05
+  4,           // 0:00:04
+  3,           // 0:00:03
+  2,           // 0:00:02
+  1            // 0:00:01
+]
 
 const useTimer = (duration: number) => {
   const [state, setState] = useState({
