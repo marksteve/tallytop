@@ -1,7 +1,7 @@
 import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import Snowfall from 'react-snowfall'
 import { json, type LoaderFunction } from '@remix-run/node'
-import { CloudSnow } from 'lucide-react'
+import { Cloud, CloudSnow } from 'lucide-react'
 import {
   Link,
   Links,
@@ -66,6 +66,8 @@ export default function App() {
     location.reload()
   }
 
+  const SnowButtonIcon = snowVisible ? CloudSnow : Cloud
+
   return (
     <html lang="en">
       <head>
@@ -83,7 +85,7 @@ export default function App() {
               className="absolute top-5 left-5 text-white"
               onClick={handleToggleSnow}
             >
-              <CloudSnow className={snowVisible ? '' : 'opacity-50'} />
+              <SnowButtonIcon size={32} />
             </button>
             {snowVisible ? (
               <Snowfall
@@ -103,21 +105,25 @@ export default function App() {
                   <img src="/images/qdb-logo.svg" alt="Queso" width="72" />
                 </h1>
               </Link>
-              {user ? (
-                user.user_metadata.name
-              ) : (
-                <Link to="/sign-in" className="button px-2 py-1 text-sm">
-                  Sign in
-                </Link>
+              {pathname === '/finals/timer' ? null : (
+                <>
+                  {user ? (
+                    user.user_metadata.name
+                  ) : (
+                    <Link to="/sign-in" className="button px-2 py-1 text-sm">
+                      Sign in
+                    </Link>
+                  )}
+                  {user ? (
+                    <button
+                      className="button px-2 py-1 text-sm"
+                      onClick={handleSignOut}
+                    >
+                      Sign out
+                    </button>
+                  ) : null}
+                </>
               )}
-              {user ? (
-                <button
-                  className="button px-2 py-1 text-sm"
-                  onClick={handleSignOut}
-                >
-                  Sign out
-                </button>
-              ) : null}
             </header>
             <Outlet />
             {transition.state !== 'idle' ? <Loading /> : null}
