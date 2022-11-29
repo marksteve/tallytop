@@ -4,13 +4,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['CS Gordon Rounded', 'sans-serif'],
-        input: ['Dekko', 'sans-serif'],
         cursive: ['Oleo Script', 'cursive'],
+        input: ['Dekko', 'sans-serif'],
+        mono: ['Roboto Mono, monospace'],
+        sans: ['CS Gordon Rounded', 'sans-serif'],
       },
       colors: {
-        teal: '#a2c4bc',
         red: '#cf2539',
+        teal: '#a2c4bc',
         yellow: '#fbeb98',
       },
     },

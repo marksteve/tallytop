@@ -10,5 +10,5 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "api/index.js",
   // publicPath: "/build/",
-  serverDependenciesToBundle: ['d3-array', 'internmap'],
+  serverDependenciesToBundle: ['d3-array', 'internmap', 'parse-ms'],
 }
