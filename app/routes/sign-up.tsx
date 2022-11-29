@@ -52,12 +52,21 @@ export const action: ActionFunction = async ({ request }) => {
     .insert({
       id: String(user?.id),
       division_id: String(divisionId),
-      round_id: process.env.QUALIS_ID,
       name: String(name),
       number: String((count ?? 0) + 1).padStart(3, '0'),
     })
   if (competitorInsertError) {
     return json({ error: competitorInsertError.message })
+  }
+
+  const { error: advancementInsertError } = await supabase
+    .from('advancements')
+    .insert({
+      competitor_id: String(user?.id),
+      round_id: process.env.QUALIS_ID,
+    })
+  if (advancementInsertError) {
+    return json({ error: advancementInsertError.message })
   }
 
   return redirect('/', { headers: response.headers })
