@@ -1,5 +1,6 @@
 import { json, type LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { ascending } from 'd3-array'
 import { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { serverClient } from '~/supabase'
@@ -13,11 +14,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     .eq('comp_id', process.env.COMP_ID)
   const { data: qualifiers } = await supabase.from('qualifiers').select()
 
-  return json({ divisions, qualifiers })
+  const { data: tops } = await supabase.from('qualis_tops_with_climbs').select()
+
+  return json({ divisions, qualifiers, tops })
 }
 
 export default function Scoresheets() {
-  const { divisions, qualifiers } = useLoaderData()
+  const { divisions, qualifiers, tops } = useLoaderData()
   const [shouldShowLinks, showLinks] = useState(false)
 
   useEffect(() => {
@@ -35,6 +38,7 @@ export default function Scoresheets() {
             qualifiers
               .filter((c) => c.division_id === division.id)
               .map((c) => ({
+                id: c.id,
                 number: c.number,
                 name: c.name,
                 rank: c.rank,
@@ -61,7 +65,32 @@ export default function Scoresheets() {
                       <tr key={c.rank}>
                         <td>{c.number}</td>
                         <td>{c.rank}</td>
-                        <td>{c.name}</td>
+                        <td className="py-5">
+                          {c.name}
+                          <div className="flex items-center gap-2">
+                            {tops
+                              .filter((t) => t.competitor_id === c.id)
+                              .sort((a, b) =>
+                                ascending(
+                                  parseFloat(a.climb_name),
+                                  parseFloat(b.climb_name)
+                                )
+                              )
+                              .map((top, i) => (
+                                <div
+                                  key={i}
+                                  className={`${
+                                    top.is_flash
+                                      ? 'bg-yellow text-black'
+                                      : 'bg-red text-white'
+                                  } flex h-7 w-7 items-center justify-center rounded-full text-xs`}
+                                  title={`${top.score} points`}
+                                >
+                                  {top.climb_name}
+                                </div>
+                              ))}
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
