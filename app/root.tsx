@@ -131,7 +131,7 @@ export default function App() {
               <img
                 src="/images/sponsors.png"
                 alt="Sponsors"
-                className="max-w-screen-sm"
+                className="max-w-screen-sm w-full"
               />
             </div>
             {transition.state !== 'idle' ? <Loading /> : null}
