@@ -1,5 +1,5 @@
 import { json, type LoaderFunction } from '@remix-run/node'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate } from '@remix-run/react'
 import { createWorkerFactory, useWorker } from '@shopify/react-web-worker'
 import { QrCode } from 'lucide-react'
 import { useEffect, useRef } from 'react'
@@ -102,7 +102,7 @@ export default function ClimbIndex() {
         </div>
         <div className="text-2xl text-red">Your Points</div>
         <div className="text-6xl">{score}</div>
-        <div>{tops.length} tops</div>
+        <Link to="/qualis/climb/tops">{tops.length} tops</Link>
       </div>
     </div>
   )
