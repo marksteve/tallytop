@@ -2,7 +2,7 @@ import { json, type LoaderFunction } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { serverClient } from '~/supabase'
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ request }) => {
   const supabase = serverClient(request)
   const { data: climbs } = await supabase
     .from('climbs')
@@ -26,7 +26,7 @@ export default function Boulders() {
             {climb.name}
           </Link>
         ))}
-      </div>{' '}
+      </div>
     </div>
   )
 }
