@@ -140,6 +140,12 @@ export default function Timer() {
         >
           4 mins
         </button>
+        <button
+          className="button bg-black"
+          onClick={() => setDuration(2 * 60 * 1000)}
+        >
+          2 mins
+        </button>
       </div>
     </div>
   )
