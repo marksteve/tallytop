@@ -51,18 +51,31 @@ export default function Scoresheets() {
           ])
           // .filter(([, divisionQualifiers]) => divisionQualifiers.length > 0)
           .map(([division, divisionQualifiers]) => (
-            <div
-              key={division.id}
-              className="flex items-start justify-between rounded-3xl bg-white p-10"
-            >
+            <div key={division.id} className="rounded-3xl bg-white p-10">
               <div className="flex flex-1 flex-col gap-5">
-                <h3 className="text-2xl">{division.name}</h3>
+                <div className="flex items-start justify-between pb-5">
+                  <h3 className="text-2xl">{division.name}</h3>
+                  {shouldShowLinks ? (
+                    <CSVLink
+                      className="button"
+                      data={divisionQualifiers.map((c) => ({
+                        number: c.number,
+                        name: c.name,
+                        rank: c.rank,
+                      }))}
+                      filename={`${division.name} Finals Scoresheet.csv`}
+                    >
+                      Download
+                    </CSVLink>
+                  ) : null}
+                </div>
                 <table className="w-full">
                   <thead>
                     <tr className="text-left text-red">
                       <th className="w-0 pr-10">Number</th>
                       <th className="w-0 pr-10">Rank</th>
                       <th>Name</th>
+                      <th>Score</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -100,25 +113,21 @@ export default function Scoresheets() {
                               ))}
                           </div>
                         </td>
+                        <td className="w-0">
+                          {tops
+                            ?.filter((t) => t.competitor_id === c.id)
+                            .reduce(
+                              (total, { score, is_flash }) =>
+                                total +
+                                score *
+                                  (is_flash ? parseFloat(qualisMultiplier) : 1),
+                              0
+                            )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </div>
-              <div className="flex flex-col gap-5">
-                {shouldShowLinks ? (
-                  <CSVLink
-                    className="button"
-                    data={divisionQualifiers.map((c) => ({
-                      number: c.number,
-                      name: c.name,
-                      rank: c.rank,
-                    }))}
-                    filename={`${division.name} Finals Scoresheet.csv`}
-                  >
-                    Download
-                  </CSVLink>
-                ) : null}
               </div>
             </div>
           ))}
