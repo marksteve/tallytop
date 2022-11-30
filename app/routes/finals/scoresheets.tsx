@@ -100,7 +100,11 @@ export default function Scoresheets() {
                 {shouldShowLinks ? (
                   <CSVLink
                     className="button"
-                    data={divisionQualifiers}
+                    data={divisionQualifiers.map((c) => ({
+                      number: c.number,
+                      name: c.name,
+                      rank: c.rank,
+                    }))}
                     filename={`${division.name} Finals Scoresheet.csv`}
                   >
                     Download
