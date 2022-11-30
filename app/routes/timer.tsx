@@ -124,15 +124,9 @@ export default function Timer() {
       <div className="flex gap-10 text-2xl">
         <button
           className="button bg-black"
-          onClick={() => setDuration(2 * 60 * 60 * 1000)}
+          onClick={() => setDuration(3 * 60 * 60 * 1000)}
         >
-          2 hrs
-        </button>
-        <button
-          className="button bg-black"
-          onClick={() => setDuration(60 * 60 * 1000)}
-        >
-          1 hr
+          3 hrs
         </button>
         <button
           className="button bg-black"
