@@ -14,6 +14,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     .from('climbs')
     .select()
     .eq('round_id', process.env.FINALS_ID)
+    .order('created_at', { ascending: true })
 
   return json({ climbs })
 }
