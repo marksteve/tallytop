@@ -97,6 +97,7 @@ export default function App() {
             <header className="flex flex-col items-center gap-2 p-5">
               <Link to="/">
                 <h1 className="flex items-center">
+                  <img src="/images/bhive.png" alt="Bouldering Hive" className="h-12 mr-5" />
                   <div className="font-cursive leading-[0.5em]">
                     <span className="text-4xl text-yellow">Queso</span>
                     <br />
