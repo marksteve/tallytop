@@ -44,7 +44,10 @@ export default function Scores() {
                 </thead>
                 <tbody>
                   {divisionFinalists.map((c, i) => (
-                    <tr key={c.id} className="text-center">
+                    <tr
+                      key={c.id}
+                      className={`text-center ${i < 3 ? 'bg-yellow/50' : ''}`}
+                    >
                       <td>{c.number}</td>
                       <td>{i + 1}</td>
                       <td className="text-left">{c.name}</td>
