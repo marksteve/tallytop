@@ -126,6 +126,13 @@ export default function App() {
               )}
             </header>
             <Outlet />
+            <div className="flex justify-center p-10">
+              <img
+                src="/images/sponsors.png"
+                alt="Sponsors"
+                className="max-w-screen-sm"
+              />
+            </div>
             {transition.state !== 'idle' ? <Loading /> : null}
           </main>
         )}
