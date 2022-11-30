@@ -16,11 +16,16 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const { data: tops } = await supabase.from('qualis_tops_with_climbs').select()
 
-  return json({ divisions, qualifiers, tops })
+  return json({
+    divisions,
+    qualifiers,
+    tops,
+    qualisMultiplier: process.env.QUALIS_FLASH_MULTIPLIER,
+  })
 }
 
 export default function Scoresheets() {
-  const { divisions, qualifiers, tops } = useLoaderData()
+  const { divisions, qualifiers, tops, qualisMultiplier } = useLoaderData()
   const [shouldShowLinks, showLinks] = useState(false)
 
   useEffect(() => {
@@ -84,7 +89,11 @@ export default function Scoresheets() {
                                       ? 'bg-yellow text-black'
                                       : 'bg-red text-white'
                                   } flex h-7 w-7 items-center justify-center rounded-full text-xs`}
-                                  title={`${top.score} points`}
+                                  title={`${
+                                    (top.is_flash
+                                      ? parseFloat(qualisMultiplier)
+                                      : 1) * top.score
+                                  } points`}
                                 >
                                   {top.climb_name}
                                 </div>
