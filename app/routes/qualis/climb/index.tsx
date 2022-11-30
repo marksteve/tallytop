@@ -102,7 +102,9 @@ export default function ClimbIndex() {
         </div>
         <div className="text-2xl text-red">Your Points</div>
         <div className="text-6xl">{score}</div>
-        <Link to="/qualis/climb/tops">{tops.length} tops</Link>
+        <Link className="button" to="/qualis/climb/tops">
+          {tops.length} tops
+        </Link>
       </div>
     </div>
   )
