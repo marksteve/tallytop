@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@pixi/assets": "^7.0.4",
+    "@pixi/core": "^7.0.4",
+    "@pixi/sound": "^5.0.0",
     "next": "13.0.0",
+    "parse-ms": "^3.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "ui": "workspace:*"
@@ -23,6 +27,8 @@
     "eslint": "7.32.0",
     "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.19",
+    "prettier": "^2.8.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
