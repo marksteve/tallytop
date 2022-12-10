@@ -101,7 +101,7 @@ export default function Timer() {
         <title>Tallytop Timer</title>
         <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
       </Head>
-      <Image src={logo} alt="Tallytop" width={200} />
+      <Image src={logo} alt="Tallytop" width={128} />
       <div className="font-mono text-[15vw]">
         {hours ? `${String(hours).padStart(2, "0")}:` : null}
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
