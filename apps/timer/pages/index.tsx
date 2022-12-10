@@ -104,10 +104,11 @@ export default function Timer() {
       <Image src={logo} alt="Tallytop" width={128} />
       <div className="font-mono text-[15vw]">
         {hours ? `${String(hours).padStart(2, "0")}:` : null}
-        {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
-        <span className="text-[7vw]">
-          .{String(milliseconds).padStart(3, "0")}
-        </span>
+        {String(
+          seconds + milliseconds / 1000 > 59 ? minutes + 1 : minutes
+        ).padStart(2, "0")}
+        :
+        {String(Math.ceil(seconds + milliseconds / 1000) % 60).padStart(2, "0")}
       </div>
       <div className="flex gap-10 text-4xl">
         {status === "running" ? (
