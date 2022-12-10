@@ -6,8 +6,6 @@ import { Button } from "ui";
 import logo from "../public/images/logo.svg";
 
 const defaultBeeps = [
-  2 * 60 * 60, // 2:00:00
-  1 * 60 * 60, // 1:00:00
   60, // 0:01:00
   5, // 0:00:05
   4, // 0:00:04
@@ -126,10 +124,10 @@ export default function Timer() {
         </Button>
       </div>
       <div className="flex gap-10 text-2xl">
-        <Button onClick={() => setDuration(3 * 60 * 60 * 1000)}>3 hrs</Button>
         <Button onClick={() => setDuration(5 * 60 * 1000)}>5 mins</Button>
         <Button onClick={() => setDuration(4 * 60 * 1000)}>4 mins</Button>
         <Button onClick={() => setDuration(2 * 60 * 1000)}>2 mins</Button>
+        <Button onClick={() => setDuration(15 * 1000)}>15 secs</Button>
       </div>
     </div>
   );
