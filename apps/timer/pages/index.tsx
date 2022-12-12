@@ -3,6 +3,7 @@ import Image from "next/image";
 import parseMs from "parse-ms";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "ui";
+import { ArrowCounterClockwise, Play, Stop } from "ui/icons";
 import logo from "../public/images/logo.svg";
 
 const defaultBeeps = [
@@ -96,7 +97,7 @@ export default function Timer() {
   const { hours, minutes, seconds, milliseconds } = time;
 
   return (
-    <div className="min-h-screen flex flex-1 flex-col items-center justify-center gap-10">
+    <div className="flex min-h-screen flex-1 flex-col items-center justify-center gap-10">
       <Head>
         <title>Tallytop Timer</title>
         <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
@@ -113,22 +114,22 @@ export default function Timer() {
       <div className="flex gap-10 text-4xl">
         {status === "running" ? (
           <Button className="bg-orange-200 px-10 py-5" onClick={stop}>
-            Stop
+            <Stop />
           </Button>
         ) : (
           <Button className="bg-emerald-200 px-10 py-5" onClick={start}>
-            Start
+            <Play />
           </Button>
         )}
         <Button className="px-10 py-5" onClick={reset}>
-          Reset
+          <ArrowCounterClockwise />
         </Button>
       </div>
-      <div className="flex gap-10 text-2xl">
-        <Button onClick={() => setDuration(5 * 60 * 1000)}>5 mins</Button>
-        <Button onClick={() => setDuration(4 * 60 * 1000)}>4 mins</Button>
-        <Button onClick={() => setDuration(2 * 60 * 1000)}>2 mins</Button>
-        <Button onClick={() => setDuration(15 * 1000)}>15 secs</Button>
+      <div className="flex gap-10 font-mono text-2xl">
+        <Button onClick={() => setDuration(5 * 60 * 1000)}>05:00</Button>
+        <Button onClick={() => setDuration(4 * 60 * 1000)}>04:00</Button>
+        <Button onClick={() => setDuration(2 * 60 * 1000)}>02:00</Button>
+        <Button onClick={() => setDuration(15 * 1000)}>00:15</Button>
       </div>
     </div>
   );
