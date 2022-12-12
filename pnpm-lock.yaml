@@ -6,10 +6,12 @@ importers:
     specifiers:
       eslint-config-custom: workspace:*
       prettier: latest
+      prettier-plugin-tailwindcss: latest
       turbo: latest
     devDependencies:
       eslint-config-custom: link:packages/eslint-config-custom
       prettier: 2.8.1
+      prettier-plugin-tailwindcss: 0.2.1_prettier@2.8.1
       turbo: 1.6.3
 
   apps/timer:
@@ -27,8 +29,6 @@ importers:
       next: 13.0.0
       parse-ms: ^3.0.0
       postcss: ^8.4.19
-      prettier: ^2.8.1
-      prettier-plugin-tailwindcss: ^0.2.1
       react: 18.2.0
       react-dom: 18.2.0
       tailwindcss: ^3.2.4
@@ -53,8 +53,6 @@ importers:
       eslint: 7.32.0
       eslint-config-custom: link:../../packages/eslint-config-custom
       postcss: 8.4.19
-      prettier: 2.8.1
-      prettier-plugin-tailwindcss: 0.2.1_prettier@2.8.1
       tailwindcss: 3.2.4_postcss@8.4.19
       tsconfig: link:../../packages/tsconfig
       typescript: 4.9.4
@@ -85,8 +83,6 @@ importers:
       '@types/react-dom': ^18.0.6
       eslint: ^7.32.0
       eslint-config-custom: workspace:*
-      prettier: ^2.8.1
-      prettier-plugin-tailwindcss: ^0.2.1
       react: ^18.2.0
       tsconfig: workspace:*
       typescript: ^4.5.2
@@ -95,8 +91,6 @@ importers:
       '@types/react-dom': 18.0.9
       eslint: 7.32.0
       eslint-config-custom: link:../eslint-config-custom
-      prettier: 2.8.1
-      prettier-plugin-tailwindcss: 0.2.1_prettier@2.8.1
       react: 18.2.0
       tsconfig: link:../tsconfig
       typescript: 4.9.4
