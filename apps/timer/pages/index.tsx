@@ -19,13 +19,13 @@ const useTimer = (duration: number) => {
   const [time, setTime] = useState(parseMs(duration));
   const sound = useRef<any>();
   const beeps = useRef(defaultBeeps);
-  const endDate = useRef(new Date());
+  const endTime = useRef(Date.now());
   const elapsed = useRef(0);
   const isRunning = useRef(false);
   const [status, setStatus] = useState("reset");
 
   const start = () => {
-    endDate.current = new Date(Date.now() + duration - elapsed.current);
+    endTime.current = Date.now() + duration - elapsed.current;
     isRunning.current = true;
     setStatus("running");
     if (elapsed.current === 0) {
@@ -34,7 +34,7 @@ const useTimer = (duration: number) => {
   };
 
   const stop = useCallback(() => {
-    const remaining = endDate.current.getTime() - Date.now();
+    const remaining = endTime.current - Date.now();
     elapsed.current = duration - remaining;
     isRunning.current = false;
     setStatus("stopped");
@@ -50,7 +50,7 @@ const useTimer = (duration: number) => {
 
   const tick = useCallback(() => {
     if (isRunning.current) {
-      let remaining = endDate.current.getTime() - Date.now();
+      let remaining = endTime.current - Date.now();
       if (remaining < 0) {
         remaining = 0;
       }
