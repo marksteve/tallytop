@@ -65,28 +65,11 @@ const useTimer = (
   const isRunning = useRef(false);
   const [status, setStatus] = useState("reset");
 
-  const start = useCallback(() => {
-    endTime.current = Date.now() + duration - elapsed.current;
-    isRunning.current = true;
-    setStatus("running");
-    if (elapsed.current === 0) {
-      onSound("beep");
-    }
-  }, [duration, onSound]);
-
   const stop = useCallback(() => {
     const remaining = endTime.current - Date.now();
     elapsed.current = duration - remaining;
     isRunning.current = false;
     setStatus("stopped");
-  }, [duration]);
-
-  const reset = useCallback(() => {
-    setTime(parseMs(duration));
-    elapsed.current = 0;
-    beeps.current = defaultBeeps;
-    isRunning.current = false;
-    setStatus("reset");
   }, [duration]);
 
   const tick = useCallback(() => {
@@ -105,13 +88,27 @@ const useTimer = (
         stop();
         onSound("end");
       }
+      requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
   }, [stop, onSound]);
 
-  useEffect(() => {
+  const start = useCallback(() => {
+    endTime.current = Date.now() + duration - elapsed.current;
+    isRunning.current = true;
+    setStatus("running");
+    if (elapsed.current === 0) {
+      onSound("beep");
+    }
     requestAnimationFrame(tick);
-  }, [tick]);
+  }, [duration, onSound, tick]);
+
+  const reset = useCallback(() => {
+    setTime(parseMs(duration));
+    elapsed.current = 0;
+    beeps.current = defaultBeeps;
+    isRunning.current = false;
+    setStatus("reset");
+  }, [duration]);
 
   useEffect(() => {
     reset();
