@@ -4,20 +4,28 @@ import { Button } from "ui";
 import { ArrowCounterClockwise, Play, Stop } from "ui/icons";
 
 type TimerProps = {
-  duration: number;
-  onSound: (type: string) => void;
+  duration: Duration;
+  onSound: (key: string) => void;
+  onFinish: () => void;
   autoStart?: boolean;
 };
 
-export default function Timer({ duration, onSound, autoStart }: TimerProps) {
+export default function Timer({
+  duration,
+  onSound,
+  onFinish,
+  autoStart,
+}: TimerProps) {
   const { time, start, stop, reset, status } = useTimer(
-    duration,
+    duration.value,
     onSound,
+    onFinish,
     autoStart
   );
   const { hours, minutes, seconds, milliseconds } = time;
   return (
     <>
+      <div className="text-4xl">{duration.name}</div>
       <div className="font-mono text-[15vw]">
         {hours ? `${String(hours).padStart(2, "0")}:` : null}
         {String(
@@ -55,7 +63,8 @@ const defaultBeeps = [
 
 const useTimer = (
   duration: number,
-  onSound: (type: string) => void,
+  onSound: (key: string) => void,
+  onFinish: () => void,
   autoStart: boolean = false
 ) => {
   const [time, setTime] = useState(parseMs(duration));
@@ -87,10 +96,12 @@ const useTimer = (
       if (remaining === 0) {
         stop();
         onSound("end");
+        onFinish();
+        setStatus("finished");
       }
       requestAnimationFrame(tick);
     }
-  }, [stop, onSound]);
+  }, [stop, onSound, onFinish]);
 
   const start = useCallback(() => {
     endTime.current = Date.now() + duration - elapsed.current;
@@ -112,7 +123,7 @@ const useTimer = (
 
   useEffect(() => {
     if (isRunning.current) {
-      return
+      return;
     }
     reset();
     if (autoStart) {
