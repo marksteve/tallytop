@@ -6,10 +6,15 @@ import { ArrowCounterClockwise, Play, Stop } from "ui/icons";
 type TimerProps = {
   duration: number;
   onSound: (type: string) => void;
+  autoStart?: boolean;
 };
 
-export default function Timer({ duration, onSound }: TimerProps) {
-  const { time, start, stop, reset, status } = useTimer(duration, onSound);
+export default function Timer({ duration, onSound, autoStart }: TimerProps) {
+  const { time, start, stop, reset, status } = useTimer(
+    duration,
+    onSound,
+    autoStart
+  );
   const { hours, minutes, seconds, milliseconds } = time;
   return (
     <>
@@ -48,7 +53,11 @@ const defaultBeeps = [
   1, // 0:00:01
 ];
 
-const useTimer = (duration: number, onSound: (type: string) => void) => {
+const useTimer = (
+  duration: number,
+  onSound: (type: string) => void,
+  autoStart: boolean = false
+) => {
   const [time, setTime] = useState(parseMs(duration));
   const beeps = useRef(defaultBeeps);
   const endTime = useRef(Date.now());
@@ -56,14 +65,14 @@ const useTimer = (duration: number, onSound: (type: string) => void) => {
   const isRunning = useRef(false);
   const [status, setStatus] = useState("reset");
 
-  const start = () => {
+  const start = useCallback(() => {
     endTime.current = Date.now() + duration - elapsed.current;
     isRunning.current = true;
     setStatus("running");
     if (elapsed.current === 0) {
       onSound("beep");
     }
-  };
+  }, [duration, onSound]);
 
   const stop = useCallback(() => {
     const remaining = endTime.current - Date.now();
@@ -98,7 +107,7 @@ const useTimer = (duration: number, onSound: (type: string) => void) => {
       }
     }
     requestAnimationFrame(tick);
-  }, [stop]);
+  }, [stop, onSound]);
 
   useEffect(() => {
     requestAnimationFrame(tick);
@@ -106,7 +115,10 @@ const useTimer = (duration: number, onSound: (type: string) => void) => {
 
   useEffect(() => {
     reset();
-  }, [reset, duration]);
+    if (autoStart) {
+      start();
+    }
+  }, [reset, duration, autoStart, start]);
 
   return { time, start, stop, reset, status };
 };

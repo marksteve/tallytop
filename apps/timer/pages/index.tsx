@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Timer from "../components/Timer";
 import logo from "../public/images/logo.svg";
 
@@ -20,11 +20,11 @@ export default function IndexPage() {
     });
   }, []);
 
-  const handleSound = (type: string) => {
+  const handleSound = useCallback((type: string) => {
     if (sound.current) {
       sound.current.play(type);
     }
-  };
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-1 flex-col items-center justify-center gap-10">
