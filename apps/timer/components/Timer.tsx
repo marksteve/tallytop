@@ -111,6 +111,9 @@ const useTimer = (
   }, [duration]);
 
   useEffect(() => {
+    if (isRunning.current) {
+      return
+    }
     reset();
     if (autoStart) {
       start();
