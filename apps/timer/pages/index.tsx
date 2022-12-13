@@ -15,9 +15,8 @@ const defaultBeeps = [
   1, // 0:00:01
 ];
 
-const useTimer = (duration: number) => {
+const useTimer = (duration: number, onSound: (type: string) => void) => {
   const [time, setTime] = useState(parseMs(duration));
-  const sound = useRef<any>();
   const beeps = useRef(defaultBeeps);
   const endTime = useRef(Date.now());
   const elapsed = useRef(0);
@@ -29,7 +28,7 @@ const useTimer = (duration: number) => {
     isRunning.current = true;
     setStatus("running");
     if (elapsed.current === 0) {
-      sound.current.play("beep");
+      onSound("beep");
     }
   };
 
@@ -58,11 +57,11 @@ const useTimer = (duration: number) => {
       const second = Math.floor(remaining / 1000) + 1;
       if (beeps.current.includes(second)) {
         beeps.current = beeps.current.filter((v) => v !== second);
-        sound.current.play("beep");
+        onSound("beep");
       }
       if (remaining === 0) {
         stop();
-        sound.current.play("end");
+        onSound("end");
       }
     }
     requestAnimationFrame(tick);
@@ -76,6 +75,12 @@ const useTimer = (duration: number) => {
     reset();
   }, [reset, duration]);
 
+  return { time, start, stop, reset, status };
+};
+
+export default function IndexPage() {
+  const sound = useRef<any>();
+
   useEffect(() => {
     import("@pixi/sound").then(({ sound: pixiSound }) => {
       if (sound.current) {
@@ -88,12 +93,14 @@ const useTimer = (duration: number) => {
     });
   }, []);
 
-  return { time, start, stop, reset, status };
-};
+  const handleSound = (type: string) => {
+    if (sound.current) {
+      sound.current.play(type);
+    }
+  };
 
-export default function Timer() {
   const [duration, setDuration] = useState(5 * 60 * 1000);
-  const { time, start, stop, reset, status } = useTimer(duration);
+  const { time, start, stop, reset, status } = useTimer(duration, handleSound);
   const { hours, minutes, seconds, milliseconds } = time;
 
   return (
