@@ -12,6 +12,8 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "dependencies": {
+    "parse-ms": "^3.0.0",
+    "phosphor-svelte": "^1.2.1",
     "ui": "workspace:*"
   },
   "devDependencies": {

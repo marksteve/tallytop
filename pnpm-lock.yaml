@@ -24,6 +24,8 @@ importers:
       '@sveltejs/kit': latest
       autoprefixer: ^10.4.13
       eslint-config-custom: workspace:*
+      parse-ms: ^3.0.0
+      phosphor-svelte: ^1.2.1
       postcss: ^8.4.20
       svelte: ^3.55.0
       svelte-check: ^2.10.2
@@ -34,6 +36,8 @@ importers:
       ui: workspace:*
       vite: ^4.0.1
     dependencies:
+      parse-ms: 3.0.0
+      phosphor-svelte: 1.2.1_svelte@3.55.0
       ui: link:../../packages/ui
     devDependencies:
       '@sveltejs/adapter-auto': 1.0.0_@sveltejs+kit@1.0.0
@@ -1386,6 +1390,11 @@ packages:
     dependencies:
       callsites: 3.1.0
 
+  /parse-ms/3.0.0:
+    resolution: {integrity: sha512-Tpb8Z7r7XbbtBTrM9UhpkzzaMrqA2VXMT3YChzYltwV3P3pM6t8wl7TvpMnSTosz1aQAdVib7kdoys7vYOPerw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /path-exists/4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
     engines: {node: '>=8'}
@@ -1405,6 +1414,14 @@ packages:
   /path-type/4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+    dev: false
+
+  /phosphor-svelte/1.2.1_svelte@3.55.0:
+    resolution: {integrity: sha512-mJDTRr4kBTRYA+SqEAj7rSZ9jbtRWrkqKjn+uYG8Ivhe17LnD685ZehRbQPNdkN8v+T4rjnfnysyKhqn3WXeTw==}
+    peerDependencies:
+      svelte: '>=3'
+    dependencies:
+      svelte: 3.55.0
     dev: false
 
   /picocolors/1.0.0:
