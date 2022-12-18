@@ -4,6 +4,7 @@
   import Play from 'phosphor-svelte/lib/play'
   import Stop from 'phosphor-svelte/lib/stop'
   import { Button } from 'ui'
+  import { Howl } from 'howler'
 
   let endTime: number
   let elapsed = 0
@@ -11,6 +12,13 @@
 
   let duration = 5 * 60 * 1000
   let time = parseMs(duration)
+
+  const sound = {
+    beep: new Howl({ src: '/sounds/beep.mp3' }),
+    end: new Howl({ src: '/sounds/end.mp3' })
+  }
+  let beeps = [0, 60, 5, 4, 3, 2, 1]
+  let playedBeeps: number[] = []
 
   function start() {
     endTime = Date.now() + duration - elapsed
@@ -27,18 +35,33 @@
     time = parseMs(duration)
     elapsed = 0
     status = 'stopped'
+    playedBeeps = []
   }
 
   function tick() {
     if (status === 'running') {
       let remaining = endTime - Date.now()
+
       if (remaining < 0) {
         remaining = 0
       }
-      time = parseMs(remaining)
       if (remaining === 0) {
         stop()
+        sound.end.play()
       }
+
+      time = parseMs(remaining)
+
+      const seconds = Math.ceil(remaining / 1000)
+
+      if (
+        !playedBeeps.includes(seconds) &&
+        (seconds === Math.ceil(duration / 1000) || beeps.includes(seconds))
+      ) {
+        sound.beep.play()
+        playedBeeps = [...playedBeeps, seconds]
+      }
+
       requestAnimationFrame(tick)
     }
   }

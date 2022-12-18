@@ -12,6 +12,7 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "dependencies": {
+    "howler": "^2.2.3",
     "parse-ms": "^3.0.0",
     "phosphor-svelte": "^1.2.1",
     "ui": "workspace:*"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "latest",
     "@sveltejs/kit": "latest",
+    "@types/howler": "^2.2.7",
     "autoprefixer": "^10.4.13",
     "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.20",
