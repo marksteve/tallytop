@@ -12,17 +12,17 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "dependencies": {
+    "@tallytop/ui": "workspace:*",
     "howler": "^2.2.3",
     "parse-ms": "^3.0.0",
-    "phosphor-svelte": "^1.2.1",
-    "ui": "workspace:*"
+    "phosphor-svelte": "^1.2.1"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "latest",
     "@sveltejs/kit": "latest",
+    "@tallytop/eslint-config-custom": "workspace:*",
     "@types/howler": "^2.2.7",
     "autoprefixer": "^10.4.13",
-    "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.20",
     "svelte": "^3.55.0",
     "svelte-check": "^2.10.2",

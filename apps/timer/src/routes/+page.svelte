@@ -1,10 +1,10 @@
 <script lang="ts">
+  import { Button } from '@tallytop/ui'
+  import { Howl } from 'howler'
   import parseMs from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
   import Play from 'phosphor-svelte/lib/play'
   import Stop from 'phosphor-svelte/lib/stop'
-  import { Button } from 'ui'
-  import { Howl } from 'howler'
 
   let endTime: number
   let elapsed = 0

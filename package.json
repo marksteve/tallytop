@@ -7,8 +7,8 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@tallytop/eslint-config-custom": "workspace:*",
     "eslint": "^8.0.0",
-    "eslint-config-custom": "workspace:*",
     "prettier": "latest",
     "prettier-plugin-svelte": "latest",
     "prettier-plugin-tailwindcss": "latest",
