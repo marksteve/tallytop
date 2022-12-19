@@ -172,7 +172,9 @@
 </script>
 
 <div
-  class="font-mono text-[15vw]"
+  class={`border-2 border-transparent font-mono text-[15vw] ${
+    status !== 'running' ? 'rounded border-stone-200 px-10' : ''
+  }`}
   contenteditable={status !== 'running'}
   on:blur={handleDurationChange}
 >
