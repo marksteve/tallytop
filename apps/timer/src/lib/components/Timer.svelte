@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from '$app/environment'
   import { goto } from '$app/navigation'
   import { Button } from '@tallytop/ui'
   import { Howl } from 'howler'
@@ -24,7 +25,12 @@
   let playedBeeps: number[] = []
 
   export let viewMode = false
-  export let id: string = nanoid()
+  export let id: string = browser
+    ? window.localStorage.getItem('tallytop-timer-id') ?? nanoid()
+    : nanoid()
+  if (browser && !viewMode) {
+    window.localStorage.setItem('tallytop-timer-id', id)
+  }
 
   function start() {
     endTime = Date.now() + duration - elapsed
