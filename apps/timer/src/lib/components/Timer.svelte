@@ -10,15 +10,17 @@
   let elapsed = 0
   let status = 'stopped'
 
-  let duration = 5 * 60 * 1000
+  export let duration = 5 * 60 * 1000
   let time = parseMs(duration)
 
   const sound = {
     beep: new Howl({ src: '/sounds/beep.mp3' }),
     end: new Howl({ src: '/sounds/end.mp3' })
   }
-  let beeps = [0, 60, 5, 4, 3, 2, 1]
+  export let beeps = [0, 60, 5, 4, 3, 2, 1]
   let playedBeeps: number[] = []
+
+  export let viewMode = false
 
   function start() {
     endTime = Date.now() + duration - elapsed
@@ -82,6 +84,8 @@
     String(Math.ceil(time.seconds + time.milliseconds / 1000) % 60).padStart(2, '0')
   ].join(':')}
 </div>
+
+{#if !viewMode}
 <div class="flex gap-10 text-4xl">
   {#if status === 'stopped'}
     <Button class="bg-emerald-200 px-10 py-5" on:click={start}><Play /></Button>
@@ -90,3 +94,4 @@
   {/if}
   <Button class="px-10 py-5" on:click={reset}><ArrowCounterClockwise /></Button>
 </div>
+{/if}
