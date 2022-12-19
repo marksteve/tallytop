@@ -1,35 +1,25 @@
-# Turborepo Svelte starter
+# Tallytop
 
-This is an official starter Turborepo.
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
+Makes organizing climbing competitions fun.
 
 ### Apps and Packages
 
-- `docs`: a [svelte-kit](https://kit.svelte.dev/) app
-- `web`: another [svelte-kit](https://kit.svelte.dev/) app
-- `ui`: a stub Svelte component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-plugin-svelte` and `eslint-config-prettier`)
+- `timer`: Configurable timer
+- `ui`: Component library shared by all applications
+- `eslint-config-custom`: `eslint` configurations 
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Build
 
-### Utilities
+To build all apps and packages, run the following command:
 
-This Turborepo has some additional tools already setup for you:
+```
+pnpm run build
+```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Develop
 
-## Using this example
+To develop all apps and packages, run the following command:
 
-Run the following command:
-
-```sh
-npx degit vercel/turbo/examples/with-svelte with-svelte
-cd with-svelte
-pnpm install
-git init . && git add . && git commit -m "Init"
+```
+pnpm run dev
 ```
