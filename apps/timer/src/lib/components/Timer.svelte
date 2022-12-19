@@ -10,6 +10,7 @@
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
   import { onDestroy, onMount } from 'svelte'
+  import toMilliseconds from '@sindresorhus/to-milliseconds'
 
   const ID_LENGTH = 6
 
@@ -80,6 +81,21 @@
     }
     Promise.all([channel.unsubscribe(), channel.untrack()])
   })
+
+  function handleDurationChange(e: FocusEvent) {
+    const text = (e.target as HTMLElement).textContent
+    let timeComponents = (text ?? '').split(':')
+    if (!timeComponents.length) {
+      return
+    }
+    let seconds = timeComponents.pop()
+    if (!timeComponents.length) {
+      duration = toMilliseconds({ seconds: parseFloat(seconds!) })
+      return
+    }
+    let minutes = timeComponents.pop()
+    duration = toMilliseconds({ minutes: parseFloat(minutes!), seconds: parseFloat(seconds!) })
+  }
 
   function start(endTimeInit?: number) {
     endTime = endTimeInit ? endTimeInit : Date.now() + duration - elapsed
@@ -155,7 +171,11 @@
   }
 </script>
 
-<div class="font-mono text-[15vw]">
+<div
+  class="font-mono text-[15vw]"
+  contenteditable={status !== 'running'}
+  on:blur={handleDurationChange}
+>
   {[
     String(time.seconds + time.milliseconds / 1000 > 59 ? time.minutes + 1 : time.minutes).padStart(
       2,

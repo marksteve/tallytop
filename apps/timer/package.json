@@ -12,6 +12,7 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "dependencies": {
+    "@sindresorhus/to-milliseconds": "^2.0.0",
     "@tallytop/supabase": "workspace:*",
     "@tallytop/ui": "workspace:*",
     "async-sema": "^3.1.1",
