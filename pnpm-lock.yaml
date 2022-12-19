@@ -23,10 +23,13 @@ importers:
       '@sveltejs/adapter-auto': latest
       '@sveltejs/kit': latest
       '@tallytop/eslint-config-custom': workspace:*
+      '@tallytop/supabase': workspace:*
       '@tallytop/ui': workspace:*
       '@types/howler': ^2.2.7
+      async-sema: ^3.1.1
       autoprefixer: ^10.4.13
       howler: ^2.2.3
+      nanoid: ^4.0.0
       parse-ms: ^3.0.0
       phosphor-svelte: ^1.2.1
       postcss: ^8.4.20
@@ -38,8 +41,11 @@ importers:
       typescript: ^4.9.4
       vite: ^4.0.1
     dependencies:
+      '@tallytop/supabase': link:../../packages/supabase
       '@tallytop/ui': link:../../packages/ui
+      async-sema: 3.1.1
       howler: 2.2.3
+      nanoid: 4.0.0
       parse-ms: 3.0.0
       phosphor-svelte: 1.2.1_svelte@3.55.0
     devDependencies:
@@ -700,6 +706,10 @@ packages:
   /array-union/2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
+    dev: false
+
+  /async-sema/3.1.1:
+    resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
     dev: false
 
   /autoprefixer/10.4.13_postcss@8.4.20:
@@ -1482,6 +1492,12 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /natural-compare-lite/1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}

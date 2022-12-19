@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import { Button } from '@tallytop/ui'
   import { Howl } from 'howler'
+  import { nanoid } from 'nanoid'
   import parseMs from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
+  import Eye from 'phosphor-svelte/lib/eye'
   import Play from 'phosphor-svelte/lib/play'
   import Stop from 'phosphor-svelte/lib/stop'
 
@@ -21,6 +24,7 @@
   let playedBeeps: number[] = []
 
   export let viewMode = false
+  export let id: string = nanoid()
 
   function start() {
     endTime = Date.now() + duration - elapsed
@@ -68,6 +72,10 @@
     }
   }
 
+  function view() {
+    goto(`/${id}`)
+  }
+
   $: {
     if (status === 'started') {
       status = 'running'
@@ -78,20 +86,22 @@
 
 <div class="font-mono text-[15vw]">
   {[
-    String(
-      time.seconds + time.milliseconds / 1000 > 59 ? time.minutes + 1 : time.minutes
-    ).padStart(2, '0'),
+    String(time.seconds + time.milliseconds / 1000 > 59 ? time.minutes + 1 : time.minutes).padStart(
+      2,
+      '0'
+    ),
     String(Math.ceil(time.seconds + time.milliseconds / 1000) % 60).padStart(2, '0')
   ].join(':')}
 </div>
 
 {#if !viewMode}
-<div class="flex gap-10 text-4xl">
-  {#if status === 'stopped'}
-    <Button class="bg-emerald-200 px-10 py-5" on:click={start}><Play /></Button>
-  {:else}
-    <Button class="bg-orange-200 px-10 py-5" on:click={stop}><Stop /></Button>
-  {/if}
-  <Button class="px-10 py-5" on:click={reset}><ArrowCounterClockwise /></Button>
-</div>
+  <div class="flex gap-10 text-4xl">
+    {#if status === 'stopped'}
+      <Button class="bg-emerald-200 px-10 py-5" on:click={start}><Play /></Button>
+    {:else}
+      <Button class="bg-orange-200 px-10 py-5" on:click={stop}><Stop /></Button>
+    {/if}
+    <Button class="px-10 py-5" on:click={reset}><ArrowCounterClockwise /></Button>
+    <Button class="px-10 py-5" on:click={view}><Eye /></Button>
+  </div>
 {/if}
