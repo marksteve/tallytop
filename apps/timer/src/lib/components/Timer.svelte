@@ -1,6 +1,5 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import { goto } from '$app/navigation'
   import supabase from '@tallytop/supabase'
   import { Button } from '@tallytop/ui'
   import { Howl } from 'howler'
@@ -148,10 +147,6 @@
     }
   }
 
-  function view() {
-    goto(`/${id}`)
-  }
-
   $: {
     if (status === 'started') {
       status = 'running'
@@ -178,6 +173,8 @@
       <Button class="bg-orange-200 px-10 py-5" on:click={() => stop()}><Stop /></Button>
     {/if}
     <Button class="px-10 py-5" on:click={() => reset()}><ArrowCounterClockwise /></Button>
-    <Button class="px-10 py-5" on:click={() => view()}><Eye /></Button>
+    <a href={`/${id}`} target="_blank" rel="noreferrer">
+      <Button class="px-10 py-5"><Eye /></Button>
+    </a>
   </div>
 {/if}
