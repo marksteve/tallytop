@@ -7,9 +7,9 @@
   import { nanoid } from 'nanoid'
   import parseMs, { type TimeComponents } from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
-  import Eye from 'phosphor-svelte/lib/eye'
-  import Play from 'phosphor-svelte/lib/play'
-  import Stop from 'phosphor-svelte/lib/stop'
+  import Eye from 'phosphor-svelte/lib/Eye'
+  import Play from 'phosphor-svelte/lib/Play'
+  import Stop from 'phosphor-svelte/lib/Stop'
   import { onDestroy, onMount } from 'svelte'
 
   const ID_LENGTH = 6
