@@ -1,5 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import toMilliseconds from '@sindresorhus/to-milliseconds'
   import supabase from '@tallytop/supabase'
   import { Button } from '@tallytop/ui'
   import { Howl } from 'howler'
@@ -10,7 +11,6 @@
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
   import { onDestroy, onMount } from 'svelte'
-  import toMilliseconds from '@sindresorhus/to-milliseconds'
 
   const ID_LENGTH = 6
 

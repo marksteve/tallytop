@@ -26,6 +26,7 @@
     "@sveltejs/kit": "latest",
     "@tallytop/eslint-config-custom": "workspace:*",
     "@types/howler": "^2.2.7",
+    "@types/sindresorhus__to-milliseconds": "^1.1.1",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
     "svelte": "^3.55.0",

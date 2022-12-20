@@ -27,6 +27,7 @@ importers:
       '@tallytop/supabase': workspace:*
       '@tallytop/ui': workspace:*
       '@types/howler': ^2.2.7
+      '@types/sindresorhus__to-milliseconds': ^1.1.1
       async-sema: ^3.1.1
       autoprefixer: ^10.4.13
       howler: ^2.2.3
@@ -55,6 +56,7 @@ importers:
       '@sveltejs/kit': 1.0.1_svelte@3.55.0+vite@4.0.1
       '@tallytop/eslint-config-custom': link:../../packages/eslint-config-custom
       '@types/howler': 2.2.7
+      '@types/sindresorhus__to-milliseconds': 1.1.1
       autoprefixer: 10.4.13_postcss@8.4.20
       postcss: 8.4.20
       svelte: 3.55.0
@@ -370,7 +372,6 @@ packages:
   /@sindresorhus/to-milliseconds/2.0.0:
     resolution: {integrity: sha512-Gkdb2ufaJjg+E2ThIo3MVIV8bqW4ytkSjr/aFE/4Cz1gUZidffhlqlbZGT1jURHB5V5wyMu3KMPz39BSJq/+CA==}
     engines: {node: '>=12'}
-    dev: false
 
   /@supabase/functions-js/2.0.0:
     resolution: {integrity: sha512-ozb7bds2yvf5k7NM2ZzUkxvsx4S4i2eRKFSJetdTADV91T65g4gCzEs9L3LUXSrghcGIkUaon03VPzOrFredqg==}
@@ -516,6 +517,13 @@ packages:
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
     dev: false
+
+  /@types/sindresorhus__to-milliseconds/1.1.1:
+    resolution: {integrity: sha512-S7tir440McEn8QzydGu8EVVE5R7GdFUL5TKCGnUVuw+d1uwGlZZnPCpRwY7qIAJmZy35MK0y8/10qocssPhbyA==}
+    deprecated: Deprecated
+    dependencies:
+      '@sindresorhus/to-milliseconds': 2.0.0
+    dev: true
 
   /@typescript-eslint/eslint-plugin/5.44.0_7pdyqmytrxe74w3zomef3h2nuy:
     resolution: {integrity: sha512-j5ULd7FmmekcyWeArx+i8x7sdRHzAtXTkmDPthE4amxZOWKFK7bomoJ4r7PJ8K7PoMzD16U8MmuZFAonr1ERvw==}
