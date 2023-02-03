@@ -3,11 +3,13 @@
 Makes organizing climbing competitions fun and easy.
 
 ## Apps
+
 - `timer`: Timer demo (https://timer.tallytop.com)
 
 ## Packages
+
 - `ui`: Component library shared by all applications
-- `eslint-config-custom`: `eslint` configurations 
+- `eslint-config-custom`: `eslint` configurations
 
 ### Build
 
