@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export interface Database {
-  public: {
+  qdb_2022: {
     Tables: {
       advancements: {
         Row: {

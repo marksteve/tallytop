@@ -63,10 +63,10 @@ SET default_tablespace = '';
 SET default_table_access_method = "heap";
 
 --
--- Name: advancements; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: advancements; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."advancements" (
+CREATE TABLE "qdb_2022"."advancements" (
     "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "division_id" "uuid",
@@ -75,13 +75,13 @@ CREATE TABLE "public"."advancements" (
 );
 
 
-ALTER TABLE "public"."advancements" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."advancements" OWNER TO "supabase_admin";
 
 --
--- Name: attempts; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: attempts; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."attempts" (
+CREATE TABLE "qdb_2022"."attempts" (
     "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "competitor_id" "uuid" NOT NULL,
@@ -93,13 +93,13 @@ CREATE TABLE "public"."attempts" (
 );
 
 
-ALTER TABLE "public"."attempts" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."attempts" OWNER TO "supabase_admin";
 
 --
--- Name: climbs; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: climbs; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."climbs" (
+CREATE TABLE "qdb_2022"."climbs" (
     "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "name" "text",
@@ -109,13 +109,13 @@ CREATE TABLE "public"."climbs" (
 );
 
 
-ALTER TABLE "public"."climbs" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."climbs" OWNER TO "supabase_admin";
 
 --
--- Name: competitors; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: competitors; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."competitors" (
+CREATE TABLE "qdb_2022"."competitors" (
     "id" "uuid" NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "division_id" "uuid" NOT NULL,
@@ -124,26 +124,26 @@ CREATE TABLE "public"."competitors" (
 );
 
 
-ALTER TABLE "public"."competitors" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."competitors" OWNER TO "supabase_admin";
 
 --
--- Name: comps; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: comps; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."comps" (
+CREATE TABLE "qdb_2022"."comps" (
     "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "name" "text" NOT NULL
 );
 
 
-ALTER TABLE "public"."comps" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."comps" OWNER TO "supabase_admin";
 
 --
--- Name: divisions; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: divisions; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."divisions" (
+CREATE TABLE "qdb_2022"."divisions" (
     "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "comp_id" "uuid" NOT NULL,
@@ -151,13 +151,13 @@ CREATE TABLE "public"."divisions" (
 );
 
 
-ALTER TABLE "public"."divisions" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."divisions" OWNER TO "supabase_admin";
 
 --
--- Name: rounds; Type: TABLE; Schema: public; Owner: supabase_admin
+-- Name: rounds; Type: TABLE; Schema: qdb_2022; Owner: supabase_admin
 --
 
-CREATE TABLE "public"."rounds" (
+CREATE TABLE "qdb_2022"."rounds" (
     "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "comp_id" "uuid" NOT NULL,
@@ -166,151 +166,151 @@ CREATE TABLE "public"."rounds" (
 );
 
 
-ALTER TABLE "public"."rounds" OWNER TO "supabase_admin";
+ALTER TABLE "qdb_2022"."rounds" OWNER TO "supabase_admin";
 
 --
--- Name: advancements advancements_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: advancements advancements_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."advancements"
+ALTER TABLE ONLY "qdb_2022"."advancements"
     ADD CONSTRAINT "advancements_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: attempts attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: attempts attempts_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."attempts"
+ALTER TABLE ONLY "qdb_2022"."attempts"
     ADD CONSTRAINT "attempts_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: competitors competitors_number_key; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: competitors competitors_number_key; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."competitors"
+ALTER TABLE ONLY "qdb_2022"."competitors"
     ADD CONSTRAINT "competitors_number_key" UNIQUE ("number");
 
 
 --
--- Name: competitors competitors_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: competitors competitors_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."competitors"
+ALTER TABLE ONLY "qdb_2022"."competitors"
     ADD CONSTRAINT "competitors_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: comps comps_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: comps comps_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."comps"
+ALTER TABLE ONLY "qdb_2022"."comps"
     ADD CONSTRAINT "comps_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: divisions divisions_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: divisions divisions_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."divisions"
+ALTER TABLE ONLY "qdb_2022"."divisions"
     ADD CONSTRAINT "divisions_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: rounds rounds_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: rounds rounds_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."rounds"
+ALTER TABLE ONLY "qdb_2022"."rounds"
     ADD CONSTRAINT "rounds_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: climbs routes_pkey; Type: CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: climbs routes_pkey; Type: CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."climbs"
+ALTER TABLE ONLY "qdb_2022"."climbs"
     ADD CONSTRAINT "routes_pkey" PRIMARY KEY ("id");
 
 
 --
--- Name: advancements advancements_division_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: advancements advancements_division_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."advancements"
-    ADD CONSTRAINT "advancements_division_id_fkey" FOREIGN KEY ("division_id") REFERENCES "public"."divisions"("id");
-
-
---
--- Name: advancements advancements_round_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
---
-
-ALTER TABLE ONLY "public"."advancements"
-    ADD CONSTRAINT "advancements_round_id_fkey" FOREIGN KEY ("round_id") REFERENCES "public"."rounds"("id");
+ALTER TABLE ONLY "qdb_2022"."advancements"
+    ADD CONSTRAINT "advancements_division_id_fkey" FOREIGN KEY ("division_id") REFERENCES "qdb_2022"."divisions"("id");
 
 
 --
--- Name: attempts attempts_climb_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: advancements advancements_round_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."attempts"
-    ADD CONSTRAINT "attempts_climb_id_fkey" FOREIGN KEY ("climb_id") REFERENCES "public"."climbs"("id");
-
-
---
--- Name: attempts attempts_competitor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
---
-
-ALTER TABLE ONLY "public"."attempts"
-    ADD CONSTRAINT "attempts_competitor_id_fkey" FOREIGN KEY ("competitor_id") REFERENCES "public"."competitors"("id");
+ALTER TABLE ONLY "qdb_2022"."advancements"
+    ADD CONSTRAINT "advancements_round_id_fkey" FOREIGN KEY ("round_id") REFERENCES "qdb_2022"."rounds"("id");
 
 
 --
--- Name: climbs climbs_round_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: attempts attempts_climb_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."climbs"
-    ADD CONSTRAINT "climbs_round_id_fkey" FOREIGN KEY ("round_id") REFERENCES "public"."rounds"("id");
-
-
---
--- Name: competitors competitors_advancement_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
---
-
-ALTER TABLE ONLY "public"."competitors"
-    ADD CONSTRAINT "competitors_advancement_id_fkey" FOREIGN KEY ("advancement_id") REFERENCES "public"."advancements"("id");
+ALTER TABLE ONLY "qdb_2022"."attempts"
+    ADD CONSTRAINT "attempts_climb_id_fkey" FOREIGN KEY ("climb_id") REFERENCES "qdb_2022"."climbs"("id");
 
 
 --
--- Name: competitors competitors_division_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: attempts attempts_competitor_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."competitors"
-    ADD CONSTRAINT "competitors_division_id_fkey" FOREIGN KEY ("division_id") REFERENCES "public"."divisions"("id");
+ALTER TABLE ONLY "qdb_2022"."attempts"
+    ADD CONSTRAINT "attempts_competitor_id_fkey" FOREIGN KEY ("competitor_id") REFERENCES "qdb_2022"."competitors"("id");
 
 
 --
--- Name: competitors competitors_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: climbs climbs_round_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."competitors"
+ALTER TABLE ONLY "qdb_2022"."climbs"
+    ADD CONSTRAINT "climbs_round_id_fkey" FOREIGN KEY ("round_id") REFERENCES "qdb_2022"."rounds"("id");
+
+
+--
+-- Name: competitors competitors_advancement_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
+--
+
+ALTER TABLE ONLY "qdb_2022"."competitors"
+    ADD CONSTRAINT "competitors_advancement_id_fkey" FOREIGN KEY ("advancement_id") REFERENCES "qdb_2022"."advancements"("id");
+
+
+--
+-- Name: competitors competitors_division_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
+--
+
+ALTER TABLE ONLY "qdb_2022"."competitors"
+    ADD CONSTRAINT "competitors_division_id_fkey" FOREIGN KEY ("division_id") REFERENCES "qdb_2022"."divisions"("id");
+
+
+--
+-- Name: competitors competitors_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
+--
+
+ALTER TABLE ONLY "qdb_2022"."competitors"
     ADD CONSTRAINT "competitors_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id");
 
 
 --
--- Name: divisions divisions_comp_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: supabase_admin
+-- Name: divisions divisions_comp_id_fkey; Type: FK CONSTRAINT; Schema: qdb_2022; Owner: supabase_admin
 --
 
-ALTER TABLE ONLY "public"."divisions"
-    ADD CONSTRAINT "divisions_comp_id_fkey" FOREIGN KEY ("comp_id") REFERENCES "public"."comps"("id");
+ALTER TABLE ONLY "qdb_2022"."divisions"
+    ADD CONSTRAINT "divisions_comp_id_fkey" FOREIGN KEY ("comp_id") REFERENCES "qdb_2022"."comps"("id");
 
 
 --
--- Name: SCHEMA "public"; Type: ACL; Schema: -; Owner: postgres
+-- Name: SCHEMA "qdb_2022"; Type: ACL; Schema: -; Owner: postgres
 --
 
-GRANT USAGE ON SCHEMA "public" TO "anon";
-GRANT USAGE ON SCHEMA "public" TO "authenticated";
-GRANT USAGE ON SCHEMA "public" TO "service_role";
+GRANT USAGE ON SCHEMA "qdb_2022" TO "anon";
+GRANT USAGE ON SCHEMA "qdb_2022" TO "authenticated";
+GRANT USAGE ON SCHEMA "qdb_2022" TO "service_role";
 
 
 --
@@ -749,13 +749,13 @@ GRANT ALL ON FUNCTION "graphql"."variable_definitions_sort"("variable_definition
 
 
 --
--- Name: FUNCTION "graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb"); Type: ACL; Schema: graphql_public; Owner: supabase_admin
+-- Name: FUNCTION "graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb"); Type: ACL; Schema: graphql_qdb_2022; Owner: supabase_admin
 --
 
--- GRANT ALL ON FUNCTION "graphql_public"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "postgres";
--- GRANT ALL ON FUNCTION "graphql_public"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "anon";
--- GRANT ALL ON FUNCTION "graphql_public"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "authenticated";
--- GRANT ALL ON FUNCTION "graphql_public"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "service_role";
+-- GRANT ALL ON FUNCTION "graphql_qdb_2022"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "postgres";
+-- GRANT ALL ON FUNCTION "graphql_qdb_2022"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "anon";
+-- GRANT ALL ON FUNCTION "graphql_qdb_2022"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "authenticated";
+-- GRANT ALL ON FUNCTION "graphql_qdb_2022"."graphql"("operationName" "text", "query" "text", "variables" "jsonb", "extensions" "jsonb") TO "service_role";
 
 
 --
@@ -807,133 +807,133 @@ GRANT ALL ON TABLE "pgsodium"."valid_key" TO "pgsodium_keyiduser";
 
 
 --
--- Name: TABLE "advancements"; Type: ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "advancements"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
-GRANT ALL ON TABLE "public"."advancements" TO "postgres";
-GRANT ALL ON TABLE "public"."advancements" TO "anon";
-GRANT ALL ON TABLE "public"."advancements" TO "authenticated";
-GRANT ALL ON TABLE "public"."advancements" TO "service_role";
-
-
---
--- Name: TABLE "attempts"; Type: ACL; Schema: public; Owner: supabase_admin
---
-
-GRANT ALL ON TABLE "public"."attempts" TO "postgres";
-GRANT ALL ON TABLE "public"."attempts" TO "anon";
-GRANT ALL ON TABLE "public"."attempts" TO "authenticated";
-GRANT ALL ON TABLE "public"."attempts" TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."advancements" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."advancements" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."advancements" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."advancements" TO "service_role";
 
 
 --
--- Name: TABLE "climbs"; Type: ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "attempts"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
-GRANT ALL ON TABLE "public"."climbs" TO "postgres";
-GRANT ALL ON TABLE "public"."climbs" TO "anon";
-GRANT ALL ON TABLE "public"."climbs" TO "authenticated";
-GRANT ALL ON TABLE "public"."climbs" TO "service_role";
-
-
---
--- Name: TABLE "competitors"; Type: ACL; Schema: public; Owner: supabase_admin
---
-
-GRANT ALL ON TABLE "public"."competitors" TO "postgres";
-GRANT ALL ON TABLE "public"."competitors" TO "anon";
-GRANT ALL ON TABLE "public"."competitors" TO "authenticated";
-GRANT ALL ON TABLE "public"."competitors" TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."attempts" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."attempts" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."attempts" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."attempts" TO "service_role";
 
 
 --
--- Name: TABLE "comps"; Type: ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "climbs"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
-GRANT ALL ON TABLE "public"."comps" TO "postgres";
-GRANT ALL ON TABLE "public"."comps" TO "anon";
-GRANT ALL ON TABLE "public"."comps" TO "authenticated";
-GRANT ALL ON TABLE "public"."comps" TO "service_role";
-
-
---
--- Name: TABLE "divisions"; Type: ACL; Schema: public; Owner: supabase_admin
---
-
-GRANT ALL ON TABLE "public"."divisions" TO "postgres";
-GRANT ALL ON TABLE "public"."divisions" TO "anon";
-GRANT ALL ON TABLE "public"."divisions" TO "authenticated";
-GRANT ALL ON TABLE "public"."divisions" TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."climbs" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."climbs" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."climbs" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."climbs" TO "service_role";
 
 
 --
--- Name: TABLE "rounds"; Type: ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "competitors"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
-GRANT ALL ON TABLE "public"."rounds" TO "postgres";
-GRANT ALL ON TABLE "public"."rounds" TO "anon";
-GRANT ALL ON TABLE "public"."rounds" TO "authenticated";
-GRANT ALL ON TABLE "public"."rounds" TO "service_role";
-
-
---
--- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "authenticated";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."competitors" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."competitors" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."competitors" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."competitors" TO "service_role";
 
 
 --
--- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "comps"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "authenticated";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "service_role";
-
-
---
--- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: public; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "postgres";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "anon";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "authenticated";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."comps" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."comps" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."comps" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."comps" TO "service_role";
 
 
 --
--- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "divisions"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "postgres";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "anon";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "authenticated";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "service_role";
-
-
---
--- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "postgres";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "anon";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "authenticated";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."divisions" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."divisions" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."divisions" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."divisions" TO "service_role";
 
 
 --
--- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: supabase_admin
+-- Name: TABLE "rounds"; Type: ACL; Schema: qdb_2022; Owner: supabase_admin
 --
 
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON TABLES  TO "postgres";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON TABLES  TO "anon";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON TABLES  TO "authenticated";
--- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "public" GRANT ALL ON TABLES  TO "service_role";
+GRANT ALL ON TABLE "qdb_2022"."rounds" TO "postgres";
+GRANT ALL ON TABLE "qdb_2022"."rounds" TO "anon";
+GRANT ALL ON TABLE "qdb_2022"."rounds" TO "authenticated";
+GRANT ALL ON TABLE "qdb_2022"."rounds" TO "service_role";
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: qdb_2022; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "service_role";
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: qdb_2022; Owner: supabase_admin
+--
+
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "postgres";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "anon";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "authenticated";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON SEQUENCES  TO "service_role";
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: qdb_2022; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "service_role";
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: qdb_2022; Owner: supabase_admin
+--
+
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "postgres";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "anon";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "authenticated";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON FUNCTIONS  TO "service_role";
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: qdb_2022; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "postgres";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "anon";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "authenticated";
+ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "service_role";
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: qdb_2022; Owner: supabase_admin
+--
+
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "postgres";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "anon";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "authenticated";
+-- ALTER DEFAULT PRIVILEGES FOR ROLE "supabase_admin" IN SCHEMA "qdb_2022" GRANT ALL ON TABLES  TO "service_role";
 
 
 --

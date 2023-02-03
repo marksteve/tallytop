@@ -25,10 +25,10 @@ export default function Boulders() {
   }
   const supabase = browserClient(...clientEnv)
   supabase
-    .channel('public:attempts')
+    .channel('qdb_2022:attempts')
     .on(
       'postgres_changes',
-      { event: '*', schema: 'public', table: 'attempts' },
+      { event: '*', schema: 'qdb_2022', table: 'attempts' },
       async (payload) => {
         const { data: climbs } = await supabase.from('qualis_climbs').select()
         setLiveClimbs(climbs)

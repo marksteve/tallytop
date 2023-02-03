@@ -26,10 +26,10 @@ export default function Scores() {
   useEffect(() => {
     const supabase = browserClient(...clientEnv)
     const channel = supabase
-      .channel('public:attempts')
+      .channel('qdb_2022:attempts')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'attempts' },
+        { event: '*', schema: 'qdb_2022', table: 'attempts' },
         async () => {
           const { data: rankings } = await supabase
             .from('qualis_rankings')

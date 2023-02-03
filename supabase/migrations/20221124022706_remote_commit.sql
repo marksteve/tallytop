@@ -3,70 +3,70 @@
 -- and may require manual changes to the script to ensure changes are applied in the correct order.
 -- Please report an issue for any failure with the reproduction steps.
 
-REVOKE ALL ON TABLE public.comps FROM anon;
-REVOKE ALL ON TABLE public.comps FROM authenticated;
-REVOKE ALL ON TABLE public.comps FROM postgres;
-REVOKE ALL ON TABLE public.comps FROM service_role;
-REVOKE ALL ON TABLE public.comps FROM supabase_admin;
-GRANT ALL ON TABLE public.comps TO anon;
+REVOKE ALL ON TABLE qdb_2022.comps FROM anon;
+REVOKE ALL ON TABLE qdb_2022.comps FROM authenticated;
+REVOKE ALL ON TABLE qdb_2022.comps FROM postgres;
+REVOKE ALL ON TABLE qdb_2022.comps FROM service_role;
+REVOKE ALL ON TABLE qdb_2022.comps FROM supabase_admin;
+GRANT ALL ON TABLE qdb_2022.comps TO anon;
 
-GRANT ALL ON TABLE public.comps TO postgres;
+GRANT ALL ON TABLE qdb_2022.comps TO postgres;
 
-GRANT ALL ON TABLE public.comps TO supabase_admin;
+GRANT ALL ON TABLE qdb_2022.comps TO supabase_admin;
 
-GRANT ALL ON TABLE public.comps TO authenticated;
+GRANT ALL ON TABLE qdb_2022.comps TO authenticated;
 
-GRANT ALL ON TABLE public.comps TO service_role;
+GRANT ALL ON TABLE qdb_2022.comps TO service_role;
 
-ALTER TABLE IF EXISTS public.comps
+ALTER TABLE IF EXISTS qdb_2022.comps
     ADD COLUMN current_round_id uuid;
-ALTER TABLE IF EXISTS public.comps
+ALTER TABLE IF EXISTS qdb_2022.comps
     ADD CONSTRAINT comps_current_round_id_fkey FOREIGN KEY (current_round_id)
-    REFERENCES public.rounds (id) MATCH SIMPLE
+    REFERENCES qdb_2022.rounds (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
-REVOKE ALL ON TABLE public.climbs FROM anon;
-REVOKE ALL ON TABLE public.climbs FROM authenticated;
-REVOKE ALL ON TABLE public.climbs FROM postgres;
-REVOKE ALL ON TABLE public.climbs FROM service_role;
-REVOKE ALL ON TABLE public.climbs FROM supabase_admin;
-GRANT ALL ON TABLE public.climbs TO anon;
+REVOKE ALL ON TABLE qdb_2022.climbs FROM anon;
+REVOKE ALL ON TABLE qdb_2022.climbs FROM authenticated;
+REVOKE ALL ON TABLE qdb_2022.climbs FROM postgres;
+REVOKE ALL ON TABLE qdb_2022.climbs FROM service_role;
+REVOKE ALL ON TABLE qdb_2022.climbs FROM supabase_admin;
+GRANT ALL ON TABLE qdb_2022.climbs TO anon;
 
-GRANT ALL ON TABLE public.climbs TO postgres;
+GRANT ALL ON TABLE qdb_2022.climbs TO postgres;
 
-GRANT ALL ON TABLE public.climbs TO supabase_admin;
+GRANT ALL ON TABLE qdb_2022.climbs TO supabase_admin;
 
-GRANT ALL ON TABLE public.climbs TO authenticated;
+GRANT ALL ON TABLE qdb_2022.climbs TO authenticated;
 
-GRANT ALL ON TABLE public.climbs TO service_role;
+GRANT ALL ON TABLE qdb_2022.climbs TO service_role;
 
-REVOKE ALL ON TABLE public.divisions FROM anon;
-REVOKE ALL ON TABLE public.divisions FROM authenticated;
-REVOKE ALL ON TABLE public.divisions FROM postgres;
-REVOKE ALL ON TABLE public.divisions FROM service_role;
-REVOKE ALL ON TABLE public.divisions FROM supabase_admin;
-GRANT ALL ON TABLE public.divisions TO anon;
+REVOKE ALL ON TABLE qdb_2022.divisions FROM anon;
+REVOKE ALL ON TABLE qdb_2022.divisions FROM authenticated;
+REVOKE ALL ON TABLE qdb_2022.divisions FROM postgres;
+REVOKE ALL ON TABLE qdb_2022.divisions FROM service_role;
+REVOKE ALL ON TABLE qdb_2022.divisions FROM supabase_admin;
+GRANT ALL ON TABLE qdb_2022.divisions TO anon;
 
-GRANT ALL ON TABLE public.divisions TO postgres;
+GRANT ALL ON TABLE qdb_2022.divisions TO postgres;
 
-GRANT ALL ON TABLE public.divisions TO supabase_admin;
+GRANT ALL ON TABLE qdb_2022.divisions TO supabase_admin;
 
-GRANT ALL ON TABLE public.divisions TO authenticated;
+GRANT ALL ON TABLE qdb_2022.divisions TO authenticated;
 
-GRANT ALL ON TABLE public.divisions TO service_role;
+GRANT ALL ON TABLE qdb_2022.divisions TO service_role;
 
-REVOKE ALL ON TABLE public.rounds FROM anon;
-REVOKE ALL ON TABLE public.rounds FROM authenticated;
-REVOKE ALL ON TABLE public.rounds FROM postgres;
-REVOKE ALL ON TABLE public.rounds FROM service_role;
-REVOKE ALL ON TABLE public.rounds FROM supabase_admin;
-GRANT ALL ON TABLE public.rounds TO anon;
+REVOKE ALL ON TABLE qdb_2022.rounds FROM anon;
+REVOKE ALL ON TABLE qdb_2022.rounds FROM authenticated;
+REVOKE ALL ON TABLE qdb_2022.rounds FROM postgres;
+REVOKE ALL ON TABLE qdb_2022.rounds FROM service_role;
+REVOKE ALL ON TABLE qdb_2022.rounds FROM supabase_admin;
+GRANT ALL ON TABLE qdb_2022.rounds TO anon;
 
-GRANT ALL ON TABLE public.rounds TO postgres;
+GRANT ALL ON TABLE qdb_2022.rounds TO postgres;
 
-GRANT ALL ON TABLE public.rounds TO supabase_admin;
+GRANT ALL ON TABLE qdb_2022.rounds TO supabase_admin;
 
-GRANT ALL ON TABLE public.rounds TO authenticated;
+GRANT ALL ON TABLE qdb_2022.rounds TO authenticated;
 
-GRANT ALL ON TABLE public.rounds TO service_role;
+GRANT ALL ON TABLE qdb_2022.rounds TO service_role;

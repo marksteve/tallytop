@@ -13,12 +13,15 @@ export const serverClient = (
   response: globalThis.Response | null = null
 ) => {
   const [url, key] = getClientEnv(process.env)
-  return createServerClient<Database>(url, key, {
+  return createServerClient<Database, 'qdb_2022'>(url, key, {
     request,
     response: response ?? new Response(),
+    options: { db: { schema: 'qdb_2022' } },
   })
 }
 
 export const browserClient = (url, key) => {
-  return createBrowserClient<Database>(url, key)
+  return createBrowserClient<Database, 'qdb_2022'>(url, key, {
+    options: { db: { schema: 'qdb_2022' } },
+  })
 }

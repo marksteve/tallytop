@@ -6,7 +6,7 @@ import { type Database } from '~/database.types'
 import { serverClient } from '~/supabase'
 
 type LoaderData = {
-  climbs: Database['public']['Tables']['climbs']['Row'][]
+  climbs: Database['qdb_2022']['Tables']['climbs']['Row'][]
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
