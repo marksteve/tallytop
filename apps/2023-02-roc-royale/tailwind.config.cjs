@@ -9,6 +9,9 @@ module.exports = {
           hotpink: '#ea32c7',
           yellow: '#fad31a'
         }
+      },
+      fontFamily: {
+        title: ['squealerheavy', 'sans-serif']
       }
     }
   },
