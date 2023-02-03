@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Logo } from '@tallytop/ui'
+  import { Wordmark } from '@tallytop/ui'
   let links = [
     ['SEE SCORES', '/scores', '-rotate-2'],
     ['JUDGE', '/judge', 'rotate-3'],
@@ -30,6 +30,6 @@
 
   <div class="relative flex items-center justify-center gap-2 whitespace-nowrap p-10 text-2xl">
     Powered by
-    <Logo class="h-14" />
+    <Wordmark class="h-14" />
   </div>
 </div>
