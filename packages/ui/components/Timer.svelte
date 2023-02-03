@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
   import toMilliseconds from '@sindresorhus/to-milliseconds'
   import supabase from '@tallytop/supabase'
-  import { Button } from '@tallytop/ui'
   import { Howl } from 'howler'
   import { nanoid } from 'nanoid'
   import parseMs, { type TimeComponents } from 'parse-ms'
@@ -11,6 +9,7 @@
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
   import { onDestroy, onMount } from 'svelte'
+  import Button from './Button.svelte'
 
   const ID_LENGTH = 6
 
@@ -31,6 +30,7 @@
   export let beeps = [0, 60, 5, 4, 3, 2, 1]
   let playedBeeps: number[] = []
 
+  export let browser = true
   export let viewMode = false
   export let id: string = browser
     ? window.localStorage.getItem('tallytop-timer-id') ?? nanoid(ID_LENGTH)
