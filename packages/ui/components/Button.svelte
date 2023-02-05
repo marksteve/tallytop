@@ -1,12 +1,26 @@
 <script lang="ts">
-  let className
-  export { className as class }
+  let extraClass = ''
+  export { extraClass as class }
+
+  let buttonClass = `px-5 leading-loose`
+
+  export let rounded = true
+
+  if (rounded) {
+    buttonClass = `${buttonClass} rounded-full`
+  }
+
+  export let variant: 'none' | 'plain' = 'plain'
+  switch (variant) {
+    case 'none':
+      break
+    case 'plain':
+    default:
+      buttonClass = `${buttonClass} bg-stone-200 hover:bg-stone-100`
+      break
+  }
 </script>
 
-<button
-  {...$$props}
-  class={`rounded-full bg-stone-200 hover:bg-stone-100 px-5 leading-loose ${className ?? ''}`}
-  on:click
->
+<button {...$$props} class={`${buttonClass} ${extraClass ?? ''}`} on:click>
   <slot />
 </button>

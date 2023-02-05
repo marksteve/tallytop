@@ -12,7 +12,8 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "dependencies": {
-    "@tallytop/ui": "workspace:*"
+    "@tallytop/ui": "workspace:*",
+    "phosphor-svelte": "^1.2.1"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "latest",

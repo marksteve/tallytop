@@ -1,3 +1,13 @@
+<script lang="ts" context="module">
+  export const formatDuration = (timeOrMs: TimeComponents | number) => {
+    const time = typeof timeOrMs === 'number' ? parseMs(timeOrMs) : timeOrMs
+    return [
+      String(Math.trunc(time.hours * 60 + time.minutes)).padStart(2, '0'),
+      String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0')
+    ].join(':')
+  }
+</script>
+
 <script lang="ts">
   import toMilliseconds from '@sindresorhus/to-milliseconds'
   import supabase from '@tallytop/supabase'
@@ -12,6 +22,7 @@
   import Button from './Button.svelte'
 
   const ID_LENGTH = 6
+  const MAX_DURATION = 5_940_000 // 99 mins
 
   type Status = 'started' | 'running' | 'stopped'
   type Event = 'start' | 'stop' | 'reset'
@@ -85,16 +96,14 @@
   function handleDurationChange(e: FocusEvent) {
     const text = (e.target as HTMLElement).textContent
     let timeComponents = (text ?? '').split(':')
-    if (!timeComponents.length) {
-      return
-    }
-    let seconds = timeComponents.pop()
-    if (!timeComponents.length) {
-      duration = toMilliseconds({ seconds: parseFloat(seconds!) })
-      return
-    }
-    let minutes = timeComponents.pop()
-    duration = toMilliseconds({ minutes: parseFloat(minutes!), seconds: parseFloat(seconds!) })
+    const components = ['seconds', 'minutes']
+    let nextDuration = {}
+    components.forEach((unit) => {
+      if (timeComponents.length) {
+        nextDuration[unit] = parseFloat(timeComponents.pop()!)
+      }
+    })
+    duration = Math.min(MAX_DURATION, toMilliseconds(nextDuration))
   }
 
   function start(endTimeInit?: number) {
@@ -178,13 +187,7 @@
   contenteditable={status !== 'running'}
   on:blur={handleDurationChange}
 >
-  {[
-    String(time.seconds + time.milliseconds / 1000 > 59 ? time.minutes + 1 : time.minutes).padStart(
-      2,
-      '0'
-    ),
-    String(Math.ceil(time.seconds + time.milliseconds / 1000) % 60).padStart(2, '0')
-  ].join(':')}
+  {formatDuration(time)}
 </div>
 
 {#if !viewMode}
