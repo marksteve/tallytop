@@ -1,22 +1,33 @@
 <script>
   import { browser } from '$app/environment'
   import { currentTimer, timerQueue } from '$lib/stores'
-  import { Button, formatDuration, Logo, Timer } from '@tallytop/ui'
+  import { Button, formatDuration, Logo, parseDuration, Timer } from '@tallytop/ui'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
 
-  let [duration, description] = $timerQueue[$currentTimer]
+  let { description, duration } = $timerQueue[$currentTimer]
 
-  const updateTimerDescription = (e, i) => {
+  const updateTimerDescription = (v, i) => {
     timerQueue.update((value) => {
-      value[i][1] = e.target.value
-      if (i === $currentTimer) description = e.target.value
+      value[i].description = v
+      return value
+    })
+  }
+
+  const updateTimerDuration = (v, i) => {
+    timerQueue.update((value) => {
+      value[i].duration = typeof v === 'string' ? parseDuration(v) : v
       return value
     })
   }
 
   let queueShown = false
   const toggleQueue = () => (queueShown = !queueShown)
+
+  $: {
+    description = $timerQueue[$currentTimer].description
+    duration = $timerQueue[$currentTimer].duration
+  }
 </script>
 
 <div class="flex min-h-screen flex-1">
@@ -29,16 +40,21 @@
   </div>
   {#if queueShown}
     <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16">
-      {#each $timerQueue as [duration, description], i}
+      {#each $timerQueue as { description, duration }, i}
         <div class="flex gap-5 px-5 leading-loose">
           <div class="text-stone-300">{i + 1}</div>
           <input
             class="bg-transparent"
             type="text"
             value={description}
-            on:change={(e) => updateTimerDescription(e, i)}
+            on:change={(e) => updateTimerDescription(e.target.value, i)}
           />
-          <div class="font-mono">{formatDuration(duration)}</div>
+          <input
+            class="w-14 bg-transparent font-mono"
+            type="text"
+            value={formatDuration(duration)}
+            on:change={(e) => updateTimerDuration(e.target.value, i)}
+          />
         </div>
       {/each}
       <Button class="flex items-center gap-2"><Plus /> New timer</Button>
@@ -46,7 +62,11 @@
   {/if}
   <div class="flex flex-1 flex-col items-center justify-center gap-10 bg-white shadow-xl">
     <Logo width="128" />
-    <Timer {duration} {browser} />
+    <Timer
+      {duration}
+      {browser}
+      onChange={({ duration }) => updateTimerDuration(duration, $currentTimer)}
+    />
     <div class="text-2xl">{description}</div>
   </div>
 </div>

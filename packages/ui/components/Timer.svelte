@@ -1,4 +1,18 @@
 <script lang="ts" context="module">
+  const MAX_DURATION = 5_940_000 // 99 mins
+
+  export const parseDuration = (text: string) => {
+    let timeComponents = (text ?? '').split(':')
+    const components = ['seconds', 'minutes']
+    let nextDuration = {}
+    components.forEach((unit) => {
+      if (timeComponents.length) {
+        nextDuration[unit] = parseFloat(timeComponents.pop()!)
+      }
+    })
+    return Math.min(MAX_DURATION, toMilliseconds(nextDuration))
+  }
+
   export const formatDuration = (timeOrMs: TimeComponents | number) => {
     const time = typeof timeOrMs === 'number' ? parseMs(timeOrMs) : timeOrMs
     return [
@@ -22,7 +36,6 @@
   import Button from './Button.svelte'
 
   const ID_LENGTH = 6
-  const MAX_DURATION = 5_940_000 // 99 mins
 
   type Status = 'started' | 'running' | 'stopped'
   type Event = 'start' | 'stop' | 'reset'
@@ -40,6 +53,8 @@
   }
   export let beeps = [0, 60, 5, 4, 3, 2, 1]
   let playedBeeps: number[] = []
+
+  export let onChange = ({ duration }: { duration: number }) => {}
 
   export let browser = true
   export let viewMode = false
@@ -95,15 +110,8 @@
 
   function handleDurationChange(e: FocusEvent) {
     const text = (e.target as HTMLElement).textContent
-    let timeComponents = (text ?? '').split(':')
-    const components = ['seconds', 'minutes']
-    let nextDuration = {}
-    components.forEach((unit) => {
-      if (timeComponents.length) {
-        nextDuration[unit] = parseFloat(timeComponents.pop()!)
-      }
-    })
-    duration = Math.min(MAX_DURATION, toMilliseconds(nextDuration))
+    duration = parseDuration(text)
+    onChange({ duration })
   }
 
   function start(endTimeInit?: number) {
@@ -177,6 +185,11 @@
       status = 'running'
       tick()
     }
+  }
+
+  $: {
+    time = parseMs(duration)
+    elapsed = 0
   }
 </script>
 

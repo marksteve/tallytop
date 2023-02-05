@@ -1,5 +1,10 @@
 import { writable } from 'svelte/store'
 
-export const timerQueue = writable([[5 * 60 * 1000, '5-min timer'] as const])
+export const timerQueue = writable([
+  {
+    description: '5-min timer',
+    duration: 5 * 60 * 1000
+  }
+])
 
 export const currentTimer = writable(0)
