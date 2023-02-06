@@ -51,7 +51,7 @@
     beep: new Howl({ src: '/sounds/beep.mp3' }),
     end: new Howl({ src: '/sounds/end.mp3' })
   }
-  export let beeps = [0, 60, 5, 4, 3, 2, 1]
+  export let beeps = [60, 5, 4, 3, 2, 1, 0]
   let playedBeeps: number[] = []
 
   export let onChange = ({ duration }: { duration: number }) => {}
@@ -143,21 +143,22 @@
 
   function tick() {
     if (status === 'running') {
-      let remaining = endTime - Date.now()
+      let remaining = endTime - Date.now() + 1000
       time = parseMs(remaining)
 
-      if (remaining < 0) {
+      const seconds = Math.trunc(remaining / 1000)
+
+      if (seconds < 0) {
         remaining = 0
       }
-      if (remaining === 0) {
+      if (seconds === 0) {
         stop()
         sound.end.play()
       }
 
-      const seconds = Math.ceil(remaining / 1000)
       if (
         !playedBeeps.includes(seconds) &&
-        (seconds === Math.ceil(duration / 1000) || beeps.includes(seconds))
+        (seconds === Math.trunc(duration / 1000) || beeps.includes(seconds))
       ) {
         sound.beep.play()
         playedBeeps = [...playedBeeps, seconds]
