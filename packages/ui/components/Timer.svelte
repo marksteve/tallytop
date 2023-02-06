@@ -207,11 +207,11 @@
 {#if !viewMode}
   <div class="flex gap-10 text-4xl">
     {#if status === 'stopped'}
-      <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-100" on:click={() => start()}
+      <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-300" on:click={() => start()}
         ><Play /></Button
       >
     {:else}
-      <Button class="bg-orange-200 px-10 py-5 hover:bg-emerald-100" on:click={() => stop()}
+      <Button class="bg-orange-200 px-10 py-5 hover:bg-orange-300" on:click={() => stop()}
         ><Stop /></Button
       >
     {/if}

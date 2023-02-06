@@ -16,7 +16,7 @@
       break
     case 'plain':
     default:
-      buttonClass = `${buttonClass} bg-stone-200 hover:bg-stone-100`
+      buttonClass = `${buttonClass} bg-stone-200 hover:bg-stone-300`
       break
   }
 </script>

@@ -38,6 +38,7 @@
       </div>
     </Button>
   </div>
+
   {#if queueShown}
     <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16">
       {#each $timerQueue as { description, duration }, i}
@@ -60,6 +61,7 @@
       <Button class="flex items-center gap-2"><Plus /> New timer</Button>
     </div>
   {/if}
+
   <div class="flex flex-1 flex-col items-center justify-center gap-10 bg-white shadow-xl">
     <Logo width="128" />
     <Timer
