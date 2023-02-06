@@ -29,7 +29,6 @@
   import { nanoid } from 'nanoid'
   import parseMs, { type TimeComponents } from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
-  import Eye from 'phosphor-svelte/lib/Eye'
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
@@ -218,8 +217,5 @@
       </Button>
     {/if}
     <Button class="px-10 py-5" on:click={() => reset()}><ArrowCounterClockwise /></Button>
-    <a href={`/${id}`} target="_blank" rel="noreferrer">
-      <Button class="px-10 py-5"><Eye /></Button>
-    </a>
   </div>
 {/if}
