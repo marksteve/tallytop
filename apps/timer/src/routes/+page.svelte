@@ -5,6 +5,9 @@
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
 
+  let queueShown = false
+  const toggleQueue = () => (queueShown = !queueShown)
+
   let { description, duration } = $timerQueue[$currentTimer]
 
   const updateTimerDescription = (v, i) => {
@@ -21,12 +24,23 @@
     })
   }
 
-  let queueShown = false
-  const toggleQueue = () => (queueShown = !queueShown)
-
   $: {
     description = $timerQueue[$currentTimer].description
     duration = $timerQueue[$currentTimer].duration
+  }
+
+  let currentTimerDescription
+
+  const handleNewTimer = () => {
+    timerQueue.update((value) => [
+      ...value,
+      { description: 'Enter description', duration: 60 * 1000 }
+    ])
+    $currentTimer = $timerQueue.length - 1
+  }
+
+  $: {
+    currentTimerDescription?.focus()
   }
 </script>
 
@@ -42,13 +56,23 @@
   {#if queueShown}
     <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16">
       {#each $timerQueue as { description, duration }, i}
-        <div class="flex gap-5 px-5 leading-loose">
-          <div class="text-stone-300">{i + 1}</div>
+        <div class="flex items-baseline gap-5 px-5 leading-loose">
+          <button
+            class={`flex h-5 w-5 items-center justify-center rounded-full leading-none ${
+              i === $currentTimer
+                ? `bg-stone-400 text-stone-50`
+                : `text-stone-400 hover:bg-stone-200`
+            }`}
+            on:click={() => ($currentTimer = i)}
+          >
+            {i + 1}
+          </button>
           <input
             class="bg-transparent"
             type="text"
             value={description}
             on:change={(e) => updateTimerDescription(e.target.value, i)}
+            bind:this={currentTimerDescription}
           />
           <input
             class="w-14 bg-transparent font-mono"
@@ -58,7 +82,7 @@
           />
         </div>
       {/each}
-      <Button class="flex items-center gap-2"><Plus /> New timer</Button>
+      <Button class="flex items-center gap-2" on:click={handleNewTimer}><Plus /> New timer</Button>
     </div>
   {/if}
 
