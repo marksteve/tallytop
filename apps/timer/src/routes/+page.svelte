@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import { browser } from '$app/environment'
   import { currentTimer, timerQueue } from '$lib/stores'
   import { Button, formatDuration, Logo, parseDuration, Timer } from '@tallytop/ui'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
+  import { tick } from 'svelte'
 
   let queueShown = false
   const toggleQueue = () => (queueShown = !queueShown)
@@ -29,18 +30,36 @@
     duration = $timerQueue[$currentTimer].duration
   }
 
-  let currentTimerDescription
+  let currentTimerDescription: HTMLInputElement
 
-  const handleNewTimer = () => {
+  const handleNewTimer = async () => {
     timerQueue.update((value) => [
       ...value,
       { description: 'Enter description', duration: 60 * 1000 }
     ])
     $currentTimer = $timerQueue.length - 1
+    await tick()
+    currentTimerDescription?.focus()
+    currentTimerDescription?.select()
   }
 
-  $: {
-    currentTimerDescription?.focus()
+  let timer
+
+  const setNextTimer = async () => {
+    $currentTimer++
+
+    const queueEnded = $currentTimer >= $timerQueue.length
+
+    if (queueEnded) {
+      $currentTimer = 0
+    }
+
+    await tick()
+    timer?.reset()
+
+    if (!queueEnded) {
+      timer?.start()
+    }
   }
 </script>
 
@@ -58,7 +77,7 @@
       {#each $timerQueue as { description, duration }, i}
         <div class="flex items-baseline gap-5 px-5 leading-loose">
           <button
-            class={`flex h-5 w-5 items-center justify-center rounded-full leading-none ${
+            class={`flex h-5 w-5 items-center justify-center rounded-full text-xs leading-none ${
               i === $currentTimer
                 ? `bg-stone-400 text-stone-50`
                 : `text-stone-400 hover:bg-stone-200`
@@ -91,7 +110,9 @@
     <Timer
       {duration}
       {browser}
-      onChange={({ duration }) => updateTimerDuration(duration, $currentTimer)}
+      bind:this={timer}
+      on:changeduration={({ duration }) => updateTimerDuration(duration, $currentTimer)}
+      on:end={setNextTimer}
     />
     <div class="text-2xl">{description}</div>
   </div>

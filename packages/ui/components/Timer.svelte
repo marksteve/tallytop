@@ -32,7 +32,7 @@
   import Eye from 'phosphor-svelte/lib/Eye'
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
-  import { onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import Button from './Button.svelte'
 
   type Status = 'started' | 'running' | 'stopped'
@@ -57,15 +57,15 @@
   export let beeps = [60, 5, 4, 3, 2, 1, 0]
   let playedBeeps: number[] = []
 
-  export let onChange = ({ duration }: { duration: number }) => {}
+  const dispatch = createEventDispatcher()
 
-  function handleDurationChange(e: FocusEvent) {
+  const handleDurationChange = (e: FocusEvent) => {
     const text = (e.target as HTMLElement).textContent
     duration = parseDuration(text)
-    onChange({ duration })
+    dispatch('changeduration', { duration })
   }
 
-  function start(endTimeInit?: number) {
+  export const start = (endTimeInit?: number) => {
     endTime = endTimeInit ? endTimeInit : Date.now() + duration - elapsed
     status = 'started'
     if (!viewMode) {
@@ -73,7 +73,7 @@
     }
   }
 
-  function stop() {
+  export const stop = () => {
     const remaining = endTime - Date.now()
     elapsed = duration - remaining
     status = 'stopped'
@@ -82,7 +82,7 @@
     }
   }
 
-  function reset() {
+  export const reset = () => {
     time = parseMs(duration)
     elapsed = 0
     status = 'stopped'
@@ -92,7 +92,7 @@
     }
   }
 
-  function tick() {
+  const tick = () => {
     if (status === 'running') {
       let remaining = endTime - Date.now() + 1000
       time = parseMs(remaining)
@@ -105,6 +105,7 @@
       if (seconds === 0) {
         stop()
         sound.end.play()
+        dispatch('end')
       }
 
       if (
@@ -123,11 +124,9 @@
     }
   }
 
-  $: {
-    if (status === 'started') {
-      status = 'running'
-      tick()
-    }
+  $: if (status === 'started') {
+    status = 'running'
+    tick()
   }
 
   const ID_LENGTH = 6
@@ -189,7 +188,7 @@
   let broadcastLimit = 1 // rps
   let lastBroadcast: number = 0
 
-  function trackTime() {
+  const trackTime = () => {
     if (Date.now() - lastBroadcast > broadcastLimit * 1000) {
       channel.track(time)
       lastBroadcast = Date.now()
