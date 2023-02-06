@@ -119,7 +119,9 @@
       {duration}
       {browser}
       bind:this={timer}
-      on:changeduration={({ duration }) => updateTimerDuration(duration, $currentTimer)}
+      on:changeduration={({ detail: { duration } }) => {
+        updateTimerDuration(duration, $currentTimer)
+      }}
       on:end={setNextTimer}
     />
     <div class="text-2xl">{description}</div>
