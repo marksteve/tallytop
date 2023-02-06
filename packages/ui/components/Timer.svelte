@@ -35,8 +35,6 @@
   import { onDestroy, onMount } from 'svelte'
   import Button from './Button.svelte'
 
-  const ID_LENGTH = 6
-
   type Status = 'started' | 'running' | 'stopped'
   type Event = 'start' | 'stop' | 'reset'
 
@@ -47,6 +45,11 @@
   export let duration = 5 * 60 * 1000
   let time = parseMs(duration)
 
+  $: {
+    time = parseMs(duration)
+    elapsed = 0
+  }
+
   const sound = {
     beep: new Howl({ src: '/sounds/beep.mp3' }),
     end: new Howl({ src: '/sounds/end.mp3' })
@@ -55,58 +58,6 @@
   let playedBeeps: number[] = []
 
   export let onChange = ({ duration }: { duration: number }) => {}
-
-  export let browser = true
-  export let viewMode = false
-  export let id: string = browser
-    ? window.localStorage.getItem('tallytop-timer-id') ?? nanoid(ID_LENGTH)
-    : nanoid(ID_LENGTH)
-  if (browser && !viewMode) {
-    window.localStorage.setItem('tallytop-timer-id', id)
-  }
-
-  const channel = supabase.channel(
-    `tallytop:${id}`,
-    viewMode
-      ? undefined
-      : {
-          config: { presence: { key: id } }
-        }
-  )
-  onMount(() => {
-    if (!browser) {
-      return
-    }
-    if (viewMode) {
-      channel.on('broadcast', { event: '*' }, ({ event, payload }) => {
-        switch (event as Event) {
-          case 'start':
-            start(payload.endTimeInit)
-            break
-          case 'stop':
-            stop()
-            break
-          case 'reset':
-            reset()
-            break
-        }
-      })
-      channel.on('presence', { event: 'sync' }, () => {
-        const prescence = channel.presenceState()?.[id]
-        if (!prescence) {
-          return
-        }
-        time = prescence[0] as unknown as TimeComponents
-      })
-    }
-    channel.subscribe()
-  })
-  onDestroy(() => {
-    if (!browser) {
-      return
-    }
-    Promise.all([channel.unsubscribe(), channel.untrack()])
-  })
 
   function handleDurationChange(e: FocusEvent) {
     const text = (e.target as HTMLElement).textContent
@@ -172,15 +123,6 @@
     }
   }
 
-  let broadcastLimit = 1 // rps
-  let lastBroadcast: number = 0
-  function trackTime() {
-    if (Date.now() - lastBroadcast > broadcastLimit * 1000) {
-      channel.track(time)
-      lastBroadcast = Date.now()
-    }
-  }
-
   $: {
     if (status === 'started') {
       status = 'running'
@@ -188,9 +130,70 @@
     }
   }
 
-  $: {
-    time = parseMs(duration)
-    elapsed = 0
+  const ID_LENGTH = 6
+
+  export let browser = true
+  export let viewMode = false
+  export let id: string = browser
+    ? window.localStorage.getItem('tallytop-timer-id') ?? nanoid(ID_LENGTH)
+    : nanoid(ID_LENGTH)
+  if (browser && !viewMode) {
+    window.localStorage.setItem('tallytop-timer-id', id)
+  }
+
+  const channel = supabase.channel(
+    `tallytop:${id}`,
+    viewMode
+      ? undefined
+      : {
+          config: { presence: { key: id } }
+        }
+  )
+
+  onMount(() => {
+    if (!browser) {
+      return
+    }
+    if (viewMode) {
+      channel.on('broadcast', { event: '*' }, ({ event, payload }) => {
+        switch (event as Event) {
+          case 'start':
+            start(payload.endTimeInit)
+            break
+          case 'stop':
+            stop()
+            break
+          case 'reset':
+            reset()
+            break
+        }
+      })
+      channel.on('presence', { event: 'sync' }, () => {
+        const prescence = channel.presenceState()?.[id]
+        if (!prescence) {
+          return
+        }
+        time = prescence[0] as unknown as TimeComponents
+      })
+    }
+    channel.subscribe()
+  })
+
+  onDestroy(() => {
+    if (!browser) {
+      return
+    }
+    Promise.all([channel.unsubscribe(), channel.untrack()])
+  })
+
+  let broadcastLimit = 1 // rps
+  let lastBroadcast: number = 0
+
+  function trackTime() {
+    if (Date.now() - lastBroadcast > broadcastLimit * 1000) {
+      channel.track(time)
+      lastBroadcast = Date.now()
+    }
   }
 </script>
 
@@ -207,13 +210,13 @@
 {#if !viewMode}
   <div class="flex gap-10 text-4xl">
     {#if status === 'stopped'}
-      <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-300" on:click={() => start()}
-        ><Play /></Button
-      >
+      <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-300" on:click={() => start()}>
+        <Play />
+      </Button>
     {:else}
-      <Button class="bg-orange-200 px-10 py-5 hover:bg-orange-300" on:click={() => stop()}
-        ><Stop /></Button
-      >
+      <Button class="bg-orange-200 px-10 py-5 hover:bg-orange-300" on:click={() => stop()}>
+        <Stop />
+      </Button>
     {/if}
     <Button class="px-10 py-5" on:click={() => reset()}><ArrowCounterClockwise /></Button>
     <a href={`/${id}`} target="_blank" rel="noreferrer">
