@@ -2,6 +2,7 @@
   import { browser } from '$app/environment'
   import { currentTimer, timerQueue } from '$lib/stores'
   import { Button, formatDuration, Logo, parseDuration, Timer } from '@tallytop/ui'
+  import Backspace from 'phosphor-svelte/lib/Backspace'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
   import { tick } from 'svelte'
@@ -28,6 +29,10 @@
   $: {
     description = $timerQueue[$currentTimer].description
     duration = $timerQueue[$currentTimer].duration
+  }
+
+  const removeTimer = (i) => {
+    timerQueue.update((value) => value.filter((_, index) => index !== i))
   }
 
   let currentTimerDescription: HTMLInputElement
@@ -75,7 +80,7 @@
   {#if queueShown}
     <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16">
       {#each $timerQueue as { description, duration }, i}
-        <div class="flex items-baseline gap-5 px-5 leading-loose">
+        <div class="group flex items-center gap-5 px-5 leading-loose">
           <button
             class={`flex h-5 w-5 items-center justify-center rounded-full text-xs leading-none ${
               i === $currentTimer
@@ -99,6 +104,9 @@
             value={formatDuration(duration)}
             on:change={(e) => updateTimerDuration(e.target.value, i)}
           />
+          <button class="opacity-0 group-hover:opacity-100" on:click={() => removeTimer(i)}>
+            <Backspace />
+          </button>
         </div>
       {/each}
       <Button class="flex items-center gap-2" on:click={handleNewTimer}><Plus /> New timer</Button>
