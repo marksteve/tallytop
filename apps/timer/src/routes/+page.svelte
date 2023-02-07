@@ -68,7 +68,7 @@
   }
 </script>
 
-<div class="flex min-h-screen flex-1">
+<div class="flex min-h-screen flex-1 text-stone-800">
   <div class="absolute top-5 left-2">
     <Button variant="none" class="text-2xl" on:click={toggleQueue}>
       <div class:opacity-20={!queueShown}>
