@@ -12,36 +12,15 @@
 
   let { description, duration } = $timerQueue[$currentTimer]
 
-  const updateTimerDescription = (v, i) => {
-    timerQueue.update((value) => {
-      value[i].description = v
-      return value
-    })
-  }
-
-  const updateTimerDuration = (v, i) => {
-    timerQueue.update((value) => {
-      value[i].duration = typeof v === 'string' ? parseDuration(v) : v
-      return value
-    })
-  }
-
   $: {
     description = $timerQueue[$currentTimer].description
     duration = $timerQueue[$currentTimer].duration
   }
 
-  const removeTimer = (i) => {
-    timerQueue.update((value) => value.filter((_, index) => index !== i))
-  }
-
   let currentTimerDescription: HTMLInputElement
 
   const handleNewTimer = async () => {
-    timerQueue.update((value) => [
-      ...value,
-      { description: 'Enter description', duration: 60 * 1000 }
-    ])
+    timerQueue.newTimer()
     $currentTimer = $timerQueue.length - 1
     await tick()
     currentTimerDescription?.focus()
@@ -95,16 +74,19 @@
             class="bg-transparent"
             type="text"
             value={description}
-            on:change={(e) => updateTimerDescription(e.target.value, i)}
+            on:change={(e) => timerQueue.updateTimerDescription(i, e.target.value)}
             bind:this={currentTimerDescription}
           />
           <input
             class="w-14 bg-transparent font-mono"
             type="text"
             value={formatDuration(duration)}
-            on:change={(e) => updateTimerDuration(e.target.value, i)}
+            on:change={(e) => timerQueue.updateTimerDuration(i, e.target.value)}
           />
-          <button class="opacity-0 group-hover:opacity-100" on:click={() => removeTimer(i)}>
+          <button
+            class="opacity-0 group-hover:opacity-100"
+            on:click={() => timerQueue.removeTimer(i)}
+          >
             <Backspace />
           </button>
         </div>
@@ -122,7 +104,7 @@
       {browser}
       bind:this={timer}
       on:changeduration={({ detail: { duration } }) => {
-        updateTimerDuration(duration, $currentTimer)
+        timerQueue.updateTimerDuration($currentTimer, duration)
       }}
       on:end={setNextTimer}
     />
