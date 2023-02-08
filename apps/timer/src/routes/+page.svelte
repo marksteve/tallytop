@@ -114,7 +114,9 @@
   {/if}
 
   <div class="flex flex-1 flex-col items-center justify-center gap-10 bg-white shadow-xl">
-    <Logo width="128" />
+    <div class="flex flex-col items-center gap-2 text-3xl font-black">
+      <Logo width="128" /> Tallytop
+    </div>
     <Timer
       {duration}
       {browser}
