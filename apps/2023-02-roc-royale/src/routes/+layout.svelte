@@ -6,4 +6,9 @@
   <title>ROC ROYALE</title>
 </svelte:head>
 
-<slot />
+<div class="bg-roc-hotpink">
+  <img src="/images/bg.jpg" class="fixed h-full w-full object-cover" alt="Background" />
+  <div class="relative">
+    <slot />
+  </div>
+</div>
