@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Wordmark } from '@tallytop/ui'
+  import { Logo } from '@tallytop/ui'
   let links = [
     ['SEE SCORES', '/scores', '-rotate-2'],
     ['JUDGE', '/judge', 'rotate-3'],
@@ -10,7 +10,7 @@
 <div class="bg-roc-hotpink">
   <img src="/images/bg.jpg" class="fixed h-full w-full object-cover" />
 
-  <div class="flex items-center p-10 md:max-h-[60vh] md:justify-center">
+  <div class="flex items-center p-10 md:max-h-[70vh] md:justify-center">
     <img src="/images/roc-royale-logo.png" class="relative flex-1 md:flex-none" />
     <img src="/images/ccm-logo.png" class="relative flex-1 md:flex-none" />
   </div>
@@ -29,7 +29,8 @@
   </div>
 
   <div class="relative flex items-center justify-center gap-2 whitespace-nowrap p-10 text-2xl">
-    Powered by
-    <Wordmark class="h-14" />
+    Scoring by
+    <Logo class="h-8" />
+    <span class="font-black">Tallytop</span>
   </div>
 </div>

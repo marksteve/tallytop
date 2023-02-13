@@ -11,7 +11,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        title: ['squealerheavy', 'sans-serif']
+        title: ['squealerheavy', 'sans-serif'],
+        sans: ['Rubik', 'sans-serif']
       }
     }
   },
