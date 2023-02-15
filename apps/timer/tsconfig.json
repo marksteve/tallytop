@@ -4,10 +4,6 @@
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
-    "paths": {
-      "$lib": ["src/lib"],
-      "$lib/*": ["src/lib/*"]
-    },
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
