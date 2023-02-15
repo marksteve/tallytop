@@ -1,23 +1,23 @@
 <script lang="ts">
   import { Logo } from '@tallytop/ui'
   let links = [
-    ['SEE SCORES', '/scores', '-rotate-2'],
+    ['SCORES', '/scores', '-rotate-2'],
     ['JUDGE', '/judge', 'rotate-3'],
     ['Sponsors', '/sponsors', 'rotate-1']
   ]
 </script>
 
 <div class="flex flex-col items-center p-10 md:max-h-[70vh] md:flex-row md:justify-center">
-  <img src="/images/roc-royale-logo.png" class="flex-1 md:flex-none" alt="Roc Royale" />
-  <img src="/images/ccm-logo.png" class="flex-1 md:flex-none" alt="CCM" />
+  <img src="/images/roc-royale-logo.png" class="w-3/4 md:w-auto md:flex-none" alt="Roc Royale" />
+  <img src="/images/ccm-logo.png" class="w-3/4 md:w-auto md:flex-none" alt="CCM" />
 </div>
 
-<div class="flex flex-col gap-10 p-10 md:flex-row">
+<div class="flex flex-col items-center gap-10 p-10 md:flex-row">
   {#each links as [link, href, _class]}
-    <div class="flex flex-1">
+    <div class="flex md:flex-1">
       <a
         {href}
-        class="bg-roc-black font-title hover:bg-roc-yellow hover:text-roc-black flex-1 text-8xl text-white {_class} -indent-5 leading-[0.8em]"
+        class="bg-roc-black font-title hover:bg-roc-yellow hover:text-roc-black ml-5 flex-1 -indent-5 text-8xl leading-[0.8em] text-white {_class}"
       >
         {link}
       </a>

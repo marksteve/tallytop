@@ -11,7 +11,7 @@
       <img src="/images/roc-royale-logo.png" alt="Roc Royale" />
     </a>
     <h2
-      class="bg-roc-black font-title hover:bg-roc-yellow hover:text-roc-black text-6xl leading-[0.8em] text-white {titleClass}"
+      class="bg-roc-black font-title hover:bg-roc-yellow hover:text-roc-black ml-5 -indent-5 text-6xl leading-[0.8em] text-white {titleClass}"
     >
       {titleText}
     </h2>
