@@ -17,10 +17,10 @@ export interface Database {
     Functions: {
       graphql: {
         Args: {
-          operationName: string
-          query: string
-          variables: Json
-          extensions: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
         }
         Returns: Json
       }
@@ -58,6 +58,46 @@ export interface Database {
           id?: string
           points?: number
           wall?: string
+        }
+      }
+      qualis: {
+        Row: {
+          created_at: string | null
+          is_flash: boolean | null
+          is_top: boolean | null
+          problem_id: string
+          team_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          is_flash?: boolean | null
+          is_top?: boolean | null
+          problem_id: string
+          team_id: string
+        }
+        Update: {
+          created_at?: string | null
+          is_flash?: boolean | null
+          is_top?: boolean | null
+          problem_id?: string
+          team_id?: string
+        }
+      }
+      teams: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
         }
       }
     }
@@ -163,31 +203,40 @@ export interface Database {
     }
     Functions: {
       extension: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string
       }
       filename: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string
       }
       foldername: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string[]
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
-        Returns: { size: number; bucket_id: string }[]
+        Returns: {
+          size: number
+          bucket_id: string
+        }[]
       }
       search: {
         Args: {
           prefix: string
           bucketname: string
-          limits: number
-          levels: number
-          offsets: number
-          search: string
-          sortcolumn: string
-          sortorder: string
+          limits?: number
+          levels?: number
+          offsets?: number
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
         }
         Returns: {
           name: string
