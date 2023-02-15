@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import type { PageData } from './$types'
+
+  export let data: PageData
 </script>
 
-{#each $page.data.walls as wall}
+{#each data.walls as wall}
   <a href="/judge/qualis/{wall}">{wall}</a>
 {/each}
