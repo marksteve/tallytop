@@ -1,6 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import supabase from '$lib/supabase'
   import { Logo } from '@tallytop/ui'
+
+  const logout = () => supabase.auth.signOut()
 
   let titleText = ''
   let titleClass = ''
@@ -8,6 +11,13 @@
 </script>
 
 <div class="flex min-h-screen flex-col gap-5">
+  {#if $page.data.session}
+    <div class="bg-roc-yellow text-roc-hotpink flex justify-between px-5">
+      Logged in as {$page.data.session?.user.email}
+      <button class="font-title" on:click={logout}>Logout</button>
+    </div>
+  {/if}
+
   <div class="flex h-32 items-center justify-between gap-5 px-5">
     <a href="/" class="w-1/5 flex-none">
       <img src="/images/roc-royale-logo.png" alt="Roc Royale" />
