@@ -2,6 +2,6 @@
   import { page } from '$app/stores'
 </script>
 
-{#each $page.data.teams as team}
-  <a href="/judge/qualis/{team.id}">{team.name}</a>
+{#each $page.data.walls as wall}
+  <a href="/judge/qualis/{wall}">{wall}</a>
 {/each}

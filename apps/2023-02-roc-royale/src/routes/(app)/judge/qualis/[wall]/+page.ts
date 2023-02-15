@@ -1,12 +1,11 @@
-import type { PageLoad } from './$types'
 import { getSupabase } from '@supabase/auth-helpers-sveltekit'
+import type { PageLoad } from './$types'
 
 export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
-  const { data: problems } = await supabaseClient.from('problems').select('wall').order('wall')
-  const walls = Array.from(new Set(problems?.map((p) => p.wall)))
+  const { data: teams } = await supabaseClient.from('teams').select()
   return {
     title: ['Judge/\nQualis', 'rotate-3'],
-    walls
+    teams
   }
 }) satisfies PageLoad

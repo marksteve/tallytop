@@ -13,6 +13,7 @@
       class="p-5"
       value={form?.email ?? ''}
       readonly={form?.success}
+      class:bg-roc-yellow={form?.success}
     />
     {#if form?.success}
       <div class="font-title text-center">Check your inbox</div>
