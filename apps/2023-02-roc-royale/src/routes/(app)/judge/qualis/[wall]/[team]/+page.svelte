@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from '$app/forms'
-  import { page } from '$app/stores'
   import type { PageData } from './$types'
 
   const colorClass: Record<string, string> = {
@@ -17,7 +16,7 @@
 </script>
 
 <div class="text-4xl">
-  <a href="./">{$page.params.wall}</a>
+  <a href="/judge/qualis/{data.wall}">{data.wall}</a>
   / {data.team?.name}
 </div>
 

@@ -21,6 +21,7 @@ export const load = (async (event) => {
   const resultsByProblem = R.fromPairs(results?.map((r) => [r?.problems?.id, r]))
   return {
     title: ['Judge/\nQualis', 'rotate-3'],
+    wall: event.params.wall,
     problems: problems ?? [],
     team,
     results: resultsByProblem
