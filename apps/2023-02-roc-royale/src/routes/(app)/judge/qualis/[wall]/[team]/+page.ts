@@ -5,7 +5,7 @@ import * as R from 'ramda'
 export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
   const { data: problems } = await supabaseClient
-    .from('problems')
+    .from('qualis_problems')
     .select()
     .eq('wall', event.params.wall)
   const { data: team } = await supabaseClient
@@ -15,10 +15,10 @@ export const load = (async (event) => {
     .single()
   const { data: results } = await supabaseClient
     .from('qualis')
-    .select('*, problems(id, wall)')
+    .select('*, qualis_problems(id, wall)')
     .eq('team_id', event.params.team)
-    .eq('problems.wall', event.params.wall)
-  const resultsByProblem = R.fromPairs(results?.map((r) => [r?.problems?.id, r]))
+    .eq('qualis_problems.wall', event.params.wall)
+  const resultsByProblem = R.fromPairs(results?.map((r) => [r?.qualis_problems?.id, r]))
   return {
     title: ['Judge/\nQualis', 'rotate-3'],
     wall: event.params.wall,

@@ -34,7 +34,30 @@ export interface Database {
   }
   public: {
     Tables: {
-      problems: {
+      qualis: {
+        Row: {
+          created_at: string | null
+          is_flash: boolean | null
+          is_top: boolean | null
+          problem_id: string
+          team_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          is_flash?: boolean | null
+          is_top?: boolean | null
+          problem_id: string
+          team_id: string
+        }
+        Update: {
+          created_at?: string | null
+          is_flash?: boolean | null
+          is_top?: boolean | null
+          problem_id?: string
+          team_id?: string
+        }
+      }
+      qualis_problems: {
         Row: {
           color: string | null
           created_at: string | null
@@ -60,29 +83,6 @@ export interface Database {
           wall?: string
         }
       }
-      qualis: {
-        Row: {
-          created_at: string | null
-          is_flash: boolean | null
-          is_top: boolean | null
-          problem_id: string
-          team_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          is_flash?: boolean | null
-          is_top?: boolean | null
-          problem_id: string
-          team_id: string
-        }
-        Update: {
-          created_at?: string | null
-          is_flash?: boolean | null
-          is_top?: boolean | null
-          problem_id?: string
-          team_id?: string
-        }
-      }
       teams: {
         Row: {
           created_at: string | null
@@ -105,6 +105,7 @@ export interface Database {
       qualis_scores: {
         Row: {
           flashes: number | null
+          id: string | null
           name: string | null
           score: number | null
         }
