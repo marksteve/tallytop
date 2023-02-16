@@ -5,7 +5,7 @@ export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
   const { data: scores } = await supabaseClient.from('qualis_scores').select()
   return {
-    title: ['Scores/\nQualis', 'rotate-3'],
+    title: ['Scores/\nQualis', '-rotate-2'],
     scores: scores ?? []
   }
 }) satisfies PageLoad
