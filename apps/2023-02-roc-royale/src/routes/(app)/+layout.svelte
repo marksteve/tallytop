@@ -23,7 +23,7 @@
       <img src="/images/roc-royale-logo.png" alt="Roc Royale" />
     </a>
     <h2
-      class="bg-roc-black font-title ml-5 -indent-5 text-6xl leading-[0.8em] text-white w-3/5 text-center {titleClass}"
+      class="bg-roc-yellow font-title text-roc-black ml-5 w-3/5 text-center -indent-5 text-6xl leading-[0.8em] {titleClass}"
     >
       {titleText}
     </h2>

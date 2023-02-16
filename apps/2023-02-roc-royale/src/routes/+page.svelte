@@ -17,7 +17,7 @@
     <div class="flex md:flex-1">
       <a
         {href}
-        class="bg-roc-black font-title hover:bg-roc-yellow hover:text-roc-black ml-5 flex-1 -indent-5 text-8xl leading-[0.8em] text-white {_class}"
+        class="bg-roc-yellow font-title hover:bg-roc-black hover:text-white text-roc-black ml-5 flex-1 -indent-5 text-8xl leading-[0.8em] {_class}"
       >
         {link}
       </a>
