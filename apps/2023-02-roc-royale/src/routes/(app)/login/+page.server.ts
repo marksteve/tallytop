@@ -6,7 +6,10 @@ export const actions = {
     const formData = await event.request.formData()
     const email = formData.get('email')?.toString()
     if (!email) throw new Error('Email is required')
-    const { error } = await supabase.auth.signInWithOtp({ email })
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: 'https://roc-royale.tallytop.com/' }
+    })
     if (error) {
       throw error
     }
