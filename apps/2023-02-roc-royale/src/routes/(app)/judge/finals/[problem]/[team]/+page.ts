@@ -13,9 +13,16 @@ export const load = (async (event) => {
     .select()
     .eq('id', event.params.team)
     .single()
+  const { data: results } = await supabaseClient
+    .from('finals')
+    .select()
+    .eq('team_id', event.params.team)
+    .eq('problem_id', event.params.problem)
+    .maybeSingle()
   return {
     title: ['Judge/\nFinals', 'rotate-3'],
     problem,
-    team
+    team,
+    attempts: results?.attempts
   }
 }) satisfies PageLoad

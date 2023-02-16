@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { applyAction, enhance } from '$app/forms'
   import type { PageData } from './$types'
 
-  let attempts = ''
+  export let data: PageData
+
+  let attempts = data.attempts ?? ''
 
   const addFail = () => (attempts += 'x')
   const addZone = () => (attempts += 'z')
@@ -11,7 +14,11 @@
   $: zone = attempts.indexOf('z') + 1 || top
   $: top = attempts.indexOf('t') + 1
 
-  export let data: PageData
+  let saved = false
+  $: {
+    attempts
+    saved = false
+  }
 </script>
 
 <div class="text-4xl">
@@ -50,3 +57,19 @@
   <button class="bg-roc-yellow font-sans text-3xl" on:click={removeAttempt}>-</button>
   <button class="bg-roc-yellow font-sans text-3xl" on:click={addFail}>+</button>
 </div>
+
+<form
+  method="POST"
+  use:enhance={() =>
+    async ({ result }) => {
+      await applyAction(result)
+      saved = true
+    }}
+>
+  <input type="hidden" name="attempts" value={attempts} />
+  <input type="hidden" name="zone" value={zone} />
+  <input type="hidden" name="top" value={top} />
+  <button type="submit">
+    {#if saved}Saved{:else}Save{/if}
+  </button>
+</form>
