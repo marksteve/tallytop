@@ -148,6 +148,16 @@ export interface Database {
       }
     }
     Views: {
+      finals_scores: {
+        Row: {
+          name: string | null
+          top_attempts: number | null
+          tops: number | null
+          walls: string[] | null
+          zone_attempts: number | null
+          zones: number | null
+        }
+      }
       qualis_scores: {
         Row: {
           flashes: number | null
@@ -158,13 +168,53 @@ export interface Database {
       }
     }
     Functions: {
-      [_ in never]: never
+      crosstab: {
+        Args: {
+          "": string
+        }
+        Returns: Record<string, unknown>[]
+      }
+      crosstab2: {
+        Args: {
+          "": string
+        }
+        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_2"][]
+      }
+      crosstab3: {
+        Args: {
+          "": string
+        }
+        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_3"][]
+      }
+      crosstab4: {
+        Args: {
+          "": string
+        }
+        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_4"][]
+      }
     }
     Enums: {
       [_ in never]: never
     }
     CompositeTypes: {
-      [_ in never]: never
+      tablefunc_crosstab_2: {
+        row_name: string
+        category_1: string
+        category_2: string
+      }
+      tablefunc_crosstab_3: {
+        row_name: string
+        category_1: string
+        category_2: string
+        category_3: string
+      }
+      tablefunc_crosstab_4: {
+        row_name: string
+        category_1: string
+        category_2: string
+        category_3: string
+        category_4: string
+      }
     }
   }
   storage: {
