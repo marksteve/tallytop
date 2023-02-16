@@ -34,6 +34,32 @@ export interface Database {
   }
   public: {
     Tables: {
+      finals: {
+        Row: {
+          attempts: string
+          created_at: string | null
+          problem_id: string
+          team_id: string
+          top: number
+          zone: number
+        }
+        Insert: {
+          attempts?: string
+          created_at?: string | null
+          problem_id: string
+          team_id: string
+          top?: number
+          zone?: number
+        }
+        Update: {
+          attempts?: string
+          created_at?: string | null
+          problem_id?: string
+          team_id?: string
+          top?: number
+          zone?: number
+        }
+      }
       finals_problems: {
         Row: {
           color: string | null
