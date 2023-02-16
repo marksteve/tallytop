@@ -22,7 +22,7 @@
 
 <div class="bg-roc-black flex w-full flex-col text-3xl leading-loose text-white">
   {#each data.problems as problem}
-    <div class="flex justify-between gap-5 px-5">
+    <div class="border-roc-hotpink flex justify-between gap-5 border-b px-5">
       <div class={colorClass[problem.color ?? '']}>{problem.description}</div>
       <form class="flex w-1/2 justify-around" method="POST" use:enhance>
         <input type="hidden" name="problem" value={problem.id} />

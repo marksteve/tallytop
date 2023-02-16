@@ -102,7 +102,13 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      qualis_scores: {
+        Row: {
+          flashes: number | null
+          name: string | null
+          score: number | null
+        }
+      }
     }
     Functions: {
       [_ in never]: never
