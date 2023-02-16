@@ -34,6 +34,26 @@ export interface Database {
   }
   public: {
     Tables: {
+      finals_problems: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          id: string
+          wall: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          wall: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          wall?: string
+        }
+      }
       qualis: {
         Row: {
           created_at: string | null
