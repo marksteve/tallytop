@@ -3,7 +3,7 @@ import type { PageLoad } from './$types'
 
 export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
-  const { data: teams } = await supabaseClient.from('teams').select()
+  const { data: teams } = await supabaseClient.from('teams').select().order('created_at')
   const { data: problem } = await supabaseClient
     .from('finals_problems')
     .select()
