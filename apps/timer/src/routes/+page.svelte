@@ -1,10 +1,11 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { currentTimer, timerQueue } from '$lib/stores'
-  import { Button, formatDuration, Logo, parseDuration, Timer } from '@tallytop/ui'
+  import { Button, formatDuration, Logo, Timer } from '@tallytop/ui'
   import Backspace from 'phosphor-svelte/lib/Backspace'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
+  import Repeat from 'phosphor-svelte/lib/Repeat'
   import { tick } from 'svelte'
 
   let queueShown = false
@@ -41,9 +42,15 @@
     await tick()
     timer?.reset()
 
-    if (!queueEnded) {
+    if (!queueEnded || repeat) {
       timer?.start()
     }
+  }
+
+  let repeat = false
+
+  const toggleRepeat = () => {
+    repeat = !repeat
   }
 </script>
 
@@ -91,7 +98,19 @@
           </button>
         </div>
       {/each}
-      <Button class="flex items-center gap-2" on:click={handleNewTimer}><Plus /> New timer</Button>
+      <div class="flex gap-5">
+        <Button class="flex flex-1 items-center justify-center gap-2" on:click={handleNewTimer}>
+          <Plus /> New timer
+        </Button>
+        <Button
+          class="flex flex-1 items-center justify-center gap-2 bg-transparent {repeat
+            ? ''
+            : 'opacity-20'}"
+          on:click={toggleRepeat}
+        >
+          <Repeat /> Repeat
+        </Button>
+      </div>
     </div>
   {/if}
 
