@@ -22,6 +22,7 @@ const record = async (
     if (error) {
       throw error
     }
+    return
   }
   const { error } = await supabaseClient
     .from('qualis')
