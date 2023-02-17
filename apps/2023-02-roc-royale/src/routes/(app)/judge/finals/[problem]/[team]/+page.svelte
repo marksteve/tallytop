@@ -40,7 +40,7 @@
   {/each}
 </div>
 
-<div class="text-roc-black flex w-2/3 text-center leading-none">
+<div class="text-roc-black flex w-2/3 text-center leading-none md:w-1/3">
   <div class="flex-1 -rotate-6">
     <div class="text-2xl">Zone</div>
     <div class="font-sans font-black">{zone}</div>
@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<div class="text-roc-black grid aspect-square w-1/2 grid-cols-2 gap-10 text-2xl">
+<div class="text-roc-black grid aspect-square w-1/2 grid-cols-2 gap-10 text-2xl md:w-1/4">
   <button class="bg-roc-yellow" on:click={addZone}>Zone</button>
   <button class="bg-roc-yellow" on:click={addTop}>Top</button>
   <button class="bg-roc-yellow font-sans text-3xl" on:click={removeAttempt}>-</button>

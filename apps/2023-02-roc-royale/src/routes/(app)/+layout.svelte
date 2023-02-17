@@ -19,7 +19,7 @@
   {/if}
 
   <div class="flex h-32 items-center justify-between gap-5 px-5">
-    <a href="/" class="w-1/5">
+    <a href="/" class="w-1/5 md:w-32">
       <img src="/images/roc-royale-logo.png" alt="Roc Royale" />
     </a>
     <h2
@@ -27,7 +27,7 @@
     >
       {titleText}
     </h2>
-    <div class="w-1/5">
+    <div class="w-1/5 md:w-32">
       <img src="/images/ccm-logo.png" alt="CCM" />
     </div>
   </div>
