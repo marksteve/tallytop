@@ -1,4 +1,5 @@
 import { getSupabase, type TypedSupabaseClient } from '@supabase/auth-helpers-sveltekit'
+import { redirect } from '@sveltejs/kit'
 import type { Actions } from './$types'
 
 const getProblem = (formData: FormData) => {
@@ -34,7 +35,7 @@ const record = async (
     })
     .select()
   if (error) {
-    throw error
+    throw redirect(303, '/login')
   }
 }
 
