@@ -1,9 +1,9 @@
 <script lang="ts">
   import { Logo } from '@tallytop/ui'
   let links = [
-    ['SCORES', '/scores', '-rotate-2'],
-    ['JUDGE', '/judge', 'rotate-3'],
-    ['Sponsors', '/sponsors', 'rotate-1']
+    ['Scores', '/scores', '-rotate-2'],
+    ['Sponsors', '/sponsors', 'rotate-1'],
+    ['Judge', '/judge', 'rotate-3'],
   ]
 </script>
 
