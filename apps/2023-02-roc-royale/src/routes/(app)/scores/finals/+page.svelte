@@ -1,5 +1,7 @@
 <script lang="ts">
+  import Lightning from 'phosphor-svelte/lib/Lightning'
   import type { PageData } from './$types'
+
   export let data: PageData
 </script>
 
@@ -19,16 +21,14 @@
         <tr class="border-roc-hotpink border-b">
           <td class="font-title text-4xl">{name}</td>
           <td class="text-roc-yellow align-middle">
-            <div class="flex gap-1 px-5">
+            <div class="flex px-5">
               {#each walls ?? [] as wall}
                 {#if wall == 'zone'}
-                  <div class="flex h-4 w-2 flex-col justify-end border border-current">
-                    <div class="h-1/2 bg-current" />
-                  </div>
+                  <Lightning weight="duotone" />
                 {:else if wall == 'top'}
-                  <div class="h-4 w-2 bg-current" />
+                  <Lightning weight="fill" />
                 {:else}
-                  <div class="h-4 w-2 border border-current" />
+                  <Lightning weight="thin" />
                 {/if}
               {/each}
             </div>

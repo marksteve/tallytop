@@ -1,5 +1,6 @@
 <script lang="ts">
   import { applyAction, enhance } from '$app/forms'
+  import Lightning from 'phosphor-svelte/lib/Lightning'
   import type { PageData } from './$types'
 
   export let data: PageData
@@ -26,16 +27,14 @@
   /<br />{data.team?.name}
 </div>
 
-<div class="text-roc-yellow flex h-10 items-center justify-center gap-2">
+<div class="text-roc-yellow flex h-10 w-full items-center justify-center px-5">
   {#each attempts as attempt}
     {#if attempt == 'z'}
-      <div class="flex h-10 w-5 flex-col justify-end border-2 border-current">
-        <div class="h-1/2 bg-current" />
-      </div>
+      <Lightning weight="duotone" />
     {:else if attempt == 't'}
-      <div class="h-10 w-5 bg-current" />
+      <Lightning weight="fill" />
     {:else}
-      <div class="h-10 w-5 border-2 border-current" />
+      <Lightning weight="thin" />
     {/if}
   {/each}
 </div>
