@@ -21,9 +21,9 @@
   }
 </script>
 
-<div class="text-4xl">
+<div class="px-5 text-4xl">
   <a href="/judge/finals/{data.problem?.id}">{data.problem?.wall}</a>
-  / {data.team?.name}
+  /<br />{data.team?.name}
 </div>
 
 <div class="text-roc-yellow flex h-10 items-center justify-center gap-2">

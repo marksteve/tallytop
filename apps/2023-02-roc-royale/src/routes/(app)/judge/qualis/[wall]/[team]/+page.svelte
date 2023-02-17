@@ -8,12 +8,12 @@
   $: results = data.results
 </script>
 
-<div class="text-4xl">
+<div class="px-5 text-4xl">
   <a href="/judge/qualis/{data.wall}">{data.wall}</a>
-  / {data.team?.name}
+  /<br />{data.team?.name}
 </div>
 
-<div class="bg-roc-black flex w-full flex-col text-3xl leading-loose text-white">
+<div class="bg-roc-black flex w-full flex-col text-3xl leading-relaxed text-white">
   {#each data.problems as problem}
     <div class="border-roc-hotpink flex justify-between gap-5 border-b px-5">
       <div class={colors[problem.color ?? '']}>{problem.description}</div>

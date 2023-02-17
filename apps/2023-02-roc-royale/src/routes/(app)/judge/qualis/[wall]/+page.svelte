@@ -4,7 +4,14 @@
   export let data: PageData
 </script>
 
-<div class="text-4xl"><a href="/judge/qualis">Qualis</a> / {data.wall}</div>
-{#each data.teams as team}
-  <a href="/judge/qualis/{data.wall}/{team.id}" class="text-3xl">{team.name}</a>
-{/each}
+<div class="px-5 text-4xl"><a href="/judge/qualis">Qualis</a> / {data.wall}</div>
+<div class="bg-roc-black flex w-full flex-col text-white">
+  {#each data.teams as team}
+    <a
+      href="/judge/qualis/{data.wall}/{team.id}"
+      class="border-roc-hotpink border-b py-2 px-5 text-3xl"
+    >
+      {team.name}
+    </a>
+  {/each}
+</div>
