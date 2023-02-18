@@ -3,7 +3,11 @@ import type { PageLoad } from './$types'
 
 export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
-  const { data: teams } = await supabaseClient.from('teams').select().order('created_at')
+  const { data: teams } = await supabaseClient
+    .from('qualis_scores')
+    .select()
+    .order('score', { ascending: false })
+    .limit(6)
   const { data: problem } = await supabaseClient
     .from('finals_problems')
     .select()
@@ -11,7 +15,7 @@ export const load = (async (event) => {
     .single()
   return {
     title: ['Judge/\nFinals', 'rotate-3'],
-    teams: teams ?? [],
+    teams: teams?.reverse() ?? [],
     problem
   }
 }) satisfies PageLoad
