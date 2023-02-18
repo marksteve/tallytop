@@ -8,6 +8,7 @@ export const load = (async (event) => {
     .from('qualis_problems')
     .select()
     .eq('wall', event.params.wall)
+    .order('points')
   const { data: team } = await supabaseClient
     .from('teams')
     .select()
