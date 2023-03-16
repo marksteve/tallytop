@@ -61,7 +61,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.1
 
-  apps/_template:
+  apps/2023-03-bouldering-nationals:
     specifiers:
       '@supabase/auth-helpers-sveltekit': ^0.8.7
       '@supabase/supabase-js': ^2.7.1
@@ -104,7 +104,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.1
 
-  apps/2023-03-bouldering-nationals:
+  apps/_template:
     specifiers:
       '@supabase/auth-helpers-sveltekit': ^0.8.7
       '@supabase/supabase-js': ^2.7.1
@@ -217,6 +217,7 @@ importers:
       nanoid: ^4.0.0
       parse-ms: ^3.0.0
       phosphor-svelte: ^1.2.1
+      qrcode-generator-es6: ^1.1.4
       svelte: ^3.55.0
     dependencies:
       '@sindresorhus/to-milliseconds': 2.0.0
@@ -226,6 +227,7 @@ importers:
       nanoid: 4.0.0
       parse-ms: 3.0.0
       phosphor-svelte: 1.2.1_svelte@3.55.0
+      qrcode-generator-es6: 1.1.4
     devDependencies:
       '@tallytop/eslint-config-custom': link:../eslint-config-custom
       svelte: 3.55.0
@@ -1993,6 +1995,10 @@ packages:
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
+
+  /qrcode-generator-es6/1.1.4:
+    resolution: {integrity: sha512-waItp+G1oyXAfljWSQz1Ba6wladIoi5t8bJdKR61/MjsEMS8ar7RqXZlYtwg2jdCa7DgP5Bm30g5xpAhhBdo/w==}
+    dev: false
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}

@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Tallytop</title>
+  <title>Bouldering Nationals 2023</title>
 </svelte:head>
 
 <slot />

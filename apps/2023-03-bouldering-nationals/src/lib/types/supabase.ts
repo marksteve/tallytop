@@ -32,30 +32,53 @@ export interface Database {
       [_ in never]: never
     }
   }
-  roc_royale_2023: {
+  public: {
     Tables: {
+      competitors: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          first_name: string
+          id: string
+          last_name: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          first_name: string
+          id?: string
+          last_name?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          first_name?: string
+          id?: string
+          last_name?: string | null
+        }
+      }
       finals: {
         Row: {
           attempts: string
+          competitor_id: string
           created_at: string | null
           problem_id: string
-          team_id: string
           top: number
           zone: number
         }
         Insert: {
           attempts?: string
+          competitor_id: string
           created_at?: string | null
           problem_id: string
-          team_id: string
           top?: number
           zone?: number
         }
         Update: {
           attempts?: string
+          competitor_id?: string
           created_at?: string | null
           problem_id?: string
-          team_id?: string
           top?: number
           zone?: number
         }
@@ -80,56 +103,7 @@ export interface Database {
           wall?: string
         }
       }
-      qualis: {
-        Row: {
-          created_at: string | null
-          is_flash: boolean | null
-          is_top: boolean | null
-          problem_id: string
-          team_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          is_flash?: boolean | null
-          is_top?: boolean | null
-          problem_id: string
-          team_id: string
-        }
-        Update: {
-          created_at?: string | null
-          is_flash?: boolean | null
-          is_top?: boolean | null
-          problem_id?: string
-          team_id?: string
-        }
-      }
-      qualis_problems: {
-        Row: {
-          color: string | null
-          created_at: string | null
-          description: string
-          id: string
-          points: number
-          wall: string
-        }
-        Insert: {
-          color?: string | null
-          created_at?: string | null
-          description: string
-          id?: string
-          points: number
-          wall: string
-        }
-        Update: {
-          color?: string | null
-          created_at?: string | null
-          description?: string
-          id?: string
-          points?: number
-          wall?: string
-        }
-      }
-      teams: {
+      judges: {
         Row: {
           created_at: string | null
           id: string
@@ -137,7 +111,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string | null
-          id?: string
+          id: string
           name: string
         }
         Update: {
@@ -158,14 +132,6 @@ export interface Database {
           zones: number | null
         }
       }
-      qualis_scores: {
-        Row: {
-          flashes: number | null
-          id: string | null
-          name: string | null
-          score: number | null
-        }
-      }
     }
     Functions: {
       crosstab: {
@@ -178,19 +144,19 @@ export interface Database {
         Args: {
           "": string
         }
-        Returns: Database["roc_royale_2023"]["CompositeTypes"]["tablefunc_crosstab_2"][]
+        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_2"][]
       }
       crosstab3: {
         Args: {
           "": string
         }
-        Returns: Database["roc_royale_2023"]["CompositeTypes"]["tablefunc_crosstab_3"][]
+        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_3"][]
       }
       crosstab4: {
         Args: {
           "": string
         }
-        Returns: Database["roc_royale_2023"]["CompositeTypes"]["tablefunc_crosstab_4"][]
+        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_4"][]
       }
     }
     Enums: {
