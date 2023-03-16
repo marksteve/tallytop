@@ -4,7 +4,7 @@ declare global {
   namespace App {
     interface Supabase {
       Database: import('./lib/types/supabase').Database
-      SchemaName: 'public'
+      SchemaName: 'roc_royale_2023'
     }
     // interface Error {}
     // interface Locals {}

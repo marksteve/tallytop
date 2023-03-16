@@ -32,7 +32,7 @@ export interface Database {
       [_ in never]: never
     }
   }
-  public: {
+  roc_royale_2023: {
     Tables: {
       finals: {
         Row: {
@@ -178,19 +178,19 @@ export interface Database {
         Args: {
           "": string
         }
-        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_2"][]
+        Returns: Database["roc_royale_2023"]["CompositeTypes"]["tablefunc_crosstab_2"][]
       }
       crosstab3: {
         Args: {
           "": string
         }
-        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_3"][]
+        Returns: Database["roc_royale_2023"]["CompositeTypes"]["tablefunc_crosstab_3"][]
       }
       crosstab4: {
         Args: {
           "": string
         }
-        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_4"][]
+        Returns: Database["roc_royale_2023"]["CompositeTypes"]["tablefunc_crosstab_4"][]
       }
     }
     Enums: {
