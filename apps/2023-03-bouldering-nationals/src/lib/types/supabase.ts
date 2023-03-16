@@ -120,6 +120,78 @@ export interface Database {
           name?: string
         }
       }
+      qualis: {
+        Row: {
+          attempts: string
+          competitor_id: string
+          created_at: string | null
+          problem_id: string
+          top: number
+          zone: number
+        }
+        Insert: {
+          attempts?: string
+          competitor_id: string
+          created_at?: string | null
+          problem_id: string
+          top?: number
+          zone?: number
+        }
+        Update: {
+          attempts?: string
+          competitor_id?: string
+          created_at?: string | null
+          problem_id?: string
+          top?: number
+          zone?: number
+        }
+      }
+      semis: {
+        Row: {
+          attempts: string
+          competitor_id: string
+          created_at: string | null
+          problem_id: string
+          top: number
+          zone: number
+        }
+        Insert: {
+          attempts?: string
+          competitor_id: string
+          created_at?: string | null
+          problem_id: string
+          top?: number
+          zone?: number
+        }
+        Update: {
+          attempts?: string
+          competitor_id?: string
+          created_at?: string | null
+          problem_id?: string
+          top?: number
+          zone?: number
+        }
+      }
+      semis_problems: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          id: string
+          wall: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          wall: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          id?: string
+          wall?: string
+        }
+      }
     }
     Views: {
       finals_scores: {
