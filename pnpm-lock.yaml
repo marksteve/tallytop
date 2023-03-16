@@ -104,7 +104,7 @@ importers:
       typescript: 4.9.4
       vite: 4.0.1
 
-  apps/bouldering-nationals-2023:
+  apps/2023-03-bouldering-nationals:
     specifiers:
       '@supabase/auth-helpers-sveltekit': ^0.8.7
       '@supabase/supabase-js': ^2.7.1

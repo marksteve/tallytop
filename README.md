@@ -5,6 +5,8 @@ Makes organizing climbing competitions fun and easy.
 ## Apps
 
 - `timer`: Timer demo (https://timer.tallytop.com)
+- `2023-02-roc-royale`: ROC ROYALE (https://roc-royale.tallytop.com)
+- `2023-03-bouldering-nationals`: Bouldering Nationals 2023 (https://ph-bouldering-nationals.tallytop.com)
 
 ## Packages
 
@@ -21,8 +23,8 @@ pnpm run build
 
 ### Develop
 
-To develop all apps and packages, run the following command:
+To develop apps and packages, run the following command:
 
 ```
-pnpm run dev
+pnpm run dev --filter <app/package name>
 ```
