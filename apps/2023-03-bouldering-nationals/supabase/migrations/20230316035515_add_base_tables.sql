@@ -105,13 +105,6 @@ create or replace view "public"."finals_scores" as  WITH wall_results AS (
   GROUP BY competitors.first_name, ARRAY[wall_results.wall_1, wall_results.wall_2, wall_results.wall_3, wall_results.wall_4]
   ORDER BY (count(*) FILTER (WHERE (finals.top > 0))) DESC, (count(*) FILTER (WHERE (finals.zone > 0))) DESC, (sum(finals.top)), (sum(finals.zone));
 
-
-create type "public"."tablefunc_crosstab_2" as ("row_name" text, "category_1" text, "category_2" text);
-
-create type "public"."tablefunc_crosstab_3" as ("row_name" text, "category_1" text, "category_2" text, "category_3" text);
-
-create type "public"."tablefunc_crosstab_4" as ("row_name" text, "category_1" text, "category_2" text, "category_3" text, "category_4" text);
-
 create policy "Everyone can read"
 on "public"."competitors"
 as permissive
