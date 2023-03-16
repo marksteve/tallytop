@@ -15,8 +15,8 @@ importers:
       eslint: 8.28.0
       prettier: 2.8.4
       prettier-plugin-svelte: 2.9.0_zg22c2qdrmrhszryt4xszuzjmq
-      prettier-plugin-tailwindcss: 0.2.2_yjdjpc7im5hvpskij45owfsns4
-      turbo: 1.7.4
+      prettier-plugin-tailwindcss: 0.2.4_yjdjpc7im5hvpskij45owfsns4
+      turbo: 1.8.3
 
   apps/2023-02-roc-royale:
     specifiers:
@@ -54,6 +54,92 @@ importers:
       postcss: 8.4.20
       prettier: 2.8.3
       prettier-plugin-svelte: 2.9.0_32rvz4smotdecgbwkzbvnqo5iy
+      svelte: 3.55.0
+      svelte-check: 3.0.3_qs7rgzvahok4cbkjoy5bgypde4
+      tailwindcss: 3.2.4_postcss@8.4.20
+      tslib: 2.4.1
+      typescript: 4.9.4
+      vite: 4.0.1
+
+  apps/_template:
+    specifiers:
+      '@supabase/auth-helpers-sveltekit': ^0.8.7
+      '@supabase/supabase-js': ^2.7.1
+      '@sveltejs/adapter-auto': ^2.0.0
+      '@sveltejs/kit': ^1.7.0
+      '@tallytop/eslint-config-custom': workspace:*
+      '@tallytop/ui': workspace:*
+      '@types/ramda': ^0.28.23
+      autoprefixer: ^10.4.13
+      phosphor-svelte: ^1.2.1
+      postcss: ^8.4.20
+      prettier: ^2.8.0
+      prettier-plugin-svelte: ^2.8.1
+      ramda: ^0.28.0
+      svelte: ^3.54.0
+      svelte-check: ^3.0.1
+      tailwindcss: ^3.2.4
+      tslib: ^2.4.1
+      typescript: ^4.9.3
+      vite: ^4.0.0
+    dependencies:
+      '@supabase/auth-helpers-sveltekit': 0.8.7_wwkefq4crizglppdxtjqhrdudm
+      '@supabase/supabase-js': 2.7.1
+      '@tallytop/ui': link:../../packages/ui
+      phosphor-svelte: 1.2.1_svelte@3.55.0
+      ramda: 0.28.0
+    devDependencies:
+      '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.7.0
+      '@sveltejs/kit': 1.7.0_svelte@3.55.0+vite@4.0.1
+      '@tallytop/eslint-config-custom': link:../../packages/eslint-config-custom
+      '@types/ramda': 0.28.23
+      autoprefixer: 10.4.13_postcss@8.4.20
+      postcss: 8.4.20
+      prettier: 2.8.4
+      prettier-plugin-svelte: 2.9.0_zg22c2qdrmrhszryt4xszuzjmq
+      svelte: 3.55.0
+      svelte-check: 3.0.3_qs7rgzvahok4cbkjoy5bgypde4
+      tailwindcss: 3.2.4_postcss@8.4.20
+      tslib: 2.4.1
+      typescript: 4.9.4
+      vite: 4.0.1
+
+  apps/bouldering-nationals-2023:
+    specifiers:
+      '@supabase/auth-helpers-sveltekit': ^0.8.7
+      '@supabase/supabase-js': ^2.7.1
+      '@sveltejs/adapter-auto': ^2.0.0
+      '@sveltejs/kit': ^1.7.0
+      '@tallytop/eslint-config-custom': workspace:*
+      '@tallytop/ui': workspace:*
+      '@types/ramda': ^0.28.23
+      autoprefixer: ^10.4.13
+      phosphor-svelte: ^1.2.1
+      postcss: ^8.4.20
+      prettier: ^2.8.0
+      prettier-plugin-svelte: ^2.8.1
+      ramda: ^0.28.0
+      svelte: ^3.54.0
+      svelte-check: ^3.0.1
+      tailwindcss: ^3.2.4
+      tslib: ^2.4.1
+      typescript: ^4.9.3
+      vite: ^4.0.0
+    dependencies:
+      '@supabase/auth-helpers-sveltekit': 0.8.7_wwkefq4crizglppdxtjqhrdudm
+      '@supabase/supabase-js': 2.7.1
+      '@tallytop/ui': link:../../packages/ui
+      phosphor-svelte: 1.2.1_svelte@3.55.0
+      ramda: 0.28.0
+    devDependencies:
+      '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.7.0
+      '@sveltejs/kit': 1.7.0_svelte@3.55.0+vite@4.0.1
+      '@tallytop/eslint-config-custom': link:../../packages/eslint-config-custom
+      '@types/ramda': 0.28.23
+      autoprefixer: 10.4.13_postcss@8.4.20
+      postcss: 8.4.20
+      prettier: 2.8.4
+      prettier-plugin-svelte: 2.9.0_zg22c2qdrmrhszryt4xszuzjmq
       svelte: 3.55.0
       svelte-check: 3.0.3_qs7rgzvahok4cbkjoy5bgypde4
       tailwindcss: 3.2.4_postcss@8.4.20
@@ -109,7 +195,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.44.0_7pdyqmytrxe74w3zomef3h2nuy
       '@typescript-eslint/parser': 5.44.0_wy4udjehnvkneqnogzx5kughki
       eslint-config-prettier: 8.5.0_eslint@8.28.0
-      eslint-config-turbo: 0.0.7_eslint@8.28.0
+      eslint-config-turbo: 0.0.9_eslint@8.28.0
       eslint-plugin-svelte3: 4.0.0_azuxbbyyvvwupfdtiuanqji4pe
 
   packages/supabase:
@@ -1129,13 +1215,13 @@ packages:
       eslint: 8.28.0
     dev: false
 
-  /eslint-config-turbo/0.0.7_eslint@8.28.0:
-    resolution: {integrity: sha512-WbrGlyfs94rOXrhombi1wjIAYGdV2iosgJRndOZtmDQeq5GLTzYmBUCJQZWtLBEBUPCj96RxZ2OL7Cn+xv/Azg==}
+  /eslint-config-turbo/0.0.9_eslint@8.28.0:
+    resolution: {integrity: sha512-j1cTdx3tRmKo0csyfQKhpuT8dynK9oddbK5nmrShoMpXI2qMbxHLYH7MWAid4FmJN8rYympy3VKw5U63Yazycg==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.28.0
-      eslint-plugin-turbo: 0.0.7_eslint@8.28.0
+      eslint-plugin-turbo: 0.0.9_eslint@8.28.0
     dev: false
 
   /eslint-plugin-svelte3/4.0.0_azuxbbyyvvwupfdtiuanqji4pe:
@@ -1148,8 +1234,8 @@ packages:
       svelte: 3.55.0
     dev: false
 
-  /eslint-plugin-turbo/0.0.7_eslint@8.28.0:
-    resolution: {integrity: sha512-iajOH8eD4jha3duztGVBD1BEmvNrQBaA/y3HFHf91vMDRYRwH7BpHSDFtxydDpk5ghlhRxG299SFxz7D6z4MBQ==}
+  /eslint-plugin-turbo/0.0.9_eslint@8.28.0:
+    resolution: {integrity: sha512-fEsuSnYU3GLtT+s66mUuzDL1LaSieIx5uk3tPO0ToGv7hI2XzOfP24aPkQItTBGl7kq2JaVkRzPwcnfz8hkp0w==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
@@ -1836,10 +1922,11 @@ packages:
       svelte: 3.55.0
     dev: true
 
-  /prettier-plugin-tailwindcss/0.2.2_yjdjpc7im5hvpskij45owfsns4:
-    resolution: {integrity: sha512-5RjUbWRe305pUpc48MosoIp6uxZvZxrM6GyOgsbGLTce+ehePKNm7ziW2dLG2air9aXbGuXlHVSQQw4Lbosq3w==}
+  /prettier-plugin-tailwindcss/0.2.4_yjdjpc7im5hvpskij45owfsns4:
+    resolution: {integrity: sha512-wMyugRI2yD8gqmMpZSS8kTA0gGeKozX/R+w8iWE+yiCZL09zY0SvfiHfHabNhjGhzxlQ2S2VuTxPE3T72vppCQ==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
+      '@ianvs/prettier-plugin-sort-imports': '*'
       '@prettier/plugin-php': '*'
       '@prettier/plugin-pug': '*'
       '@shopify/prettier-plugin-liquid': '*'
@@ -1856,6 +1943,8 @@ packages:
       prettier-plugin-svelte: '*'
       prettier-plugin-twig-melody: '*'
     peerDependenciesMeta:
+      '@ianvs/prettier-plugin-sort-imports':
+        optional: true
       '@prettier/plugin-php':
         optional: true
       '@prettier/plugin-pug':
@@ -2332,65 +2421,65 @@ packages:
       typescript: 4.9.4
     dev: false
 
-  /turbo-darwin-64/1.7.4:
-    resolution: {integrity: sha512-ZyYrQlUl8K/mYN1e6R7bEhPPYjMakz0DYMaexkyD7TAijQtWmTSd4a+I7VknOYNEssnUZ/v41GU3gPV1JAzxxQ==}
+  /turbo-darwin-64/1.8.3:
+    resolution: {integrity: sha512-bLM084Wr17VAAY/EvCWj7+OwYHvI9s/NdsvlqGp8iT5HEYVimcornCHespgJS/yvZDfC+mX9EQkn3V2JmYgGGw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.7.4:
-    resolution: {integrity: sha512-CKIXg9uqp1a+Yeq/c4U0alPOqvwLUq5SBZf1PGYhGqJsfG0fRBtJfkUjHuBsuJIOGXg8rCmcGSWGIsIF6fqYuw==}
+  /turbo-darwin-arm64/1.8.3:
+    resolution: {integrity: sha512-4oZjXtzakopMK110kue3z/hqu3WLv+eDLZOX1NGdo49gqca9BeD8GbH+sXpAp6tqyeuzpss+PIliVYuyt7LgbA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.7.4:
-    resolution: {integrity: sha512-RIUl4RUFFyzD2T024vL7509Ygwcw+SEa8NOwPfaN6TtJHK7RZV/SBP3fLNVOptG9WRLnOWX3OvsLMbiOqDLLyA==}
+  /turbo-linux-64/1.8.3:
+    resolution: {integrity: sha512-uvX2VKotf5PU14FCxJA5iHItPQno2JWzerMd+g3/h/Asay6dvxvtVjc39MQeGT0H5njSvzVKFkT+3/5q8lgOEg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.7.4:
-    resolution: {integrity: sha512-Bg65F0AjYYYxqE6RPf2H5TIGuA/EyWMeGOATHVSZOWAbYcnG3Ly03GZii8AHnUi7ntWBdjwvXf/QbOS1ayNB6A==}
+  /turbo-linux-arm64/1.8.3:
+    resolution: {integrity: sha512-E1p+oH3XKMaPS4rqWhYsL4j2Pzc0d/9P5KU7Kn1kqVLo2T3iRA7n2KVULEieUNE0nTH+aIJPXYXOpqCI5wFJaA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.7.4:
-    resolution: {integrity: sha512-rTaV50XZ2BRxRHOHqt1UsWfeDmYLbn8UKE6g2D2ED+uW+kmnTvR9s01nmlGWd2sAuWcRYQyQ2V+O09VfKPKcQw==}
+  /turbo-windows-64/1.8.3:
+    resolution: {integrity: sha512-cnzAytHtoLXd0J7aNzRpZFpL/GTjcBmkvAPlbOdf/Pl1iwS4qzGrudZQ+OM1lmLgLIfBPIavsGHBknTwTNib4A==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.7.4:
-    resolution: {integrity: sha512-h8sxdKPvHTnWUPtwnYszFMmSO0P/iUUwmYY9n7iYThA71zSao28UeZ0H0Gw75cY3MPjvkjn2C4EBAUGPjuZJLw==}
+  /turbo-windows-arm64/1.8.3:
+    resolution: {integrity: sha512-ulIiItNm2w/zYJdD5/oAzjzNns1IjbpweRzpsE8tLXaWwo6+fnXXkyloUug0IUhcd2k6fJXfoiDZfygqpOVuXg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.7.4:
-    resolution: {integrity: sha512-8RLedDoUL0kkVKWEZ/RMM70BvKLyDFen06QuKKhYC2XNOfNKqFDqzIdcY/vGick869bNIWalChoy4O07k0HLsA==}
+  /turbo/1.8.3:
+    resolution: {integrity: sha512-zGrkU1EuNFmkq6iky6LcMqD4h0OLE8XysVFxQWRIZbcTNnf0XAycbsbeEyiJpiWeqb7qtg2bVuY9EYcNoNhVuQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.7.4
-      turbo-darwin-arm64: 1.7.4
-      turbo-linux-64: 1.7.4
-      turbo-linux-arm64: 1.7.4
-      turbo-windows-64: 1.7.4
-      turbo-windows-arm64: 1.7.4
+      turbo-darwin-64: 1.8.3
+      turbo-darwin-arm64: 1.8.3
+      turbo-linux-64: 1.8.3
+      turbo-linux-arm64: 1.8.3
+      turbo-windows-64: 1.8.3
+      turbo-windows-arm64: 1.8.3
     dev: true
 
   /type-check/0.4.0:
