@@ -6,7 +6,7 @@ Makes organizing climbing competitions fun and easy.
 
 - `timer`: Timer demo (https://timer.tallytop.com)
 - `2023-02-roc-royale`: ROC ROYALE (https://roc-royale.tallytop.com)
-- `2023-03-bouldering-nationals`: Bouldering Nationals 2023 (https://ph-bouldering-nationals.tallytop.com)
+- `2023-03-boulder-nationals`: Boulder Nationals 2023 (https://ph-boulder-nationals.tallytop.com)
 
 ## Packages
 

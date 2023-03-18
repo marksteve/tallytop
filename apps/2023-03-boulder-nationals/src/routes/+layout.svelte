@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Bouldering Nationals 2023</title>
+  <title>Boulder Nationals 2023</title>
 </svelte:head>
 
 <slot />
