@@ -6,8 +6,8 @@
 
   let competitor: (typeof data.competitors)[string] | null = null
 
-  const handleScan = (id: string) => {
-    competitor = data.competitors[id]
+  const handleScan = (event: any) => {
+    competitor = data.competitors[event.detail]
   }
 </script>
 
@@ -25,6 +25,6 @@
       Scan another
     </Button>
   {:else}
-    <QrCamera onScan={handleScan} />
+    <QrCamera on:scan={handleScan} />
   {/if}
 </div>
