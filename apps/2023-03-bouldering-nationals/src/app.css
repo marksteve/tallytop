@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+@font-face {
+  font-family: 'glacial-indifference';
+  src: url('/fonts/glacialindifference-regular-webfont.woff2') format('woff2'),
+    url('/fonts/glacialindifference-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'glacial-indifference';
+  src: url('/fonts/glacialindifference-bold-webfont.woff2') format('woff2'),
+    url('/fonts/glacialindifference-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

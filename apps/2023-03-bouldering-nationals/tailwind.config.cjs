@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {},
       fontFamily: {
-        sans: ['Inter', 'sans-serif']
+        sans: ['glacial-indifference', 'sans-serif']
       }
     }
   },
