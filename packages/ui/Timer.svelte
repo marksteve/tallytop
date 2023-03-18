@@ -16,7 +16,8 @@
   export const formatDuration = (timeOrMs: TimeComponents | number) => {
     const time = typeof timeOrMs === 'number' ? parseMs(timeOrMs) : timeOrMs
     return [
-      String(Math.trunc(time.hours * 60 + time.minutes)).padStart(2, '0'),
+      String(Math.trunc(time.days * 24 + time.hours)).padStart(2, '0'),
+      String(Math.trunc(time.minutes)).padStart(2, '0'),
       String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0')
     ].join(':')
   }
