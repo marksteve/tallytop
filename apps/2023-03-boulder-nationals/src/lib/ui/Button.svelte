@@ -5,7 +5,7 @@
 
 <button
   {...$$props}
-  class={`border-brand rounded-xl border-4 bg-white p-2 text-xl font-bold ${extraClass}`}
+  class={`border-brand hover:bg-brand rounded-xl border-4 bg-white p-2 text-xl font-bold hover:text-white ${extraClass}`}
   on:click
 >
   <slot />
