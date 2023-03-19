@@ -1,18 +1,19 @@
-import supabase from '$lib/supabase'
+import { JUDGE_EMAIL } from '$env/static/private'
+import { redirect, fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
 
 export const actions = {
-  default: async (event) => {
-    const formData = await event.request.formData()
-    const email = formData.get('email')?.toString()
-    if (!email) throw new Error('Email is required')
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: 'https://tallytop.com/' }
+  default: async ({ request, locals: { supabase } }) => {
+    const formData = await request.formData()
+    const password = formData.get('password')?.toString()
+    if (!password) return fail(400, { error: 'Password is required' })
+    const { error } = await supabase.auth.signInWithPassword({
+      email: JUDGE_EMAIL,
+      password
     })
     if (error) {
       throw error
     }
-    return { email, success: true }
+    throw redirect(303, '/judge')
   }
 } satisfies Actions

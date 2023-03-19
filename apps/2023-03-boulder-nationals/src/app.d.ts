@@ -7,7 +7,11 @@ declare global {
       SchemaName: 'public'
     }
     // interface Error {}
-    // interface Locals {}
+    interface Locals {
+      supabase: import('@supabase/supabase-js').SupabaseClient<
+        import('./lib/types/supabase').Database
+      >
+    }
     interface PageData {
       session: import('@supabase/supabase-js').Session | null
     }

@@ -4,11 +4,10 @@ import { getSupabase } from '@supabase/auth-helpers-sveltekit'
 import { redirect, type Handle } from '@sveltejs/kit'
 
 export const handle = (async ({ event, resolve }) => {
-  if (event.url.pathname.startsWith('/judge')) {
-    const { session } = await getSupabase(event)
-    if (!session) {
-      throw redirect(303, '/login')
-    }
+  const { supabaseClient, session } = await getSupabase(event)
+  if (!session && event.url.pathname.startsWith('/judge')) {
+    throw redirect(303, '/login')
   }
+  event.locals.supabase = supabaseClient
   return resolve(event)
 }) satisfies Handle

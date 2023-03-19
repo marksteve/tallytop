@@ -1,23 +1,16 @@
 <script lang="ts">
   import { enhance } from '$app/forms'
-  import type { ActionData } from './$types'
-  export let form: ActionData
+  import Button from '$lib/ui/Button.svelte'
 </script>
 
 <form method="POST" use:enhance>
-  <div class="flex flex-col gap-10 p-10 text-4xl">
+  <div class="flex flex-col gap-5 p-5 text-3xl">
     <input
-      type="email"
-      name="email"
-      placeholder="Email"
-      class="p-5"
-      value={form?.email ?? ''}
-      readonly={form?.success}
+      class="border-brand rounded-xl border-4 p-2 text-center placeholder:text-center"
+      name="password"
+      type="password"
+      placeholder="PASSWORD"
     />
-    {#if form?.success}
-      <div class="text-center">Check your inbox</div>
-    {:else}
-      <button type="submit">Send magic link</button>
-    {/if}
+    <Button type="submit">LOGIN</Button>
   </div>
 </form>

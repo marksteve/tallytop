@@ -5,3 +5,8 @@ export const categories: Record<string, string> = {
   inter_w: `Inter Women's`,
   unknown: 'Unknown'
 }
+
+export const rounds: Record<string, string> = {
+  qualis: `Qualifiers`,
+  finals: `Finals`
+}
