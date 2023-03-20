@@ -128,9 +128,11 @@ export interface Database {
       }
     }
     Views: {
-      finals_scores: {
+      scores: {
         Row: {
-          name: string | null
+          category: string | null
+          competitor_id: string | null
+          round: string | null
           top_attempts: number | null
           tops: number | null
           walls: string[] | null
