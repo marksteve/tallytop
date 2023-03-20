@@ -1,3 +1,3 @@
-<div class="font-title flex flex-1 flex-col items-center justify-center gap-10 text-6xl">
+<div class="grid flex-1 auto-rows-fr grid-cols-1 items-center justify-items-center">
   <slot />
 </div>

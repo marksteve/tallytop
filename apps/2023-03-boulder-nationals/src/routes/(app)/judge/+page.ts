@@ -4,8 +4,8 @@ export const load = (async () => {
   return {
     title: 'Judge',
     rounds: [
-      ['qualis', 'Qualis'],
-      ['finals', 'Finals']
+      ['qualis', 'QUALIS'],
+      ['finals', 'FINALS']
     ]
   }
 }) satisfies PageLoad

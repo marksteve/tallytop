@@ -1,7 +1,11 @@
 <script lang="ts">
   import { Countdown } from '@tallytop/ui'
+  import sponsor1 from './bhive.png'
+  import sponsor2 from './8a.png'
+  import sponsor3 from './pilipinas-climbing.png'
 
   let eventStart = new Date(2023, 3 - 1, 24)
+  const sponsors = [sponsor1, sponsor2, sponsor3]
 </script>
 
 <div
@@ -27,13 +31,9 @@
     <div class="text-6xl md:text-8xl"><Countdown to={eventStart} /></div>
   </div>
   <div />
-  <div class="bg-white p-10">
-    <img class="h-full w-full object-contain" src="/images/sponsors/bhive.png" />
-  </div>
-  <div class="bg-white p-10">
-    <img class="h-full w-full object-contain" src="/images/sponsors/8a.png" />
-  </div>
-  <div class="bg-white p-10">
-    <img class="h-full w-full object-contain" src="/images/sponsors/pilipinas-climbing.png" />
-  </div>
+  {#each sponsors as sponsor}
+    <div class="bg-white p-10">
+      <img class="h-full w-full object-contain" src={sponsor} />
+    </div>
+  {/each}
 </div>

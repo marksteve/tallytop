@@ -17,7 +17,7 @@
   }
 </script>
 
-<div class="flex min-h-screen flex-col justify-center gap-10 pb-20">
+<div class="flex flex-1 flex-col justify-center gap-10 pb-20">
   {#if selected}
     <div class="flex flex-col gap-5 p-10">
       <div class="text-6xl">
