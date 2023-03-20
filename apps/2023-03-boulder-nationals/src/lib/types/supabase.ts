@@ -126,6 +126,26 @@ export interface Database {
           wall?: string
         }
       }
+      startlists: {
+        Row: {
+          category: string
+          competitor_id: string
+          created_at: string | null
+          order: number
+        }
+        Insert: {
+          category: string
+          competitor_id: string
+          created_at?: string | null
+          order: number
+        }
+        Update: {
+          category?: string
+          competitor_id?: string
+          created_at?: string | null
+          order?: number
+        }
+      }
     }
     Views: {
       scores: {
