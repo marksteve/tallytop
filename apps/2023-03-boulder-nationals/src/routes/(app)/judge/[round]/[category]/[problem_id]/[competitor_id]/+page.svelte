@@ -36,8 +36,8 @@
   const { params } = $page
 </script>
 
-<div class="p-5 text-center text-4xl font-bold uppercase text-white">
-  <div class="text-6xl">
+<div class="p-5 text-center text-2xl font-bold uppercase text-white">
+  <div class="text-4xl">
     {data.problem.wall}
   </div>
   {data.competitor?.first_name ?? ''}
