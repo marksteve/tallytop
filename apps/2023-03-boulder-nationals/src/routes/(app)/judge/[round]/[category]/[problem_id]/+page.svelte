@@ -1,11 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
   import Button from '$lib/ui/Button.svelte'
   import { QrCamera } from '@tallytop/ui'
-  import type { PageData } from './$types'
 
-  export let data: PageData
-  const { params } = data
+  const { params } = $page.data
 
   let scanMode = false
 
@@ -22,7 +21,7 @@
     <Button on:click={() => (scanMode = false)}>CANCEL</Button>
   </div>
 {:else}
-  {#each data.competitors as competitor}
+  {#each $page.data.competitors as competitor}
     <a
       class="justify-self-stretch p-5 font-bold uppercase text-white"
       href="/judge/{params.round}/{params.category}/{params.problem_id}/{competitor.id}"

@@ -13,6 +13,9 @@ declare global {
       >
     }
     interface PageData {
+      supabaseClient: import('@supabase/supabase-js').SupabaseClient<
+        import('./lib/types/supabase').Database
+      >
       session: import('@supabase/supabase-js').Session | null
     }
     // interface Platform {}

@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { PageData } from './$types'
-
-  export let data: PageData
-  const { params } = data
+  import { page } from '$app/stores'
+  const { params } = $page.data
 </script>
 
-{#each data.categories as [path, name]}
+{#each $page.data.categories as [path, name]}
   <a class="text-4xl font-bold text-white" href="/judge/{params.round}/{path}">
     {name}
   </a>

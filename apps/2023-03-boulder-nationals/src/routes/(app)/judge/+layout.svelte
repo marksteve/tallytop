@@ -9,22 +9,28 @@
   $: {
     crumbs = [
       { type: 'round', options: R.toPairs(rounds), value: $page.params.round },
-      { type: 'category', options: R.toPairs(categories), value: $page.params.category }
+      { type: 'category', options: R.toPairs(categories), value: $page.params.category },
+      { type: 'problem', options: $page.data.problems, value: $page.params.problem_id }
     ]
   }
 
   const handleChange = (crumb) => {
     const { type, value } = crumb
-    if (type === 'round') {
-      if ($page.params.category) {
-        goto(`/judge/${value}/${$page.params.category}`)
-      } else {
-        goto(`/judge/${value}`)
-      }
+    let { round, category, problem_id, competitor_id } = $page.params
+    switch (type) {
+      case 'round':
+        round = value
+        break
+      case 'category':
+        category = value
+        problem_id = ''
+        break
+      case 'problem':
+        problem_id = value
+        break
     }
-    if (type === 'category') {
-      goto(`/judge/${$page.params.round}/${value}`)
-    }
+    const path = [round, category, problem_id, competitor_id].filter(Boolean).join('/')
+    goto(`/judge/${path}`)
   }
 </script>
 
@@ -34,7 +40,7 @@
       {#if crumb.value}
         <div class="border-brand flex-1 border-t px-5 py-2">
           <select
-            class="font-bold"
+            class="bg-white font-bold"
             value={crumb.value}
             on:change={(e) => handleChange({ type: crumb.type, value: e.target.value })}
           >
