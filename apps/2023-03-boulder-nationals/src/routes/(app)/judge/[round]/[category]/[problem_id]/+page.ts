@@ -3,14 +3,13 @@ import { getSupabase } from '@supabase/auth-helpers-sveltekit'
 
 export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
-  const { data: problems } = await supabaseClient
-    .from('problems')
+  const { data: competitors } = await supabaseClient
+    .from('competitors')
     .select()
-    .eq('round', event.params.round)
     .eq('category', event.params.category)
   return {
     title: 'JUDGE',
     params: event.params,
-    problems: problems ?? []
+    competitors: competitors ?? []
   }
 }) satisfies PageLoad

@@ -34,6 +34,32 @@ export interface Database {
   }
   public: {
     Tables: {
+      climbs: {
+        Row: {
+          attempts: string
+          competitor_id: string
+          created_at: string | null
+          problem_id: string
+          top: number
+          zone: number
+        }
+        Insert: {
+          attempts?: string
+          competitor_id: string
+          created_at?: string | null
+          problem_id: string
+          top?: number
+          zone?: number
+        }
+        Update: {
+          attempts?: string
+          competitor_id?: string
+          created_at?: string | null
+          problem_id?: string
+          top?: number
+          zone?: number
+        }
+      }
       competitors: {
         Row: {
           category: string | null
@@ -57,52 +83,6 @@ export interface Database {
           last_name?: string | null
         }
       }
-      finals: {
-        Row: {
-          attempts: string
-          competitor_id: string
-          created_at: string | null
-          problem_id: string
-          top: number
-          zone: number
-        }
-        Insert: {
-          attempts?: string
-          competitor_id: string
-          created_at?: string | null
-          problem_id: string
-          top?: number
-          zone?: number
-        }
-        Update: {
-          attempts?: string
-          competitor_id?: string
-          created_at?: string | null
-          problem_id?: string
-          top?: number
-          zone?: number
-        }
-      }
-      finals_problems: {
-        Row: {
-          color: string | null
-          created_at: string | null
-          id: string
-          wall: string
-        }
-        Insert: {
-          color?: string | null
-          created_at?: string | null
-          id?: string
-          wall: string
-        }
-        Update: {
-          color?: string | null
-          created_at?: string | null
-          id?: string
-          wall?: string
-        }
-      }
       judges: {
         Row: {
           created_at: string | null
@@ -120,75 +100,29 @@ export interface Database {
           name?: string
         }
       }
-      qualis: {
+      problems: {
         Row: {
-          attempts: string
-          competitor_id: string
-          created_at: string | null
-          problem_id: string
-          top: number
-          zone: number
-        }
-        Insert: {
-          attempts?: string
-          competitor_id: string
-          created_at?: string | null
-          problem_id: string
-          top?: number
-          zone?: number
-        }
-        Update: {
-          attempts?: string
-          competitor_id?: string
-          created_at?: string | null
-          problem_id?: string
-          top?: number
-          zone?: number
-        }
-      }
-      semis: {
-        Row: {
-          attempts: string
-          competitor_id: string
-          created_at: string | null
-          problem_id: string
-          top: number
-          zone: number
-        }
-        Insert: {
-          attempts?: string
-          competitor_id: string
-          created_at?: string | null
-          problem_id: string
-          top?: number
-          zone?: number
-        }
-        Update: {
-          attempts?: string
-          competitor_id?: string
-          created_at?: string | null
-          problem_id?: string
-          top?: number
-          zone?: number
-        }
-      }
-      semis_problems: {
-        Row: {
+          category: string
           color: string | null
           created_at: string | null
           id: string
+          round: string
           wall: string
         }
         Insert: {
+          category: string
           color?: string | null
           created_at?: string | null
           id?: string
+          round: string
           wall: string
         }
         Update: {
+          category?: string
           color?: string | null
           created_at?: string | null
           id?: string
+          round?: string
           wall?: string
         }
       }

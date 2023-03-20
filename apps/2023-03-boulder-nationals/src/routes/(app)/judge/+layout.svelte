@@ -1,9 +1,8 @@
 <script lang="ts">
-  import * as R from 'ramda'
-  import { page } from '$app/stores'
-  import { rounds, categories } from '$lib/labels'
-  import { redirect } from '@sveltejs/kit'
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+  import { categories, rounds } from '$lib/labels'
+  import * as R from 'ramda'
 
   let crumbs = []
 
@@ -35,6 +34,7 @@
       {#if crumb.value}
         <div class="border-brand flex-1 border-t px-5 py-2">
           <select
+            class="font-bold"
             value={crumb.value}
             on:change={(e) => handleChange({ type: crumb.type, value: e.target.value })}
           >
@@ -46,7 +46,9 @@
       {/if}
     {/each}
   </div>
-  <div class="bg-brand grid flex-1 auto-rows-fr grid-cols-1 items-center justify-items-center">
+  <div
+    class="bg-brand grid flex-1 auto-rows-fr grid-cols-1 items-center justify-items-center pb-20"
+  >
     <slot />
   </div>
 </div>

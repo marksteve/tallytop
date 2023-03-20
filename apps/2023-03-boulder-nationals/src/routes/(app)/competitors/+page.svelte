@@ -52,8 +52,8 @@
         {/each}
       {/each}
     </div>
-    <div class="fixed inset-x-0 bottom-0 flex p-5">
-      <Button class="flex-1" on:click={() => (scanMode = true)}>SCAN</Button>
+    <div class="fixed right-0 bottom-0 flex p-5">
+      <Button class="flex-1" on:click={() => (scanMode = true)}>SCAN QR</Button>
     </div>
   {/if}
 </div>
