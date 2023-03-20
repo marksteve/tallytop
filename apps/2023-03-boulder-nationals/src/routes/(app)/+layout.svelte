@@ -6,11 +6,6 @@
   const logout = () => supabase.auth.signOut()
 </script>
 
-{#if $page.data.session}
-  JUDGE MODE
-  <Button on:click={logout}>LOGOUT</Button>
-{/if}
-
 <div class="text-brand flex justify-between p-5">
   <a class="flex-1" href="/">
     <img src="/images/logo.svg" class="w-32" />
@@ -22,5 +17,14 @@
     </h2>
   </div>
 </div>
+
+{#if $page.data.session}
+  <div
+    class="bg-brand flex items-center justify-between border-y border-white p-5 text-3xl font-bold text-white"
+  >
+    JUDGE
+    <Button class="text-sm" on:click={logout}>LOGOUT</Button>
+  </div>
+{/if}
 
 <slot />
