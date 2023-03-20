@@ -30,7 +30,6 @@ export const load = (async (event) => {
   }
   return {
     title: 'JUDGE',
-    params: event.params,
     problem,
     competitor,
     attempts: climbs?.attempts

@@ -20,10 +20,13 @@
     switch (type) {
       case 'round':
         round = value
+        problem_id = ''
+        competitor_id = ''
         break
       case 'category':
         category = value
         problem_id = ''
+        competitor_id = ''
         break
       case 'problem':
         problem_id = value

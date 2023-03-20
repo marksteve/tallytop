@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import { applyAction, enhance } from '$app/forms'
   import Button from '$lib/ui/Button.svelte'
   import failIcon from '../../fail.svg'
   import topIcon from '../../top.svg'
   import zoneIcon from '../../zone.svg'
   import type { PageData } from './$types'
+  import * as R from 'ramda'
 
   export let data: PageData
 
@@ -23,6 +25,15 @@
     attempts
     saved = false
   }
+
+  let competitor, prev, next
+  $: {
+    competitor = R.find(R.propEq('id', data.competitor?.id), data.competitors)
+    prev = R.find(R.propEq('order', competitor?.order - 1), data.competitors)
+    next = R.find(R.propEq('order', competitor?.order + 1), data.competitors)
+  }
+
+  const { params } = $page
 </script>
 
 <div class="p-5 text-center text-4xl font-bold uppercase text-white">
@@ -58,18 +69,34 @@
   <button class="rounded-xl bg-white text-6xl" on:click={addFail}>+</button>
 </div>
 
-<form
-  method="POST"
-  use:enhance={() =>
-    async ({ result }) => {
-      await applyAction(result)
-      saved = true
-    }}
->
-  <input type="hidden" name="attempts" value={attempts} />
-  <input type="hidden" name="zone" value={zone} />
-  <input type="hidden" name="top" value={top} />
-  <Button type="submit">
-    {#if saved}SAVED{:else}SAVE{/if}
-  </Button>
-</form>
+<div class="grid grid-cols-3 justify-items-center justify-self-stretch px-10">
+  {#if prev}
+    <a href={`/judge/${params.round}/${params.category}/${params.problem_id}/${prev.id}`}>
+      <Button>PREV</Button>
+    </a>
+  {:else}
+    <div />
+  {/if}
+  <form
+    method="POST"
+    use:enhance={() =>
+      async ({ result }) => {
+        await applyAction(result)
+        saved = true
+      }}
+  >
+    <input type="hidden" name="attempts" value={attempts} />
+    <input type="hidden" name="zone" value={zone} />
+    <input type="hidden" name="top" value={top} />
+    <Button type="submit">
+      {#if saved}SAVED{:else}SAVE{/if}
+    </Button>
+  </form>
+  {#if next}
+    <a href={`/judge/${params.round}/${params.category}/${params.problem_id}/${next.id}`}>
+      <Button>NEXT</Button>
+    </a>
+  {:else}
+    <div />
+  {/if}
+</div>
