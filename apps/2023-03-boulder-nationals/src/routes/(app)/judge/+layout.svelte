@@ -41,7 +41,7 @@
   <div class="flex items-center">
     {#each crumbs as crumb}
       {#if crumb.value}
-        <div class="border-brand flex-1 border-t px-5 py-2">
+        <div class="border-brand flex-1 border-t px-5 py-2 text-center">
           <select
             class="bg-white font-bold"
             value={crumb.value}
