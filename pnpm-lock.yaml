@@ -78,6 +78,7 @@ importers:
       ramda: ^0.28.0
       svelte: ^3.54.0
       svelte-check: ^3.0.1
+      svelte-progress-bar: ^3.0.2
       tailwindcss: ^3.2.4
       tslib: ^2.4.1
       typescript: ^4.9.3
@@ -89,6 +90,7 @@ importers:
       '@tallytop/ui': link:../../packages/ui
       phosphor-svelte: 1.2.1_svelte@3.55.0
       ramda: 0.28.0
+      svelte-progress-bar: 3.0.2
       zx: 7.2.1
     devDependencies:
       '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.7.0
@@ -2524,6 +2526,10 @@ packages:
       svelte: 3.55.0
       typescript: 4.9.4
     dev: true
+
+  /svelte-progress-bar/3.0.2:
+    resolution: {integrity: sha512-OpHgSg7ebvCtzA1mnUzOSftG7qcJ6llbopGuLCQ3Usz8RnFMm5S4DcclaaSDHQ33NJ8s+SrN/sEVuKZIDF7asw==}
+    dev: false
 
   /svelte/3.55.0:
     resolution: {integrity: sha512-uGu2FVMlOuey4JoKHKrpZFkoYyj0VLjJdz47zX5+gVK5odxHM40RVhar9/iK2YFRVxvfg9FkhfVlR0sjeIrOiA==}

@@ -1,14 +1,21 @@
 <script lang="ts">
+  import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import supabase from '$lib/supabase'
   import Button from '$lib/ui/Button.svelte'
+  import ProgressBar from 'svelte-progress-bar'
   import headerBg from './header-bg.svg'
   import logo from './logo.svg'
 
   const logout = () => supabase.auth.signOut()
+
+  let progress
+  beforeNavigate(() => progress.start())
+  afterNavigate(() => progress.complete())
 </script>
 
 <div class="flex min-h-screen flex-col">
+  <ProgressBar bind:this={progress} color="#003070" />
   <div class="text-brand flex justify-between gap-5 p-5">
     <a class="flex-1" href="/">
       <img src={logo} class="w-32" />
