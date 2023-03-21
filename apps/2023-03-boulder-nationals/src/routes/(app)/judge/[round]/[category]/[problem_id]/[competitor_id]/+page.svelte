@@ -36,7 +36,7 @@
   const { params } = $page
 </script>
 
-<div class="justify-self-stretch px-5 font-bold uppercase text-white">
+<div class="justify-self-stretch px-5 font-bold uppercase text-white md:justify-self-center">
   <div class="flex items-center gap-5">
     <div class="text-4xl">
       {data.problem.wall}
@@ -69,7 +69,9 @@
   </div>
 </div>
 
-<div class="text-brand row-span-2 grid aspect-square w-1/2 auto-rows-fr grid-cols-2 gap-5">
+<div
+  class="text-brand row-span-2 grid aspect-square w-1/2 auto-rows-fr grid-cols-2 gap-5 md:max-w-xs"
+>
   <button class="rounded-xl bg-white text-3xl font-bold" on:click={addTop}>TOP</button>
   <button class="rounded-xl bg-white text-3xl font-bold" on:click={addZone}>ZONE</button>
   <button class="rounded-xl bg-white text-6xl" on:click={removeAttempt}>-</button>
