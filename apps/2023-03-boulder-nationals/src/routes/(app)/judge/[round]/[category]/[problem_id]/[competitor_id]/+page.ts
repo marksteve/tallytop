@@ -32,6 +32,6 @@ export const load = (async (event) => {
     title: 'JUDGE',
     problem,
     competitor,
-    attempts: climbs?.attempts
+    climbs
   }
 }) satisfies PageLoad

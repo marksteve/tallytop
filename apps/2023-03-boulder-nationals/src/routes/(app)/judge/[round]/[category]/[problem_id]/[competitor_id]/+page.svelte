@@ -1,22 +1,21 @@
 <script lang="ts">
-  import { page } from '$app/stores'
   import { applyAction, enhance } from '$app/forms'
+  import { page } from '$app/stores'
   import Button from '$lib/ui/Button.svelte'
+  import * as R from 'ramda'
   import failIcon from '../../fail.svg'
   import topIcon from '../../top.svg'
   import zoneIcon from '../../zone.svg'
   import type { PageData } from './$types'
-  import * as R from 'ramda'
 
   export let data: PageData
-
-  let attempts = data.attempts ?? ''
 
   const addFail = () => (attempts += 'x')
   const addZone = () => (attempts += 'z')
   const addTop = () => (attempts += 't')
   const removeAttempt = () => (attempts = attempts.slice(0, attempts.length - 1))
 
+  $: attempts = data.climbs?.attempts ?? ''
   $: zone = attempts.indexOf('z') + 1 || top
   $: top = attempts.indexOf('t') + 1
 
