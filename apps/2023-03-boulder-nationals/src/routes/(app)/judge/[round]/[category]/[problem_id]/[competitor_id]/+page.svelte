@@ -36,12 +36,19 @@
   const { params } = $page
 </script>
 
-<div class="p-5 text-center text-2xl font-bold uppercase text-white">
-  <div class="text-4xl">
-    {data.problem.wall}
+<div class="justify-self-stretch px-5 font-bold uppercase text-white">
+  <div class="flex items-center gap-5">
+    <div class="text-4xl">
+      {data.problem.wall}
+    </div>
+    <div class="text-brand w-14 rounded-full bg-white text-center text-2xl">
+      {competitor.bib_number}
+    </div>
+    <div class="flex-1 text-xl leading-none">
+      {data.competitor?.first_name ?? ''}
+      {data.competitor?.last_name ?? ''}
+    </div>
   </div>
-  {data.competitor?.first_name ?? ''}
-  {data.competitor?.last_name ?? ''}
 </div>
 
 <div class="flex flex-col gap-5">

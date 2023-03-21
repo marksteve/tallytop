@@ -62,25 +62,28 @@ export interface Database {
       }
       competitors: {
         Row: {
-          category: string | null
+          bib_number: string | null
+          category: string
           created_at: string | null
           first_name: string
           id: string
-          last_name: string | null
+          last_name: string
         }
         Insert: {
-          category?: string | null
+          bib_number?: string | null
+          category: string
           created_at?: string | null
           first_name: string
           id?: string
-          last_name?: string | null
+          last_name: string
         }
         Update: {
-          category?: string | null
+          bib_number?: string | null
+          category?: string
           created_at?: string | null
           first_name?: string
           id?: string
-          last_name?: string | null
+          last_name?: string
         }
       }
       judges: {

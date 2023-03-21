@@ -23,9 +23,12 @@
 {:else}
   {#each $page.data.competitors as competitor}
     <a
-      class="justify-self-stretch p-5 font-bold uppercase text-white"
+      class="flex items-center gap-2 justify-self-stretch p-5 font-bold uppercase text-white"
       href="/judge/{params.round}/{params.category}/{params.problem_id}/{competitor.id}"
     >
+      <div class="text-brand w-10 rounded-full bg-white text-center text-sm">
+        {competitor.bib_number}
+      </div>
       {competitor.first_name}
       {competitor.last_name}
     </a>

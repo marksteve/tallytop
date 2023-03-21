@@ -45,7 +45,13 @@
           {labels.categories[category]}
         </h3>
         {#each competitors as competitor}
-          <button class="p-5 text-left uppercase" on:click={() => (selected = competitor)}>
+          <button
+            class="flex items-center gap-2 p-5 uppercase"
+            on:click={() => (selected = competitor)}
+          >
+            <div class="bg-brand w-10 rounded-full text-center text-sm font-bold text-white">
+              {competitor.bib_number}
+            </div>
             {competitor.first_name ?? ''}
             {competitor.last_name ?? ''}
           </button>
