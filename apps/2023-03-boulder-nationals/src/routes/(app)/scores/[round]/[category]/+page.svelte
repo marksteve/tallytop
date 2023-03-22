@@ -17,10 +17,19 @@
   </div>
 {:else}
   <div
-    class="grid grid-cols-4 items-center justify-items-center gap-2 justify-self-stretch p-5 text-white"
+    class="grid grid-cols-4 items-center justify-items-center gap-2 self-start justify-self-stretch p-5 text-white md:grid-cols-8"
   >
+    <div class="md:contents hidden">
+      <strong class="col-span-4 justify-self-start">ATHLETE</strong>
+      <strong>TOPS</strong>
+      <strong>ZONES</strong>
+      <strong>TOP ATTEMPTS</strong>
+      <strong>ZONE ATTEMPTS</strong>
+    </div>
     {#each data.scores as score}
-      <div class="col-span-3 justify-self-stretch flex items-center gap-2 text-xl font-bold uppercase">
+      <div
+        class="col-span-3 flex items-center gap-2 justify-self-stretch text-xl font-bold uppercase"
+      >
         <div class="text-brand w-10 rounded-full bg-white text-center text-sm font-bold">
           {score.bib_number}
         </div>
