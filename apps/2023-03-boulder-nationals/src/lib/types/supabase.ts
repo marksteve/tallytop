@@ -135,18 +135,21 @@ export interface Database {
           competitor_id: string
           created_at: string | null
           order: number
+          round: string
         }
         Insert: {
           category: string
           competitor_id: string
           created_at?: string | null
           order: number
+          round: string
         }
         Update: {
           category?: string
           competitor_id?: string
           created_at?: string | null
           order?: number
+          round?: string
         }
       }
     }
