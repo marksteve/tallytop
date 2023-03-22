@@ -1,5 +1,7 @@
 <script lang="ts">
+  import Button from '$lib/ui/Button.svelte'
   import { page } from '$app/stores'
+  import { enhance } from '$app/forms'
   import { categories, rounds } from '$lib/labels'
   import failIcon from '$lib/ui/icons/fail.svg'
   import topIcon from '$lib/ui/icons/top.svg'
@@ -8,6 +10,20 @@
 
   export let data: PageData
   $: params = $page.params
+
+  const cutoff = {
+    qualis: {
+      inter_m: 6,
+      inter_w: 6,
+      open_m: 20,
+      open_w: 6
+    },
+    semis: {
+      open_m: 6
+    }
+  }
+
+  $: defaultValue = cutoff[params.round]?.[params.category] ?? 0
 </script>
 
 {#if data.scores.length === 0}
@@ -19,7 +35,7 @@
   <div
     class="grid grid-cols-4 items-center justify-items-center gap-2 self-start justify-self-stretch p-5 text-white md:grid-cols-8"
   >
-    <div class="md:contents hidden">
+    <div class="hidden md:contents">
       <strong class="col-span-4 justify-self-start">ATHLETE</strong>
       <strong>TOPS</strong>
       <strong>ZONES</strong>
@@ -60,5 +76,20 @@
         ZA <span class="font-bold">{score.zone_attempts}</span>
       </div>
     {/each}
+    {#if data.scores.length > 0 && data.session}
+      <form class="col-span-4 p-5 text-black md:col-span-8" method="POST" use:enhance>
+        <div class="flex flex-col items-center gap-2 rounded-xl bg-white p-5 md:flex-row">
+          Advance top
+          <input
+            class="w-16 rounded-xl border-4 text-center text-3xl"
+            type="number"
+            name="cutoff"
+            value={defaultValue}
+          />
+          to the next round
+          <Button class="p-1 text-sm" type="submit">CONFIRM</Button>
+        </div>
+      </form>
+    {/if}
   </div>
 {/if}
