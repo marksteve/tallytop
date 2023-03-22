@@ -9,7 +9,13 @@
   $: {
     crumbs = [
       { type: 'round', options: R.toPairs(rounds), value: $page.params.round },
-      { type: 'category', options: R.toPairs(categories), value: $page.params.category },
+      {
+        type: 'category',
+        options: R.toPairs(categories).filter(([category]) =>
+          $page.params.round === 'semis' ? category === 'open_m' : true
+        ),
+        value: $page.params.category
+      },
       { type: 'problem', options: $page.data.problems, value: $page.params.problem_id }
     ]
   }
@@ -20,6 +26,9 @@
     switch (type) {
       case 'round':
         round = value
+        if (value === 'semis') {
+          category = ''
+        }
         problem_id = ''
         competitor_id = ''
         break

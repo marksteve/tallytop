@@ -6,6 +6,8 @@ export const load = (async ({ params }) => {
   return {
     title: 'JUDGE',
     params,
-    categories: R.toPairs(categories)
+    categories: R.toPairs(categories).filter(([category]) =>
+      params.round === 'semis' ? category === 'open_m' : true
+    )
   }
 }) satisfies PageLoad

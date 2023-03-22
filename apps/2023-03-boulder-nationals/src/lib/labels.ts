@@ -7,5 +7,6 @@ export const categories: Record<string, string> = {
 
 export const rounds: Record<string, string> = {
   qualis: `Qualifiers`,
+  semis: `Semi-Finals`,
   finals: `Finals`
 }
