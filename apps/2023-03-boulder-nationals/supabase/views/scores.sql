@@ -26,7 +26,9 @@ ORDER
       wall_4 text
     )
 )
-SELECT climbs.competitor_id,
+SELECT competitors.bib_number,
+  competitors.first_name,
+  competitors.last_name,
   problems.round,
   problems.category,
   ARRAY [wall_results.wall_1, wall_results.wall_2, wall_results.wall_3, wall_results.wall_4] AS walls,
@@ -39,13 +41,15 @@ SELECT climbs.competitor_id,
   SUM(climbs.top) AS top_attempts,
   SUM(climbs.zone) AS zone_attempts
 FROM climbs
+  LEFT JOIN competitors ON competitors.id = climbs.competitor_id
   LEFT JOIN problems ON problems.id = climbs.problem_id
   INNER JOIN wall_results ON wall_results.competitor_id = climbs.competitor_id
 GROUP BY 1,
   2,
   3,
-  4
-ORDER BY 5 DESC,
-  6 DESC,
-  7,
-  8
+  4,
+  5
+ORDER BY 6 DESC,
+  7 DESC,
+  8,
+  9

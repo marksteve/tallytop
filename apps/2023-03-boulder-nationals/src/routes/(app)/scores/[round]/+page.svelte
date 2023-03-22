@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  const { params } = $page
+  $: params = $page.params
 </script>
 
 {#each $page.data.categories as [path, name]}

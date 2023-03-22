@@ -2,10 +2,10 @@
   import { applyAction, enhance } from '$app/forms'
   import { page } from '$app/stores'
   import Button from '$lib/ui/Button.svelte'
+  import failIcon from '$lib/ui/icons/fail.svg'
+  import topIcon from '$lib/ui/icons/top.svg'
+  import zoneIcon from '$lib/ui/icons/zone.svg'
   import * as R from 'ramda'
-  import failIcon from '../../fail.svg'
-  import topIcon from '../../top.svg'
-  import zoneIcon from '../../zone.svg'
   import type { ActionData, PageData } from './$types'
 
   export let data: PageData
@@ -33,7 +33,7 @@
     next = R.find(R.propEq('order', competitor?.order + 1), data.competitors)
   }
 
-  const { params } = $page
+  $: params = $page.params
 </script>
 
 <div class="justify-self-stretch px-5 font-bold uppercase text-white md:justify-self-center">

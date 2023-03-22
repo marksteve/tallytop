@@ -1,13 +1,13 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { rounds } from '$lib/labels'
+  import { categories, rounds } from '$lib/labels'
   import Button from '$lib/ui/Button.svelte'
   import { QrCamera } from '@tallytop/ui'
   import type { PageData } from './$types'
 
-  const { params } = $page
   export let data: PageData
+  $: params = $page.params
 
   let scanMode = false
 
@@ -19,7 +19,8 @@
 
 {#if data.competitors.length === 0}
   <div class="p-10 text-3xl text-white">
-    <strong>{rounds[params.round]}</strong> round hasn't started yet. Please check back later.
+    <strong>{rounds[params.round]}</strong> round for the
+    <strong>{categories[params.category]}</strong> category hasn't started yet. Please check back later.
   </div>
 {/if}
 
