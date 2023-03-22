@@ -13,6 +13,7 @@ const getCompetitors = async (supabaseClient, params) => {
     const { data: competitors } = await supabaseClient
       .from('startlists')
       .select('order, competitor:competitors(*)')
+      .eq('round', params.round)
       .eq('category', params.category)
       .order('order')
     return competitors.map(({ order, competitor }) => ({ ...competitor, order }))
