@@ -12,7 +12,7 @@ export const actions = {
       password
     })
     if (error) {
-      throw error
+      return fail(400, { error: 'Wrong password' })
     }
     throw redirect(303, '/judge')
   }

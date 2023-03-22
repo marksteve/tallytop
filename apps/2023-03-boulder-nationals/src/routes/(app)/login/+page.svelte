@@ -1,6 +1,9 @@
 <script lang="ts">
   import { enhance } from '$app/forms'
   import Button from '$lib/ui/Button.svelte'
+  import type { ActionData } from './$types'
+
+  export let form: ActionData
 </script>
 
 <form method="POST" use:enhance>
@@ -12,5 +15,8 @@
       placeholder="PASSWORD"
     />
     <Button type="submit">LOGIN</Button>
+    {#if form?.error}
+      <div class="text-center text-red-500">{form.error}</div>
+    {/if}
   </div>
 </form>
