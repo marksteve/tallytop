@@ -26,9 +26,10 @@ ORDER
       wall_4 text
     )
 )
-SELECT competitors.bib_number,
-  competitors.first_name,
-  competitors.last_name,
+SELECT competitors.id as competitor_id,
+  competitors.bib_number as competitor_bib_number,
+  competitors.first_name as competitor_first_name,
+  competitors.last_name as competitor_last_name,
   problems.round,
   problems.category,
   ARRAY [wall_results.wall_1, wall_results.wall_2, wall_results.wall_3, wall_results.wall_4] AS walls,
@@ -48,8 +49,10 @@ GROUP BY 1,
   2,
   3,
   4,
-  5
-ORDER BY 6 DESC,
-  7 DESC,
-  8,
-  9
+  5,
+  6,
+  7
+ORDER BY 8 DESC,
+  9 DESC,
+  10,
+  11

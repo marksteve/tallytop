@@ -156,10 +156,11 @@ export interface Database {
     Views: {
       scores: {
         Row: {
-          bib_number: string | null
           category: string | null
-          first_name: string | null
-          last_name: string | null
+          competitor_bib_number: string | null
+          competitor_first_name: string | null
+          competitor_id: string | null
+          competitor_last_name: string | null
           round: string | null
           top_attempts: number | null
           tops: number | null

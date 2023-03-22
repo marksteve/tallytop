@@ -20,6 +20,12 @@
     },
     semis: {
       open_m: 6
+    },
+    finals: {
+      inter_m: 3,
+      inter_w: 3,
+      open_m: 3,
+      open_w: 3
     }
   }
 
@@ -42,15 +48,17 @@
       <strong>TOP ATTEMPTS</strong>
       <strong>ZONE ATTEMPTS</strong>
     </div>
-    {#each data.scores as score}
+    {#each data.scores as score, index}
       <div
-        class="col-span-3 flex items-center gap-2 justify-self-stretch text-xl font-bold uppercase"
+        class={'col-span-3 flex items-center gap-2 justify-self-stretch text-xl font-bold uppercase'}
       >
         <div class="text-brand w-10 rounded-full bg-white text-center text-sm font-bold">
-          {score.bib_number}
+          {score.competitor_bib_number}
         </div>
-        {score.first_name}
-        {score.last_name}
+        <div class={index < defaultValue ? 'bg-white/20' : ''}>
+          {score.competitor_first_name}
+          {score.competitor_last_name}
+        </div>
       </div>
       <div class="flex gap-1">
         {#each score.walls ?? [] as wall}
@@ -76,7 +84,7 @@
         ZA <span class="font-bold">{score.zone_attempts}</span>
       </div>
     {/each}
-    {#if data.scores.length > 0 && data.session}
+    {#if data.nextRound && !data.nextHasStartlist && data.scores.length > 0 && data.session}
       <form class="col-span-4 p-5 text-black md:col-span-8" method="POST" use:enhance>
         <div class="flex flex-col items-center gap-2 rounded-xl bg-white p-5 md:flex-row">
           Advance top
@@ -86,7 +94,7 @@
             name="cutoff"
             value={defaultValue}
           />
-          to the next round
+          to {rounds[data.nextRound]}
           <Button class="p-1 text-sm" type="submit">CONFIRM</Button>
         </div>
       </form>
