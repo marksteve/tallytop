@@ -16,7 +16,7 @@
   </div>
   <div class="contents bg-white md:block" />
   <div class="text-brand flex items-center justify-center bg-white p-10">
-    <div class="outline-brand rounded-xl p-2 outline-4 hover:outline">SCORES</div>
+    <a class="outline-brand rounded-xl p-2 outline-4 hover:outline" href="/scores">SCORES</a>
   </div>
   <div class="bg-brand flex items-center justify-center text-white">
     <a class="rounded-xl p-2 outline-4 outline-white hover:outline" href="/competitors">
@@ -28,7 +28,7 @@
   <div class="contents bg-white md:block" />
   <div class="text-brand col-span-2 bg-white p-10">
     <div>EVENT STARTS IN</div>
-    <div class="text-6xl md:text-8xl"><Countdown to={eventStart} /></div>
+    <div class="text-6xl md:text-8xl"><Countdown to={eventStart ?? ''} /></div>
   </div>
   <div />
   {#each sponsors as sponsor}

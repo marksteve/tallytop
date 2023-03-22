@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { PageData } from './$types'
-
-  export let data: PageData
+  import { page } from '$app/stores'
 </script>
 
-<div class="flex flex-1 flex-col items-center justify-center gap-10 text-6xl">
-  {#each data.rounds as [path, name]}
-    <a href="/scores/{path}">{name}</a>
-  {/each}
-</div>
+{#each $page.data.rounds as [path, name]}
+  <a class="text-6xl font-bold text-white" href="/scores/{path}">
+    {name}
+  </a>
+{/each}
