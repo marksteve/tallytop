@@ -1,10 +1,13 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import { rounds } from '$lib/labels'
   import Button from '$lib/ui/Button.svelte'
   import { QrCamera } from '@tallytop/ui'
+  import type { PageData } from './$types'
 
-  const { params } = $page.data
+  const { params } = $page
+  export let data: PageData
 
   let scanMode = false
 
@@ -14,6 +17,12 @@
   }
 </script>
 
+{#if data.competitors.length === 0}
+  <div class="p-10 text-3xl text-white">
+    <strong>{rounds[params.round]}</strong> round hasn't started yet. Please check back later.
+  </div>
+{/if}
+
 {#if scanMode}
   <div class="flex flex-col gap-5 p-10 text-white">
     <QrCamera on:scan={handleScan} />
@@ -21,7 +30,7 @@
     <Button on:click={() => (scanMode = false)}>CANCEL</Button>
   </div>
 {:else}
-  {#each $page.data.competitors as competitor}
+  {#each data.competitors as competitor}
     <a
       class="flex items-center gap-2 justify-self-stretch p-5 font-bold uppercase text-white"
       href="/judge/{params.round}/{params.category}/{params.problem_id}/{competitor.id}"
@@ -33,7 +42,9 @@
       {competitor.last_name}
     </a>
   {/each}
-  <div class="fixed right-0 bottom-0 flex p-5">
-    <Button class="flex-1" on:click={() => (scanMode = true)}>SCAN QR</Button>
-  </div>
+  {#if data.competitors.length > 0}
+    <div class="fixed right-0 bottom-0 flex p-5">
+      <Button class="flex-1" on:click={() => (scanMode = true)}>SCAN QR</Button>
+    </div>
+  {/if}
 {/if}

@@ -6,9 +6,10 @@
   import failIcon from '../../fail.svg'
   import topIcon from '../../top.svg'
   import zoneIcon from '../../zone.svg'
-  import type { PageData } from './$types'
+  import type { ActionData, PageData } from './$types'
 
   export let data: PageData
+  export let form: ActionData
 
   const addFail = () => (attempts += 'x')
   const addZone = () => (attempts += 'z')
@@ -90,7 +91,7 @@
     use:enhance={() =>
       async ({ result }) => {
         await applyAction(result)
-        saved = true
+        saved = result.type !== 'failure'
       }}
   >
     <input type="hidden" name="attempts" value={attempts} />
@@ -107,4 +108,5 @@
   {:else}
     <div />
   {/if}
+  {#if form?.error}<div class="col-span-3 px-10 py-2 text-center text-white">{form.error}</div>{/if}
 </div>

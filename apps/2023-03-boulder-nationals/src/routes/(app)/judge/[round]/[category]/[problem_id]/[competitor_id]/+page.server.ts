@@ -1,4 +1,5 @@
 import { getSupabase } from '@supabase/auth-helpers-sveltekit'
+import { fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
 
 export const actions = {
@@ -16,7 +17,7 @@ export const actions = {
       zone
     })
     if (error) {
-      throw error
+      return fail(400, { error: error.message })
     }
   }
 } satisfies Actions
