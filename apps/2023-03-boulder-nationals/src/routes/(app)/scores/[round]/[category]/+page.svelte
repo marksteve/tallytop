@@ -30,6 +30,10 @@
   }
 
   $: defaultValue = cutoff[params.round]?.[params.category] ?? 0
+  $: ifscFormat = !(params.round === 'qualis' && params.category.startsWith('inter_'))
+  $: withZones = ifscFormat
+  $: withWalls = ifscFormat
+  $: numWalls = params.round === 'qualis' && ifscFormat ? 5 : 4
 </script>
 
 {#if data.scores.length === 0}
@@ -44,9 +48,9 @@
     <div class="hidden md:contents">
       <strong class="col-span-4 justify-self-start">ATHLETE</strong>
       <strong>TOPS</strong>
-      <strong>ZONES</strong>
+      {#if withZones}<strong>ZONES</strong>{/if}
       <strong>TOP ATTEMPTS</strong>
-      <strong>ZONE ATTEMPTS</strong>
+      {#if withZones}<strong>ZONE ATTEMPTS</strong>{/if}
     </div>
     {#each data.scores as score, index}
       <div
@@ -61,28 +65,32 @@
         </div>
       </div>
       <div class="flex gap-1">
-        {#each score.walls ?? [] as wall}
-          {#if wall === 'top'}
-            <img src={topIcon} class="h-6" />
-          {:else if wall === 'zone'}
-            <img src={zoneIcon} class="h-6" />
-          {:else}
-            <img src={failIcon} class="h-6" />
-          {/if}
-        {/each}
+        {#if withWalls}
+          {#each (score.walls ?? []).slice(0, numWalls) as wall}
+            {#if wall === 'top'}
+              <img src={topIcon} class="h-6" />
+            {:else if wall === 'zone'}
+              <img src={zoneIcon} class="h-6" />
+            {:else}
+              <img src={failIcon} class="h-6" />
+            {/if}
+          {/each}
+        {/if}
       </div>
       <div>
         T <span class="font-bold">{score.tops}</span>
       </div>
-      <div>
-        Z <span class="font-bold">{score.zones}</span>
-      </div>
+      {#if withZones}<div>
+          Z <span class="font-bold">{score.zones}</span>
+        </div>
+      {/if}
       <div>
         TA <span class="font-bold">{score.top_attempts}</span>
       </div>
-      <div>
-        ZA <span class="font-bold">{score.zone_attempts}</span>
-      </div>
+      {#if withZones}<div>
+          ZA <span class="font-bold">{score.zone_attempts}</span>
+        </div>
+      {/if}
     {/each}
     {#if data.nextRound && !data.nextHasStartlist && data.scores.length > 0 && data.session}
       <form class="col-span-4 p-5 text-black md:col-span-8" method="POST" use:enhance>

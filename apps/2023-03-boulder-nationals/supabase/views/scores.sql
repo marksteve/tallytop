@@ -1,12 +1,8 @@
 WITH wall_results AS (
-  SELECT ct.competitor_id,
-    ct.wall_1,
-    ct.wall_2,
-    ct.wall_3,
-    ct.wall_4
+  SELECT *
   FROM crosstab(
       '
-SELECT competitor_id,
+SELECT CONCAT(competitor_id, ''-'', problems.round) AS id,
   problems.wall,
   CASE
     WHEN top > 0 THEN ''top''
@@ -19,11 +15,12 @@ ORDER
 	BY 1, 2
 '::text
     ) ct(
-      competitor_id uuid,
+      id text,
       wall_1 text,
       wall_2 text,
       wall_3 text,
-      wall_4 text
+      wall_4 text,
+      wall_5 text
     )
 )
 SELECT competitors.id as competitor_id,
@@ -32,7 +29,7 @@ SELECT competitors.id as competitor_id,
   competitors.last_name as competitor_last_name,
   problems.round,
   problems.category,
-  ARRAY [wall_results.wall_1, wall_results.wall_2, wall_results.wall_3, wall_results.wall_4] AS walls,
+  ARRAY [wall_results.wall_1, wall_results.wall_2, wall_results.wall_3, wall_results.wall_4, wall_results.wall_5] AS walls,
   COUNT(*) FILTER (
     WHERE climbs.top > 0
   ) AS tops,
@@ -44,7 +41,7 @@ SELECT competitors.id as competitor_id,
 FROM climbs
   LEFT JOIN competitors ON competitors.id = climbs.competitor_id
   LEFT JOIN problems ON problems.id = climbs.problem_id
-  INNER JOIN wall_results ON wall_results.competitor_id = climbs.competitor_id
+  INNER JOIN wall_results ON wall_results.id = CONCAT(climbs.competitor_id, '-', problems.round)
 GROUP BY 1,
   2,
   3,
