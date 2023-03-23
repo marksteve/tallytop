@@ -88,56 +88,56 @@ INSERT INTO public.competitors (id,created_at,first_name,category,last_name,bib_
 	 ('b7cb6333-1f04-473e-ae26-481a32d2a39a','2023-03-16 12:33:16.757+08','Praj','open_w','dela Cruz','213');
 INSERT INTO public.competitors (id,created_at,first_name,category,last_name,bib_number) VALUES
 	 ('80327356-7f55-47d3-8acc-2e024c5260c2','2023-03-22 10:18:58.577296+08','Naod','inter_m','Negash','327');
-INSERT INTO public.startlists (created_at,competitor_id,category,"order") VALUES
-	 ('2023-03-20 23:16:45.568077+08','d0e8cf75-85dc-4eec-93c7-6e693b81eb20','open_m',1),
-	 ('2023-03-20 23:16:45.568077+08','3dda2893-50ab-4301-a055-d478f85a35aa','open_m',2),
-	 ('2023-03-20 23:16:45.568077+08','8dc83e9d-f8bc-47fe-9a06-2f4720bcb019','open_m',3),
-	 ('2023-03-20 23:16:45.568077+08','4df4178c-9b0e-4da6-b791-f6e96eb0421a','open_m',4),
-	 ('2023-03-20 23:16:45.568077+08','e26eb562-06fa-4950-9072-78a00b3d673c','open_m',5),
-	 ('2023-03-20 23:16:45.568077+08','7aca58cd-4565-4f2d-ac5a-28252676b02d','open_m',6),
-	 ('2023-03-20 23:16:45.568077+08','1d8a0d8d-1432-4a70-8273-196ca3c59180','open_m',7),
-	 ('2023-03-20 23:16:45.568077+08','a0989683-bc04-4de4-94cd-d4349dd430de','open_m',8),
-	 ('2023-03-20 23:16:45.568077+08','d806f47f-3d61-4366-bd89-00aad2e5fd48','open_m',9),
-	 ('2023-03-20 23:16:45.568077+08','0dcc758d-823a-45e9-8f02-da4099fa2c9c','open_m',10);
-INSERT INTO public.startlists (created_at,competitor_id,category,"order") VALUES
-	 ('2023-03-20 23:16:45.568077+08','2bd0e3ff-30be-45e1-9bcc-8a6d86a43a59','open_m',11),
-	 ('2023-03-20 23:16:45.568077+08','06886826-a6f0-487f-ac4d-e27a60231eeb','open_m',12),
-	 ('2023-03-20 23:16:45.568077+08','2ee49f12-0a4f-4449-ab20-d325778568c0','open_m',13),
-	 ('2023-03-20 23:16:45.568077+08','defe977c-79b2-46d6-b556-8cf7a712d9ce','open_m',14),
-	 ('2023-03-20 23:16:45.568077+08','a8768010-b59a-4be4-8b82-7f92762bcf4f','open_m',15),
-	 ('2023-03-20 23:16:45.568077+08','4e112930-ddfc-49e0-948a-81192403252a','open_m',16),
-	 ('2023-03-20 23:16:45.568077+08','8b11dc9c-0d5c-419b-aeeb-50ff485a282e','open_m',17),
-	 ('2023-03-20 23:16:45.568077+08','f5678ccf-c356-4801-a14c-e30b1e2c384b','open_m',18),
-	 ('2023-03-20 23:16:45.568077+08','91e086a3-a118-48ac-8dcc-f79de2120949','open_m',19),
-	 ('2023-03-20 23:16:45.568077+08','374994d9-062a-46dc-b2dd-e5fe1d29056d','open_m',20);
-INSERT INTO public.startlists (created_at,competitor_id,category,"order") VALUES
-	 ('2023-03-20 23:16:45.568077+08','aad0673c-4604-4150-a51e-b3c5263d5d10','open_m',21),
-	 ('2023-03-20 23:16:45.568077+08','e8d9bdc1-c8be-4309-a626-c1eb30fd7b5d','open_m',22),
-	 ('2023-03-20 23:16:45.568077+08','456ae18c-b4ad-4c6a-95d6-20429ce0e38b','open_m',23),
-	 ('2023-03-20 23:16:45.568077+08','d9c0479b-ed2a-4427-b02e-0055ea76dfeb','open_m',24),
-	 ('2023-03-20 23:16:45.568077+08','ea269579-8a37-4241-8714-20c42c32a85d','open_m',25),
-	 ('2023-03-20 23:16:45.568077+08','a7330676-235e-4f7a-9549-dbb184c9c12a','open_m',26),
-	 ('2023-03-20 23:16:45.568077+08','97c3a768-850d-4ee0-8a43-e837db6b9da8','open_m',27),
-	 ('2023-03-20 23:16:45.568077+08','f09eb518-ab79-449e-86be-bf7764aab234','open_w',1),
-	 ('2023-03-20 23:16:45.568077+08','0e55a646-5bf8-483e-ba7a-7409d1385c29','open_w',2),
-	 ('2023-03-20 23:16:45.568077+08','aa3464cd-0c68-4670-8096-3fe169c78ad7','open_w',3);
-INSERT INTO public.startlists (created_at,competitor_id,category,"order") VALUES
-	 ('2023-03-20 23:16:45.568077+08','58d468f4-c05d-44c4-a8c7-f0250a1298e8','open_w',4),
-	 ('2023-03-20 23:16:45.568077+08','3030d2b3-0edc-4fba-a261-ff2461297f18','open_w',5),
-	 ('2023-03-20 23:16:45.568077+08','bd350573-5e32-4a42-bc87-349f67c20be5','open_w',6),
-	 ('2023-03-20 23:16:45.568077+08','67f3cda0-16e6-4769-a624-fc155eebd6bf','open_w',7),
-	 ('2023-03-20 23:16:45.568077+08','8f0ac98f-fa1b-4118-abe8-50e23c0cc645','open_w',8),
-	 ('2023-03-20 23:16:45.568077+08','52086a21-f7c7-44b7-859e-559fec4d1eab','open_w',9),
-	 ('2023-03-20 23:16:45.568077+08','fb8c77ff-c9d7-463a-bd66-2622f8acf791','open_w',10),
-	 ('2023-03-20 23:16:45.568077+08','1e00b4bf-8a03-4acf-870e-ea07a9c682ed','open_w',11),
-	 ('2023-03-20 23:16:45.568077+08','1c66c1ad-d31f-4525-9472-27ec83010a83','open_w',12),
-	 ('2023-03-20 23:16:45.568077+08','c10bbefe-4fa2-468a-9e35-7e93b114fabb','open_w',13);
-INSERT INTO public.startlists (created_at,competitor_id,category,"order") VALUES
-	 ('2023-03-20 23:16:45.568077+08','3fbda428-33b2-496e-b3c2-e9b4fbbcbb9e','open_w',14),
-	 ('2023-03-20 23:16:45.568077+08','b82ad3b5-9d8e-4dde-8e9d-27f8667e6214','open_w',15),
-	 ('2023-03-20 23:16:45.568077+08','18b44f96-a95b-4b72-b635-6d772acc4f25','open_w',16),
-	 ('2023-03-20 23:16:45.568077+08','b7cb6333-1f04-473e-ae26-481a32d2a39a','open_w',17),
-	 ('2023-03-20 23:16:45.568077+08','ec0d05fa-5d6c-4be8-a096-c434113e1ad1','open_w',18);
+INSERT INTO public.startlists (created_at,competitor_id,category,"order",round) VALUES
+	 ('2023-03-20 23:16:45.568077+08','d0e8cf75-85dc-4eec-93c7-6e693b81eb20','open_m',1,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','3dda2893-50ab-4301-a055-d478f85a35aa','open_m',2,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','8dc83e9d-f8bc-47fe-9a06-2f4720bcb019','open_m',3,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','4df4178c-9b0e-4da6-b791-f6e96eb0421a','open_m',4,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','e26eb562-06fa-4950-9072-78a00b3d673c','open_m',5,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','7aca58cd-4565-4f2d-ac5a-28252676b02d','open_m',6,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','1d8a0d8d-1432-4a70-8273-196ca3c59180','open_m',7,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','a0989683-bc04-4de4-94cd-d4349dd430de','open_m',8,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','d806f47f-3d61-4366-bd89-00aad2e5fd48','open_m',9,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','0dcc758d-823a-45e9-8f02-da4099fa2c9c','open_m',10,'qualis');
+INSERT INTO public.startlists (created_at,competitor_id,category,"order",round) VALUES
+	 ('2023-03-20 23:16:45.568077+08','2bd0e3ff-30be-45e1-9bcc-8a6d86a43a59','open_m',11,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','06886826-a6f0-487f-ac4d-e27a60231eeb','open_m',12,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','2ee49f12-0a4f-4449-ab20-d325778568c0','open_m',13,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','defe977c-79b2-46d6-b556-8cf7a712d9ce','open_m',14,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','a8768010-b59a-4be4-8b82-7f92762bcf4f','open_m',15,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','4e112930-ddfc-49e0-948a-81192403252a','open_m',16,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','8b11dc9c-0d5c-419b-aeeb-50ff485a282e','open_m',17,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','f5678ccf-c356-4801-a14c-e30b1e2c384b','open_m',18,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','91e086a3-a118-48ac-8dcc-f79de2120949','open_m',19,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','374994d9-062a-46dc-b2dd-e5fe1d29056d','open_m',20,'qualis');
+INSERT INTO public.startlists (created_at,competitor_id,category,"order",round) VALUES
+	 ('2023-03-20 23:16:45.568077+08','aad0673c-4604-4150-a51e-b3c5263d5d10','open_m',21,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','e8d9bdc1-c8be-4309-a626-c1eb30fd7b5d','open_m',22,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','456ae18c-b4ad-4c6a-95d6-20429ce0e38b','open_m',23,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','d9c0479b-ed2a-4427-b02e-0055ea76dfeb','open_m',24,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','ea269579-8a37-4241-8714-20c42c32a85d','open_m',25,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','a7330676-235e-4f7a-9549-dbb184c9c12a','open_m',26,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','97c3a768-850d-4ee0-8a43-e837db6b9da8','open_m',27,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','f09eb518-ab79-449e-86be-bf7764aab234','open_w',1,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','0e55a646-5bf8-483e-ba7a-7409d1385c29','open_w',2,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','aa3464cd-0c68-4670-8096-3fe169c78ad7','open_w',3,'qualis');
+INSERT INTO public.startlists (created_at,competitor_id,category,"order",round) VALUES
+	 ('2023-03-20 23:16:45.568077+08','58d468f4-c05d-44c4-a8c7-f0250a1298e8','open_w',4,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','3030d2b3-0edc-4fba-a261-ff2461297f18','open_w',5,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','bd350573-5e32-4a42-bc87-349f67c20be5','open_w',6,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','67f3cda0-16e6-4769-a624-fc155eebd6bf','open_w',7,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','8f0ac98f-fa1b-4118-abe8-50e23c0cc645','open_w',8,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','52086a21-f7c7-44b7-859e-559fec4d1eab','open_w',9,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','fb8c77ff-c9d7-463a-bd66-2622f8acf791','open_w',10,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','1e00b4bf-8a03-4acf-870e-ea07a9c682ed','open_w',11,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','1c66c1ad-d31f-4525-9472-27ec83010a83','open_w',12,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','c10bbefe-4fa2-468a-9e35-7e93b114fabb','open_w',13,'qualis');
+INSERT INTO public.startlists (created_at,competitor_id,category,"order",round) VALUES
+	 ('2023-03-20 23:16:45.568077+08','3fbda428-33b2-496e-b3c2-e9b4fbbcbb9e','open_w',14,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','b82ad3b5-9d8e-4dde-8e9d-27f8667e6214','open_w',15,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','18b44f96-a95b-4b72-b635-6d772acc4f25','open_w',16,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','b7cb6333-1f04-473e-ae26-481a32d2a39a','open_w',17,'qualis'),
+	 ('2023-03-20 23:16:45.568077+08','ec0d05fa-5d6c-4be8-a096-c434113e1ad1','open_w',18,'qualis');
 INSERT INTO public.problems (id,created_at,wall,color,round,category) VALUES
 	 ('8150991e-add6-4586-9d75-58cce396fc66','2023-03-20 21:03:38.461016+08','M1',NULL,'qualis','inter_m'),
 	 ('6a3abe98-782d-49f3-8497-9d529a09f92a','2023-03-20 21:03:38.461016+08','M2',NULL,'qualis','inter_m'),
@@ -173,9 +173,19 @@ INSERT INTO public.problems (id,created_at,wall,color,round,category) VALUES
 	 ('0793ed8e-90a4-4b55-892e-67dbb7b32afd','2023-03-20 21:03:38.461016+08','W2',NULL,'finals','open_w');
 INSERT INTO public.problems (id,created_at,wall,color,round,category) VALUES
 	 ('839982f0-0c46-4509-b90f-d37912197461','2023-03-20 21:03:38.461016+08','W3',NULL,'finals','open_w'),
-	 ('ecfda68c-ebf2-48a5-9af1-519e0f1edbd4','2023-03-20 21:03:38.461016+08','W4',NULL,'finals','open_w');
-INSERT INTO public.problems (id,created_at,wall,color,round,category) VALUES
+	 ('ecfda68c-ebf2-48a5-9af1-519e0f1edbd4','2023-03-20 21:03:38.461016+08','W4',NULL,'finals','open_w'),
 	 ('d5ee8076-049d-4083-8f00-de235c3e10c3','2023-03-22 10:33:14.370205+08','M1',NULL,'semis','open_m'),
 	 ('5e21ff06-db4c-4c97-9f8c-7b451482a4cd','2023-03-22 10:33:22.487965+08','M2',NULL,'semis','open_m'),
 	 ('299337f8-3177-412b-ba0c-85bb1f944fb4','2023-03-22 10:33:34.745855+08','M3',NULL,'semis','open_m'),
-	 ('e33d608c-23c4-45bf-8e75-25d011a00ad3','2023-03-22 10:33:45.21208+08','M4',NULL,'semis','open_m');
+	 ('e33d608c-23c4-45bf-8e75-25d011a00ad3','2023-03-22 10:33:45.21208+08','M4',NULL,'semis','open_m'),
+	 ('138aeb65-cade-4b5d-9102-4f695ee94bf1','2023-03-23 16:27:10.683714+08','M5',NULL,'qualis','inter_m'),
+	 ('d5f79846-32db-4aa1-abd8-c0f6114b09b8','2023-03-23 16:27:10.683714+08','M6',NULL,'qualis','inter_m'),
+	 ('9a8a9ca5-bab8-4b57-814f-251d9c974a0e','2023-03-23 16:27:10.683714+08','M7',NULL,'qualis','inter_m'),
+	 ('5dad334b-5c89-4d34-be5c-5d2b840eee78','2023-03-23 16:27:10.683714+08','M8',NULL,'qualis','inter_m');
+INSERT INTO public.problems (id,created_at,wall,color,round,category) VALUES
+	 ('2509dc35-b042-4fcf-adca-2f2b9860fc37','2023-03-23 16:27:10.683714+08','W5',NULL,'qualis','inter_w'),
+	 ('a3555add-6524-4b2b-9416-4657901aeec2','2023-03-23 16:27:10.683714+08','W6',NULL,'qualis','inter_w'),
+	 ('ef03004c-dfe0-4a1f-beeb-1993a1cd6fe5','2023-03-23 16:27:10.683714+08','W7',NULL,'qualis','inter_w'),
+	 ('9627ef10-2112-42c4-b89b-ef9a7b0c1c71','2023-03-23 16:27:10.683714+08','W8',NULL,'qualis','inter_w'),
+	 ('da75cf46-f008-4139-8b4d-ce86727262b3','2023-03-23 16:27:10.683714+08','M5',NULL,'qualis','open_m'),
+	 ('254fb06d-329e-4e08-ae04-2af624e22e4d','2023-03-23 16:27:10.683714+08','W5',NULL,'qualis','open_w');
