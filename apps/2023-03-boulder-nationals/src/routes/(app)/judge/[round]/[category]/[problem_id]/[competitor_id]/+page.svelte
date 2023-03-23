@@ -12,8 +12,16 @@
   export let form: ActionData
 
   const addFail = () => (attempts += 'x')
-  const addZone = () => (attempts += 'z')
-  const addTop = () => (attempts += 't')
+  const addZone = () => {
+    if (attempts.length > 0) {
+      attempts = attempts.substring(0, attempts.length - 1) + 'z'
+    }
+  }
+  const addTop = () => {
+    if (attempts.length > 0) {
+      attempts = attempts.substring(0, attempts.length - 1) + 't'
+    }
+  }
   const removeAttempt = () => (attempts = attempts.slice(0, attempts.length - 1))
 
   $: attempts = data.climbs?.attempts ?? ''
