@@ -10,7 +10,13 @@
   const logout = () => supabase.auth.signOut()
 
   let progress
-  beforeNavigate(() => progress.start())
+  beforeNavigate((navigation) => {
+    if (
+      navigation.from?.route.id !== '/(app)/judge/[round]/[category]/[problem_id]/[competitor_id]'
+    ) {
+      progress.start()
+    }
+  })
   afterNavigate(() => progress.complete())
 </script>
 

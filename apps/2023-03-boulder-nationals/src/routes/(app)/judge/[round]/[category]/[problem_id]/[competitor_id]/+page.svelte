@@ -1,5 +1,6 @@
 <script lang="ts">
   import { applyAction, enhance } from '$app/forms'
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import Button from '$lib/ui/Button.svelte'
   import failIcon from '$lib/ui/icons/fail.svg'
@@ -39,9 +40,17 @@
     competitor = R.find(R.propEq('id', data.competitor?.id), data.competitors)
     prev = R.find(R.propEq('order', competitor?.order - 1), data.competitors)
     next = R.find(R.propEq('order', competitor?.order + 1), data.competitors)
+    saved = false
   }
 
   $: params = $page.params
+
+  beforeNavigate((navigation) => {
+    if (!saved) {
+      navigation.cancel()
+      alert('Score not saved yet!')
+    }
+  })
 </script>
 
 <div class="justify-self-stretch px-5 font-bold uppercase text-white md:justify-self-center">
