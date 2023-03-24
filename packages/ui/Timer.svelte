@@ -197,7 +197,7 @@
 </script>
 
 <div
-  class={`border-2 border-transparent font-mono text-[15vw] ${
+  class={`border-2 border-transparent font-mono text-[10vw] ${
     status !== 'running' ? 'rounded border-stone-200 px-10' : ''
   }`}
   contenteditable={status !== 'running'}
