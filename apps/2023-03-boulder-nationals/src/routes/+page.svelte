@@ -5,6 +5,35 @@
   import sponsor3 from './pilipinas-climbing.png'
 
   let eventStart = new Date(2023, 3 - 1, 25, 7)
+  const schedule = [
+    {
+      round: `Open Women's Qualifiers`,
+      start: new Date(2023, 3 - 1, 25, 8),
+      end: new Date(2023, 3 - 1, 25, 10)
+    },
+    {
+      round: `Open Men's Qualifiers`,
+      start: new Date(2023, 3 - 1, 25, 11, 15),
+      end: new Date(2023, 3 - 1, 25, 14, 15)
+    },
+    {
+      round: `Inter Women's Qualifiers`,
+      start: new Date(2023, 3 - 1, 25, 15, 10),
+      end: new Date(2023, 3 - 1, 25, 15, 55)
+    },
+    {
+      round: `Inter Men's Qualifiers`,
+      start: new Date(2023, 3 - 1, 25, 16, 40),
+      end: new Date(2023, 3 - 1, 25, 18, 10)
+    },
+    {
+      round: `Open Men's Semi-Finals`,
+      start: new Date(2023, 3 - 1, 25, 19, 10),
+      end: new Date(2023, 3 - 1, 25, 21, 30)
+    }
+  ]
+  const upcoming = schedule.find((s) => s.start > Date.now())
+  const ongoing = schedule.find((s) => s.start < Date.now() && s.end > Date.now())
   const sponsors = [sponsor1, sponsor2, sponsor3]
 </script>
 
@@ -27,8 +56,22 @@
   <div class="contents md:block" />
   <div class="contents bg-white md:block" />
   <div class="text-brand col-span-2 bg-white p-10">
-    <div>EVENT STARTS IN</div>
-    <div class="text-6xl md:text-8xl"><Countdown to={eventStart ?? ''} /></div>
+    {#if eventStart > Date.now()}
+      <div>EVENT STARTS IN</div>
+      <div class="text-6xl md:text-8xl">
+        <Countdown to={eventStart} />
+      </div>
+    {:else if ongoing}
+      <div class="text-4xl font-bold uppercase md:text-6xl">
+        {ongoing.round}
+      </div>
+      <div>ONGOING</div>
+    {:else if upcoming}
+      <div class="text-4xl font-bold uppercase md:text-6xl">
+        {upcoming.round}
+      </div>
+      <div>STARTS IN <Countdown to={upcoming.start} /></div>
+    {/if}
   </div>
   <div />
   {#each sponsors as sponsor}
