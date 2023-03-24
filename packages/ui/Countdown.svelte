@@ -20,4 +20,4 @@
   })
 </script>
 
-{duration}
+{duration ?? ''}
