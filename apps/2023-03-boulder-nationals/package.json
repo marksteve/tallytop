@@ -24,6 +24,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.7.0",
+    "@tailwindcss/typography": "^0.5.9",
     "@tallytop/eslint-config-custom": "workspace:*",
     "@types/ramda": "^0.28.23",
     "autoprefixer": "^10.4.13",

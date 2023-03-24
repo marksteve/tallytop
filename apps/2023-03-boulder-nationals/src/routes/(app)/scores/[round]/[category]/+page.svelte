@@ -14,24 +14,6 @@
   export let data: PageData
   $: params = $page.params
 
-  const cutoff = {
-    qualis: {
-      inter_m: 6,
-      inter_w: 6,
-      open_m: 20,
-      open_w: 6
-    },
-    semis: {
-      open_m: 6
-    },
-    finals: {
-      inter_m: 3,
-      inter_w: 3,
-      open_m: 3,
-      open_w: 3
-    }
-  }
-
   let channel: RealtimeChannel
 
   onMount(() => {
@@ -57,7 +39,7 @@
     }
   })
 
-  $: defaultValue = cutoff[params.round]?.[params.category] ?? 0
+  $: defaultValue = data.cutoffs[params.round]?.[params.category] ?? 0
   $: ifscFormat = !(params.round === 'qualis' && params.category.startsWith('inter_'))
   $: numWalls = params.round === 'qualis' && ifscFormat ? 5 : 4
 </script>

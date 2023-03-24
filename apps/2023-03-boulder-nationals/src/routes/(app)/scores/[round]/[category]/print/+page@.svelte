@@ -1,0 +1,40 @@
+<script lang="ts">
+  import { page } from '$app/stores'
+  import { categories, rounds } from '$lib/labels'
+  import type { PageData } from './$types'
+
+  $: params = $page.params
+  export let data: PageData
+</script>
+
+<div class="prose-lg prose flex max-w-full flex-col items-center p-10">
+  <img class="m-0 h-20" src="/images/logo.svg" />
+  <div>March 25 to 26</div>
+  <h2 class="m-0">{categories[params.category]} {rounds[params.round]}</h2>
+  <div>Official Results</div>
+  <table>
+    <thead>
+      <tr>
+        <th />
+        <th>Name</th>
+        <th>Bib</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each data.scores as score, index}
+        <tr>
+          <td>{index + 1}</td>
+          <td>{score.competitor_first_name} {score.competitor_last_name}</td>
+          <td>{score.competitor_bib_number}</td>
+          <td>
+            {score.tops}T
+            {score.zones}z
+            {score.top_attempts}
+            {score.zone_attempts}
+          </td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>

@@ -1,7 +1,9 @@
+import { nextRounds } from '$lib/flows'
 import { getSupabase } from '@supabase/auth-helpers-sveltekit'
 import type { PageLoad } from './$types'
 
 export const load = (async (event) => {
+  const nextRound = nextRounds[event.params.round][event.params.category]
   const { supabaseClient } = await getSupabase(event)
   const { data: scores } = await supabaseClient
     .from('scores')
@@ -11,12 +13,12 @@ export const load = (async (event) => {
   const { count: nextCount } = await supabaseClient
     .from('scores')
     .select('*', { count: 'exact', head: true })
-    .eq('round', event.data.nextRound)
+    .eq('round', nextRound)
     .eq('category', event.params.category)
   event.depends([event.params.round, event.params.category].join(':'))
   return {
     title: 'SCORES',
-    nextRound: event.data.nextRound,
+    nextRound,
     scores: scores ?? [],
     nextHasStartlist: nextCount! > 0
   }

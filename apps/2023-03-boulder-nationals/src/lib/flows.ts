@@ -7,5 +7,6 @@ export const nextRounds = {
   },
   semis: {
     open_m: 'finals'
-  }
+  },
+  finals: {}
 }

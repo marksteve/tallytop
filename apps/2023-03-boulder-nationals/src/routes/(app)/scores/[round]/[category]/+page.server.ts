@@ -1,24 +1,6 @@
+import { nextRounds } from '$lib/flows'
 import { fail, redirect } from '@sveltejs/kit'
-import type { Actions, PageServerLoad } from './$types'
-
-const nextRounds = {
-  qualis: {
-    inter_m: 'finals',
-    inter_w: 'finals',
-    open_m: 'semis',
-    open_w: 'finals'
-  },
-  semis: {
-    open_m: 'finals'
-  },
-  finals: {}
-}
-
-export const load = (async ({ params }) => {
-  return {
-    nextRound: nextRounds[params.round][params.category]
-  }
-}) satisfies PageServerLoad
+import type { Actions } from './$types'
 
 export const actions = {
   default: async ({ request, params, locals: { supabase } }) => {
