@@ -4,7 +4,7 @@
   import sponsor2 from './8a.png'
   import sponsor3 from './pilipinas-climbing.png'
 
-  let eventStart = new Date(2023, 3 - 1, 25)
+  let eventStart = new Date(2023, 3 - 1, 25, 7)
   const sponsors = [sponsor1, sponsor2, sponsor3]
 </script>
 
