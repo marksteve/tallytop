@@ -13,6 +13,7 @@ export const load = (async (event) => {
     .select('*', { count: 'exact', head: true })
     .eq('round', event.data.nextRound)
     .eq('category', event.params.category)
+  event.depends([event.params.round, event.params.category].join(':'))
   return {
     title: 'SCORES',
     nextRound: event.data.nextRound,

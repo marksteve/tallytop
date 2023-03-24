@@ -1,11 +1,14 @@
 <script lang="ts">
-  import Button from '$lib/ui/Button.svelte'
-  import { page } from '$app/stores'
   import { enhance } from '$app/forms'
+  import { invalidate } from '$app/navigation'
+  import { page } from '$app/stores'
   import { categories, rounds } from '$lib/labels'
+  import Button from '$lib/ui/Button.svelte'
   import failIcon from '$lib/ui/icons/fail.svg'
   import topIcon from '$lib/ui/icons/top.svg'
   import zoneIcon from '$lib/ui/icons/zone.svg'
+  import type { RealtimeChannel } from '@supabase/supabase-js'
+  import { onDestroy, onMount } from 'svelte'
   import type { PageData } from './$types'
 
   export let data: PageData
@@ -28,6 +31,31 @@
       open_w: 3
     }
   }
+
+  let channel: RealtimeChannel
+
+  onMount(() => {
+    channel = data.supabaseClient
+      .channel('any')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'climbs'
+        },
+        (payload) => {
+          invalidate([params.round, params.category].join(':'))
+        }
+      )
+      .subscribe()
+  })
+
+  onDestroy(() => {
+    if (channel) {
+      data.supabaseClient.removeChannel(channel)
+    }
+  })
 
   $: defaultValue = cutoff[params.round]?.[params.category] ?? 0
   $: ifscFormat = !(params.round === 'qualis' && params.category.startsWith('inter_'))
