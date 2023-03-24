@@ -20,7 +20,7 @@
   afterNavigate(() => progress.complete())
 </script>
 
-<div class="flex min-h-screen flex-col">
+<div class="flex min-h-screen flex-col bg-white">
   <ProgressBar bind:this={progress} color="#003070" class="fixed inset-x-0 top-0" />
   <div class="text-brand flex justify-between gap-5 p-5">
     <a class="flex-1" href="/">
