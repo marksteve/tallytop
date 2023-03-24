@@ -85,7 +85,7 @@
             bind:this={currentTimerDescription}
           />
           <input
-            class="w-14 bg-transparent font-mono"
+            class="w-20 bg-transparent font-mono"
             type="text"
             value={formatDuration(duration)}
             on:change={(e) => timerQueue.updateTimerDuration(i, e.target.value)}
