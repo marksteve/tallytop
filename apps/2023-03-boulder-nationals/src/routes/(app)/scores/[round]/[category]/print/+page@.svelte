@@ -9,10 +9,18 @@
 </script>
 
 <div class="prose-lg prose flex max-w-full flex-col items-center p-10">
-  <img class="m-0 h-20" src="/images/logo.svg" />
-  <div>March 25 to 26</div>
-  <h2 class="m-0">{categories[params.category]} {rounds[params.round]}</h2>
-  <div>Official Results</div>
+  <div class="flex items-center justify-between self-stretch">
+    <img class="m-0 h-20" src="/images/logo.svg" />
+    <div class="text-center">
+      <h2 class="m-0">{categories[params.category]} {rounds[params.round]}</h2>
+      <div>Official Results</div>
+    </div>
+    <div class="text-sm">
+      <div>The Bouldering Hive</div>
+      <div>Circuit Makati</div>
+      <div>March 25 to 26</div>
+    </div>
+  </div>
   <table>
     <thead>
       <tr>
