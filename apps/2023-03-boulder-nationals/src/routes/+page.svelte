@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { browser } from '$app/environment'
   import { Countdown } from '@tallytop/ui'
-  import sponsor1 from './bhive.png'
   import sponsor2 from './8a.png'
+  import sponsor1 from './bhive.png'
   import sponsor3 from './pilipinas-climbing.png'
+
+  const isLiveStream = browser ? window.location.search.endsWith('livestream') : false
 
   let eventStart = new Date(2023, 3 - 1, 25, 7)
   const schedule = [
@@ -45,12 +48,16 @@
   </div>
   <div class="contents bg-white md:block" />
   <div class="text-brand flex items-center justify-center bg-white p-10">
-    <a class="outline-brand rounded-xl p-2 outline-4 hover:outline" href="/scores">SCORES</a>
+    {#if !isLiveStream}
+      <a class="outline-brand rounded-xl p-2 outline-4 hover:outline" href="/scores">SCORES</a>
+    {/if}
   </div>
   <div class="bg-brand flex items-center justify-center text-white">
-    <a class="rounded-xl p-2 outline-4 outline-white hover:outline" href="/competitors">
-      COMPETITORS
-    </a>
+    {#if !isLiveStream}
+      <a class="rounded-xl p-2 outline-4 outline-white hover:outline" href="/competitors">
+        COMPETITORS
+      </a>
+    {/if}
   </div>
   <div class="contents bg-white md:block" />
   <div class="contents md:block" />
