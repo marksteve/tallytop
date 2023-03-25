@@ -3,8 +3,9 @@
   import { categories, rounds } from '$lib/labels'
   import type { PageData } from './$types'
 
-  $: params = $page.params
   export let data: PageData
+  $: params = $page.params
+  $: cutoff = data.cutoffs[params.round]?.[params.category] ?? 0
 </script>
 
 <div class="prose-lg prose flex max-w-full flex-col items-center p-10">
@@ -23,7 +24,11 @@
     </thead>
     <tbody>
       {#each data.scores as score, index}
-        <tr>
+        <tr
+          class="border-0 border-black"
+          class:border-b={index === cutoff - 1}
+          class:font-bold={index < cutoff}
+        >
           <td>{index + 1}</td>
           <td>{score.competitor_first_name} {score.competitor_last_name}</td>
           <td>{score.competitor_bib_number}</td>
