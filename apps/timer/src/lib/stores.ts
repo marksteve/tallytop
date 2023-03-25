@@ -7,7 +7,7 @@ export const timerQueue = (() => {
       .fill([
         {
           description: 'Climb',
-          duration: 4 * 60 * 1000
+          duration: 5 * 60 * 1000
         },
         {
           description: 'Prepare',
