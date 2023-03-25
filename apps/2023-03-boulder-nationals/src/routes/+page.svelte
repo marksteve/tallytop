@@ -21,8 +21,8 @@
     },
     {
       round: `Inter Women's Qualifiers`,
-      start: new Date(2023, 3 - 1, 25, 15, 10),
-      end: new Date(2023, 3 - 1, 25, 15, 55)
+      start: new Date(2023, 3 - 1, 25, 15, 45),
+      end: new Date(2023, 3 - 1, 25, 16, 30)
     },
     {
       round: `Inter Men's Qualifiers`,
