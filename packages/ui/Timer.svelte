@@ -16,10 +16,14 @@
   export const formatDuration = (timeOrMs: TimeComponents | number) => {
     const time = typeof timeOrMs === 'number' ? parseMs(timeOrMs) : timeOrMs
     return [
-      String(Math.trunc(time.days * 24 + time.hours)).padStart(2, '0'),
+      time.days * 24 + time.hours > 0
+        ? String(Math.trunc(time.days * 24 + time.hours)).padStart(2, '0')
+        : null,
       String(Math.trunc(time.minutes)).padStart(2, '0'),
       String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0')
-    ].join(':')
+    ]
+      .filter((p) => p !== null)
+      .join(':')
   }
 </script>
 
@@ -197,7 +201,7 @@
 </script>
 
 <div
-  class={`border-2 border-transparent font-mono text-[10vw] ${
+  class={`border-2 border-transparent font-mono text-[20vw] ${
     status !== 'running' ? 'rounded border-stone-200 px-10' : ''
   }`}
   contenteditable={status !== 'running'}
