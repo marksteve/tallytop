@@ -47,8 +47,9 @@
 
   beforeNavigate((navigation) => {
     if (!saved) {
-      navigation.cancel()
-      alert('Score not saved yet!')
+      if (confirm('Score not saved yet! Continue?')) {
+        navigation.cancel()
+      }
     }
   })
 </script>
