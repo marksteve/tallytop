@@ -64,7 +64,7 @@
   </div>
 
   {#if queueShown}
-    <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16">
+    <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16 max-h-screen overflow-y-auto">
       {#each $timerQueue as { description, duration }, i}
         <div class="group flex items-center gap-5 px-5 leading-loose">
           <button

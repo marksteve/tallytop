@@ -2,52 +2,20 @@ import { writable } from 'svelte/store'
 import { parseDuration } from '@tallytop/ui'
 
 export const timerQueue = (() => {
-  const { update, ...store } = writable([
-    {
-      description: 'Climb',
-      duration: 5 * 60 * 1000
-    },
-    {
-      description: 'Prepare',
-      duration: 15 * 1000
-    },
-    {
-      description: 'Climb',
-      duration: 5 * 60 * 1000
-    },
-    {
-      description: 'Prepare',
-      duration: 15 * 1000
-    },
-    {
-      description: 'Climb',
-      duration: 5 * 60 * 1000
-    },
-    {
-      description: 'Prepare',
-      duration: 15 * 1000
-    },
-    {
-      description: 'Climb',
-      duration: 5 * 60 * 1000
-    },
-    {
-      description: 'Prepare',
-      duration: 15 * 1000
-    },
-    {
-      description: 'Climb',
-      duration: 5 * 60 * 1000
-    },
-    {
-      description: 'Prepare',
-      duration: 15 * 1000
-    },
-    {
-      description: 'Climb',
-      duration: 5 * 60 * 1000
-    }
-  ])
+  const { update, ...store } = writable(
+    Array(30)
+      .fill([
+        {
+          description: 'Climb',
+          duration: 5 * 60 * 1000
+        },
+        {
+          description: 'Prepare',
+          duration: 15 * 1000
+        }
+      ])
+      .flat()
+  )
 
   return {
     ...store,
