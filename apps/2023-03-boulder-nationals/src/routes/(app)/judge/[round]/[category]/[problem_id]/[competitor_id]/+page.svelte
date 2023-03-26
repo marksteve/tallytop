@@ -38,8 +38,17 @@
   let competitor, prev, next
   $: {
     competitor = R.find(R.propEq('id', data.competitor?.id), data.competitors)
-    prev = R.find(R.propEq('order', competitor?.order - 1), data.competitors)
-    next = R.find(R.propEq('order', competitor?.order + 1), data.competitors)
+    prev = R.find(
+      R.propEq(
+        'order',
+        competitor?.order - 1 < 1 ? data.competitors.length : competitor?.order - 1
+      ),
+      data.competitors
+    )
+    next = R.find(
+      R.propEq('order', (competitor?.order % data.competitors.length) + 1),
+      data.competitors
+    )
     saved = false
   }
 
