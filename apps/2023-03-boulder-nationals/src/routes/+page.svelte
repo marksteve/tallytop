@@ -10,29 +10,24 @@
   let eventStart = new Date(2023, 3 - 1, 25, 7)
   const schedule = [
     {
-      round: `Open Women's Qualifiers`,
-      start: new Date(2023, 3 - 1, 25, 8),
-      end: new Date(2023, 3 - 1, 25, 10)
+      round: `Inter Women's Finals`,
+      start: new Date(2023, 3 - 1, 26, 9),
+      end: new Date(2023, 3 - 1, 26, 11)
     },
     {
-      round: `Open Men's Qualifiers`,
-      start: new Date(2023, 3 - 1, 25, 11, 55),
-      end: new Date(2023, 3 - 1, 25, 14, 55)
+      round: `Inter Men's Finals`,
+      start: new Date(2023, 3 - 1, 26, 12),
+      end: new Date(2023, 3 - 1, 25, 14)
     },
     {
-      round: `Inter Women's Qualifiers`,
-      start: new Date(2023, 3 - 1, 25, 15, 45),
-      end: new Date(2023, 3 - 1, 25, 16, 30)
+      round: `Open Women's Finals`,
+      start: new Date(2023, 3 - 1, 26, 15),
+      end: new Date(2023, 3 - 1, 26, 17)
     },
     {
-      round: `Inter Men's Qualifiers`,
-      start: new Date(2023, 3 - 1, 25, 16, 40),
-      end: new Date(2023, 3 - 1, 25, 18, 10)
-    },
-    {
-      round: `Open Men's Semi-Finals`,
-      start: new Date(2023, 3 - 1, 25, 19, 10),
-      end: new Date(2023, 3 - 1, 25, 21, 30)
+      round: `Open Men's Finals`,
+      start: new Date(2023, 3 - 1, 26, 18),
+      end: new Date(2023, 3 - 1, 26, 20)
     }
   ]
   const upcoming = schedule.find((s) => s.start > Date.now())
