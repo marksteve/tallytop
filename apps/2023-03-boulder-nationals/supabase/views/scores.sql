@@ -37,10 +37,15 @@ SELECT competitors.id as competitor_id,
     WHERE climbs.zone > 0
   ) AS zones,
   SUM(climbs.top) AS top_attempts,
-  SUM(climbs.zone) AS zone_attempts
+  SUM(climbs.zone) AS zone_attempts,
+  CASE problems.round
+    WHEN 'qualis' THEN MIN(startlists.order)
+    ELSE -MIN(startlists.order)
+  END AS countback
 FROM climbs
   LEFT JOIN competitors ON competitors.id = climbs.competitor_id
   LEFT JOIN problems ON problems.id = climbs.problem_id
+  LEFT JOIN startlists ON startlists.round = problems.round AND startlists.competitor_id = climbs.competitor_id
   INNER JOIN wall_results ON wall_results.id = CONCAT(climbs.competitor_id, '-', problems.round)
 GROUP BY 1,
   2,
@@ -52,4 +57,5 @@ GROUP BY 1,
 ORDER BY 8 DESC,
   9 DESC,
   10,
-  11
+  11,
+  12
