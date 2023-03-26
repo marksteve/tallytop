@@ -56,7 +56,8 @@
 
   const sound = {
     beep: new Howl({ src: '/sounds/beep.mp3' }),
-    end: new Howl({ src: '/sounds/end.mp3' })
+    end: new Howl({ src: '/sounds/end.mp3' }),
+    airhorn: new Howl({ src: '/sounds/airhorn.mp3' })
   }
   export let beeps = [60, 5, 4, 3, 2, 1, 0]
   let playedBeeps: number[] = []
@@ -108,7 +109,7 @@
       }
       if (seconds === 0) {
         stop()
-        sound.end.play()
+        sound.airhorn.play()
         dispatch('end')
       }
 
@@ -201,7 +202,7 @@
 </script>
 
 <div
-  class={`border-2 border-transparent font-mono text-[20vw] ${
+  class={`border-2 border-transparent font-mono text-[30vw] leading-none outline-none ${
     status !== 'running' ? 'rounded border-stone-200 px-10' : ''
   }`}
   contenteditable={status !== 'running'}

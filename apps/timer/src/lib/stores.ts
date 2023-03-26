@@ -3,18 +3,19 @@ import { parseDuration } from '@tallytop/ui'
 
 export const timerQueue = (() => {
   const { update, ...store } = writable(
-    Array(40)
-      .fill([
-        {
-          description: 'Climb',
-          duration: 5 * 60 * 1000
-        },
-        {
-          description: 'Prepare',
-          duration: 15 * 1000
-        }
-      ])
-      .flat()
+    [{ description: 'Climb', duration: 4 * 60 * 1000 }]
+    // Array(40)
+    //   .fill([
+    //     {
+    //       description: 'Climb',
+    //       duration: 4 * 60 * 1000
+    //     },
+    //     {
+    //       description: 'Prepare',
+    //       duration: 15 * 1000
+    //     }
+    //   ])
+    //   .flat()
   )
 
   return {

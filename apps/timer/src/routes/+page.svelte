@@ -64,7 +64,7 @@
   </div>
 
   {#if queueShown}
-    <div class="flex flex-col gap-2 bg-stone-50 p-5 pt-16 max-h-screen overflow-y-auto">
+    <div class="flex max-h-screen flex-col gap-2 overflow-y-auto bg-stone-50 p-5 pt-16">
       {#each $timerQueue as { description, duration }, i}
         <div class="group flex items-center gap-5 px-5 leading-loose">
           <button
@@ -115,8 +115,8 @@
   {/if}
 
   <div class="flex flex-1 flex-col items-center justify-center gap-10 bg-white shadow-xl">
-    <div class="flex flex-col items-center gap-2 text-3xl font-black">
-      <Logo width="128" /> Tallytop
+    <div class="absolute top-5 right-10 flex flex-col items-center gap-2 text-xl font-black">
+      <Logo width="64" /> Tallytop
     </div>
     <Timer
       {duration}
