@@ -57,8 +57,11 @@
   const sound = {
     beep: new Howl({ src: '/sounds/beep.mp3' }),
     end: new Howl({ src: '/sounds/end.mp3' }),
-    airhorn: new Howl({ src: '/sounds/airhorn.mp3' })
+    airhorn: new Howl({ src: '/sounds/airhorn.mp3' }),
+    coin: new Howl({ src: '/sounds/coin.mp3' }),
+    gameover: new Howl({ src: '/sounds/gameover.mp3' })
   }
+
   export let beeps = [60, 5, 4, 3, 2, 1, 0]
   let playedBeeps: number[] = []
 
@@ -109,7 +112,7 @@
       }
       if (seconds === 0) {
         stop()
-        sound.airhorn.play()
+        sound.gameover.play()
         dispatch('end')
       }
 
@@ -117,7 +120,7 @@
         !playedBeeps.includes(seconds) &&
         (seconds === Math.trunc(duration / 1000) || beeps.includes(seconds))
       ) {
-        sound.beep.play()
+        sound.coin.play()
         playedBeeps = [...playedBeeps, seconds]
       }
 
