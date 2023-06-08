@@ -1,16 +1,28 @@
 {
   "name": "@tallytop/ui",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Styles and components for use in Tallytop apps",
-  "type": "module",
-  "module": "index.ts",
-  "svelte": "index.ts",
-  "license": "MIT",
   "scripts": {
-    "lint": "prettier --check --ignore-path=../../.prettierignore . && eslint \".\"",
-    "format": "prettier --write --ignore-path=../../.prettierignore ."
+    "dev": "vite dev",
+    "build": "vite build && npm run package",
+    "preview": "vite preview",
+    "package": "svelte-kit sync && svelte-package && publint",
+    "prepublishOnly": "npm run package",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
-  "dependencies": {
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "peerDependencies": {
     "@sindresorhus/to-milliseconds": "^2.0.0",
     "@tallytop/supabase": "workspace:*",
     "@zxing/browser": "^0.1.1",
@@ -19,10 +31,21 @@
     "nanoid": "^4.0.0",
     "parse-ms": "^3.0.0",
     "phosphor-svelte": "^1.2.1",
-    "qrcode-generator-es6": "^1.1.4"
+    "qrcode-generator-es6": "^1.1.4",
+    "svelte": "^3.54.0"
   },
   "devDependencies": {
-    "@tallytop/eslint-config-custom": "workspace:*",
-    "svelte": "^3.55.0"
-  }
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.5.0",
+    "@sveltejs/package": "^2.0.0",
+    "publint": "^0.1.9",
+    "svelte": "^3.54.0",
+    "svelte-check": "^3.0.1",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0",
+    "vite": "^4.3.0"
+  },
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module"
 }
