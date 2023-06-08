@@ -8,6 +8,6 @@ export const load = (async (event) => {
 
   return {
     title: 'COMPETITORS',
-    competitors: R.zipObj(R.map(R.prop('id'), competitors), competitors)
+    competitors: R.zipObj(R.map(R.prop('id'), competitors), competitors),
   }
 }) satisfies PageLoad

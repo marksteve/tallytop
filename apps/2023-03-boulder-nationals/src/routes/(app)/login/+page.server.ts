@@ -9,11 +9,11 @@ export const actions = {
     if (!password) return fail(400, { error: 'Password is required' })
     const { error } = await supabase.auth.signInWithPassword({
       email: JUDGE_EMAIL,
-      password
+      password,
     })
     if (error) {
       return fail(400, { error: 'Wrong password' })
     }
     throw redirect(303, '/judge')
-  }
+  },
 } satisfies Actions

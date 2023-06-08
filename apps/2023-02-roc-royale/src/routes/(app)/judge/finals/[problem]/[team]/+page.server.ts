@@ -13,7 +13,7 @@ export const actions = {
       problem_id: event.params.problem,
       attempts,
       top,
-      zone
+      zone,
     })
-  }
+  },
 } satisfies Actions

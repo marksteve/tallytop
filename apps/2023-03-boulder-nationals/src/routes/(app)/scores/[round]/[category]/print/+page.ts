@@ -9,6 +9,6 @@ export const load = (async (event) => {
     .eq('round', event.params.round)
     .eq('category', event.params.category)
   return {
-    scores: scores ?? []
+    scores: scores ?? [],
   }
 }) satisfies PageLoad

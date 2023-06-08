@@ -12,11 +12,11 @@ const password = await question('Judge password:\n')
 
 const {
   error,
-  data: { user }
+  data: { user },
 } = await supabase.auth.admin.createUser({
   email: process.env.JUDGE_EMAIL,
   password,
-  email_confirm: true
+  email_confirm: true,
 })
 if (error) {
   throw error

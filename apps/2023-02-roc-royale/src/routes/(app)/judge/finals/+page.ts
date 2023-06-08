@@ -6,6 +6,6 @@ export const load = (async (event) => {
   const { data: problems } = await supabaseClient.from('finals_problems').select().order('wall')
   return {
     title: ['Judge/\nFinals', 'rotate-3'],
-    problems: problems ?? []
+    problems: problems ?? [],
   }
 }) satisfies PageLoad

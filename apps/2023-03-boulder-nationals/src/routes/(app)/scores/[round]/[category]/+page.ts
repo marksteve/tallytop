@@ -20,6 +20,6 @@ export const load = (async (event) => {
     title: 'SCORES',
     nextRound,
     scores: scores ?? [],
-    nextHasStartlist: nextCount! > 0
+    nextHasStartlist: nextCount! > 0,
   }
 }) satisfies PageLoad

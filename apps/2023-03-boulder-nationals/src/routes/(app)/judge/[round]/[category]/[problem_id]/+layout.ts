@@ -23,6 +23,6 @@ const getCompetitors = async (supabaseClient, params) => {
 export const load: LayoutLoad = async (event) => {
   const { supabaseClient } = await getSupabase(event)
   return {
-    competitors: await getCompetitors(supabaseClient, event.params)
+    competitors: await getCompetitors(supabaseClient, event.params),
   }
 }

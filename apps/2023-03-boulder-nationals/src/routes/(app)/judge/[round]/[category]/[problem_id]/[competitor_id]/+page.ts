@@ -25,13 +25,13 @@ export const load = (async (event) => {
     throw error(403, {
       message: `${competitor?.first_name} ${competitor?.last_name} doesn't belong to ${
         categories[problem?.category ?? '']
-      }`
+      }`,
     })
   }
   return {
     title: 'JUDGE',
     problem,
     competitor,
-    climbs
+    climbs,
   }
 }) satisfies PageLoad

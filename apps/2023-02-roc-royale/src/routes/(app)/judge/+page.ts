@@ -5,7 +5,7 @@ export const load = (async () => {
     title: ['Judge', 'rotate-3'],
     rounds: [
       ['qualis', 'Qualis'],
-      ['finals', 'Finals']
-    ]
+      ['finals', 'Finals'],
+    ],
   }
 }) satisfies PageLoad

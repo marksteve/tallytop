@@ -6,6 +6,6 @@ export const load = (async (event) => {
   const { data: scores } = await supabaseClient.from('finals_scores').select()
   return {
     title: ['Scores/\nFinals', '-rotate-2'],
-    scores: scores ?? []
+    scores: scores ?? [],
   }
 }) satisfies PageLoad

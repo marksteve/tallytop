@@ -8,11 +8,11 @@ export const actions = {
     if (!email) throw new Error('Email is required')
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: 'https://roc-royale.tallytop.com/' }
+      options: { emailRedirectTo: 'https://roc-royale.tallytop.com/' },
     })
     if (error) {
       throw error
     }
     return { email, success: true }
-  }
+  },
 } satisfies Actions

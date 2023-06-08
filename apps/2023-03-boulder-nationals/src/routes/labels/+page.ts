@@ -5,6 +5,6 @@ export const load = (async (event) => {
   const { supabaseClient } = await getSupabase(event)
   const { data: competitors } = await supabaseClient.from('competitors').select()
   return {
-    competitors: competitors ?? []
+    competitors: competitors ?? [],
   }
 }) satisfies PageLoad

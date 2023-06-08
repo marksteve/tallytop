@@ -37,7 +37,7 @@ export const timerQueue = (() => {
     },
     removeTimer(index: number) {
       update((value) => value.filter((_, i) => i !== index))
-    }
+    },
   }
 })()
 

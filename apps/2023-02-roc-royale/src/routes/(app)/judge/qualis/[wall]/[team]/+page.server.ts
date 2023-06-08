@@ -31,7 +31,7 @@ const record = async (
       team_id: team,
       problem_id: problem,
       is_top: type === 'top',
-      is_flash: type === 'flash'
+      is_flash: type === 'flash',
     })
     .select()
   if (error) {
@@ -54,5 +54,5 @@ export const actions = {
     const { supabaseClient } = await getSupabase(event)
     const problem = getProblem(await event.request.formData())
     await record(supabaseClient, event.params.team, problem, null)
-  }
+  },
 } satisfies Actions

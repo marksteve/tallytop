@@ -4,12 +4,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: '#003070'
+        brand: '#003070',
       },
       fontFamily: {
-        sans: ['glacial-indifference', 'sans-serif']
-      }
-    }
+        sans: ['glacial-indifference', 'sans-serif'],
+      },
+    },
   },
-  plugins: [require('@tailwindcss/typography')]
+  plugins: [require('@tailwindcss/typography')],
 }

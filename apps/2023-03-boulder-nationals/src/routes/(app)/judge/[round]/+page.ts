@@ -8,6 +8,6 @@ export const load = (async ({ params }) => {
     params,
     categories: R.toPairs(categories).filter(([category]) =>
       params.round === 'semis' ? category === 'open_m' : true
-    )
+    ),
   }
 }) satisfies PageLoad

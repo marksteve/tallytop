@@ -16,6 +16,6 @@ export const load = (async (event) => {
   return {
     title: ['Judge/\nFinals', 'rotate-3'],
     teams: teams?.reverse() ?? [],
-    problem
+    problem,
   }
 }) satisfies PageLoad

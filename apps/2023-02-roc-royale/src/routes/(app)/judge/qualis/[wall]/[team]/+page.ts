@@ -25,6 +25,6 @@ export const load = (async (event) => {
     wall: event.params.wall,
     problems: problems ?? [],
     team,
-    results: resultsByProblem
+    results: resultsByProblem,
   }
 }) satisfies PageLoad

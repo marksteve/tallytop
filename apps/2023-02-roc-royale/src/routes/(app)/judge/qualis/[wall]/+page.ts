@@ -7,6 +7,6 @@ export const load = (async (event) => {
   return {
     title: ['Judge/\nQualis', 'rotate-3'],
     teams: teams ?? [],
-    wall: event.params.wall
+    wall: event.params.wall,
   }
 }) satisfies PageLoad

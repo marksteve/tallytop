@@ -23,6 +23,6 @@ export const load = (async (event) => {
     title: ['Judge/\nFinals', 'rotate-3'],
     problem,
     team,
-    attempts: results?.attempts
+    attempts: results?.attempts,
   }
 }) satisfies PageLoad

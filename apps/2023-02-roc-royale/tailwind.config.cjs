@@ -7,14 +7,14 @@ module.exports = {
         roc: {
           black: '#161616',
           hotpink: '#ea32c7',
-          yellow: '#fad31a'
-        }
+          yellow: '#fad31a',
+        },
       },
       fontFamily: {
         title: ['squealerheavy', 'sans-serif'],
-        sans: ['Rubik', 'sans-serif']
-      }
-    }
+        sans: ['Rubik', 'sans-serif'],
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 }

@@ -1,10 +1,4 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
 
 export interface Database {
   graphql_public: {
@@ -173,27 +167,27 @@ export interface Database {
     Functions: {
       crosstab: {
         Args: {
-          "": string
+          '': string
         }
         Returns: Record<string, unknown>[]
       }
       crosstab2: {
         Args: {
-          "": string
+          '': string
         }
-        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_2"][]
+        Returns: Database['public']['CompositeTypes']['tablefunc_crosstab_2'][]
       }
       crosstab3: {
         Args: {
-          "": string
+          '': string
         }
-        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_3"][]
+        Returns: Database['public']['CompositeTypes']['tablefunc_crosstab_3'][]
       }
       crosstab4: {
         Args: {
-          "": string
+          '': string
         }
-        Returns: Database["public"]["CompositeTypes"]["tablefunc_crosstab_4"][]
+        Returns: Database['public']['CompositeTypes']['tablefunc_crosstab_4'][]
       }
     }
     Enums: {
@@ -362,4 +356,3 @@ export interface Database {
     }
   }
 }
-

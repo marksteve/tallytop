@@ -3,10 +3,10 @@ export const nextRounds = {
     inter_m: 'finals',
     inter_w: 'finals',
     open_m: 'semis',
-    open_w: 'finals'
+    open_w: 'finals',
   },
   semis: {
-    open_m: 'finals'
+    open_m: 'finals',
   },
-  finals: {}
+  finals: {},
 }

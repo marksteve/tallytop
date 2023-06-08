@@ -8,5 +8,5 @@ export default {
   purple: 'text-purple-500',
   red: 'text-red-500',
   white: 'text-white',
-  yellow: 'text-yellow-500'
+  yellow: 'text-yellow-500',
 } as Record<string, string>

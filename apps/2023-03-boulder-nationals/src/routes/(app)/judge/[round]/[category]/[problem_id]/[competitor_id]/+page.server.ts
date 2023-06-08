@@ -14,10 +14,10 @@ export const actions = {
       problem_id: event.params.problem_id,
       attempts,
       top,
-      zone
+      zone,
     })
     if (error) {
       return fail(400, { error: error.message })
     }
-  }
+  },
 } satisfies Actions

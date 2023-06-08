@@ -11,6 +11,6 @@ export const load = (async (event) => {
   return {
     title: 'JUDGE',
     params: event.params,
-    problems: problems ?? []
+    problems: problems ?? [],
   }
 }) satisfies PageLoad

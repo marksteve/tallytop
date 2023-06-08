@@ -5,6 +5,6 @@ import * as R from 'ramda'
 export const load = (async () => {
   return {
     title: 'JUDGE',
-    rounds: R.toPairs(rounds)
+    rounds: R.toPairs(rounds),
   }
 }) satisfies PageLoad

@@ -5,7 +5,7 @@ export const load = (() => {
     title: ['Scores', '-rotate-2'],
     rounds: [
       ['qualis', 'Qualis'],
-      ['finals', 'Finals']
-    ]
+      ['finals', 'Finals'],
+    ],
   }
 }) satisfies PageLoad

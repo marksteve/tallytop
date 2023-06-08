@@ -16,12 +16,12 @@ export const actions = {
     const startlists = scores?.reverse().map((startlist, i) => ({
       ...startlist,
       round: nextRound,
-      order: i + 1
+      order: i + 1,
     }))
     const { error } = await supabase.from('startlists').insert(startlists)
     if (error) {
       return fail(400, { error: error.message })
     }
     throw redirect(303, `/judge/${nextRound}/${params.category}`)
-  }
+  },
 } satisfies Actions
