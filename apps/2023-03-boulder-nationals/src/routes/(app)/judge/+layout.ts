@@ -8,6 +8,7 @@ export const load: LayoutLoad = async (event) => {
     const { data: problems } = await supabaseClient
       .from('problems')
       .select()
+      .eq('competition', '2023-03-boulder-nationals')
       .eq('round', params.round)
       .eq('category', params.category)
     return {

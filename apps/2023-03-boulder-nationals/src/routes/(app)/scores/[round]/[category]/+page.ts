@@ -8,11 +8,13 @@ export const load = (async (event) => {
   const { data: scores } = await supabaseClient
     .from('scores')
     .select()
+    .eq('competition', '2023-03-boulder-nationals')
     .eq('round', event.params.round)
     .eq('category', event.params.category)
   const { count: nextCount } = await supabaseClient
     .from('scores')
     .select('*', { count: 'exact', head: true })
+    .eq('competition', '2023-03-boulder-nationals')
     .eq('round', nextRound)
     .eq('category', event.params.category)
   event.depends([event.params.round, event.params.category].join(':'))

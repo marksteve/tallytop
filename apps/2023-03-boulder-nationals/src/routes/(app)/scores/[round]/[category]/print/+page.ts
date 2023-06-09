@@ -6,6 +6,7 @@ export const load = (async (event) => {
   const { data: scores } = await supabaseClient
     .from('scores')
     .select()
+    .eq('competition', '2023-03-boulder-nationals')
     .eq('round', event.params.round)
     .eq('category', event.params.category)
   return {

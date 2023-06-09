@@ -6,6 +6,7 @@ const getCompetitors = async (supabaseClient, params) => {
     const { data: competitors } = await supabaseClient
       .from('competitors')
       .select()
+      .eq('competition', '2023-03-boulder-nationals')
       .eq('category', params.category)
       .order('last_name')
     return competitors
