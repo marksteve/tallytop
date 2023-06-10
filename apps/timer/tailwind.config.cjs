@@ -6,7 +6,7 @@ module.exports = {
       fontFamily: {
         sans: ['Rubik', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
-      },
+      }
     },
   },
   plugins: [],
