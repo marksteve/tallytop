@@ -1,6 +1,7 @@
 {
   "name": "timer",
   "version": "0.0.3",
+  "private": true,
   "scripts": {
     "dev": "vite dev --port 3001",
     "build": "vite build",
