@@ -7,6 +7,6 @@
     class="text-4xl font-bold text-white"
     href="/judge/{$page.params.round}/{$page.params.category}/{problem.id}"
   >
-    {problem.wall}
+    {problem.name}
   </a>
 {/each}

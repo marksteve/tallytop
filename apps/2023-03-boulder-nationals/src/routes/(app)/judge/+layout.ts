@@ -12,7 +12,7 @@ export const load: LayoutLoad = async (event) => {
       .eq('round', params.round)
       .eq('category', params.category)
     return {
-      problems: problems?.map((problem) => [problem.id, problem.wall]),
+      problems: problems?.map((problem) => [problem.id, problem.name]),
     }
   }
 }

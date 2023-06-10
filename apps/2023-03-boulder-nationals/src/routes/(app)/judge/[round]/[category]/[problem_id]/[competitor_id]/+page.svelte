@@ -66,7 +66,7 @@
 <div class="justify-self-stretch px-5 font-bold uppercase text-white md:justify-self-center">
   <div class="flex items-center gap-5">
     <div class="text-4xl">
-      {data.problem.wall}
+      {data.problem.name}
     </div>
     <div class="text-brand w-14 rounded-full bg-white text-center text-2xl">
       {competitor.bib_number}

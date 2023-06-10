@@ -74,7 +74,7 @@
       </div>
       <div class="flex gap-1">
         {#if ifscFormat}
-          {#each (score.walls ?? []).slice(0, numWalls) as wall}
+          {#each (score.problems ?? []).slice(0, numWalls) as wall}
             {#if wall === 'top'}
               <img src={topIcon} class="h-6" />
             {:else if wall === 'zone'}
