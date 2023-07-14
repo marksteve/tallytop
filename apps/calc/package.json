@@ -27,5 +27,10 @@
     "typescript": "^5.0.0",
     "vite": "^4.4.2"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "carbon-components-svelte": "^0.77.0",
+    "carbon-pictograms-svelte": "^12.5.0",
+    "carbon-preprocess-svelte": "^0.9.1"
+  }
 }
