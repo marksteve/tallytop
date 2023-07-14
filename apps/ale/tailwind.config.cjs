@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Futura', 'Inter', 'sans-serif']
+        sans: ['Futura', 'Inter', 'sans-serif'],
       },
       colors: {
-        fg: '#351F59'
-      }
+        fg: '#351F59',
+      },
     },
   },
   plugins: [],
