@@ -141,8 +141,8 @@
               </TileGroup>
             </Column>
             <Column>
-              <div class="tops">
-                {#if currCompetitor}
+              {#if currCompetitor}
+                <div class="tops">
                   <h1>{currCompetitor}</h1>
                   <div>
                     {#each problems as problem}
@@ -161,10 +161,10 @@
                       </SelectableTile>
                     {/each}
                   </div>
-                  <Tile light><h3>Total: {currTotal}</h3></Tile>
-                  <Button on:click={nextCompetitor}>Next</Button>
-                {/if}
-              </div>
+                </div>
+                <Tile light>Total: {currTotal}</Tile>
+                <Button on:click={nextCompetitor}>Next</Button>
+              {/if}
             </Column>
           </Row>
         </Grid>
