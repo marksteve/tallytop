@@ -31,6 +31,7 @@
         tops: {},
       })
   )
+  let storage: LocalStorage
   let step = 0
   let competitorsInput = store.competitorsInput
   let problemsInput = store.problemsInput
@@ -77,9 +78,13 @@
       currCompetitor = competitors[currIndex + 1]
     }
   }
+  const reset = () => {
+    storage.clearItem()
+    location.reload()
+  }
 </script>
 
-<LocalStorage key="tallytop-phoenix" bind:value={store} />
+<LocalStorage key="tallytop-phoenix" bind:value={store} bind:this={storage} />
 
 <Header company="Tallytop" platformName="Calc" />
 
@@ -184,6 +189,8 @@
             {/if}
           </svelte:fragment>
         </DataTable>
+        <br /><br />
+        <Button kind="danger" on:click={reset}>Reset</Button>
       </TabContent>
     </svelte:fragment>
   </Tabs>
