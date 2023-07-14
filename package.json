@@ -9,7 +9,7 @@
   "devDependencies": {
     "@tallytop/eslint-config-custom": "workspace:*",
     "eslint": "^8.0.0",
-    "prettier": "latest",
+    "prettier": "^2.8.0",
     "prettier-plugin-svelte": "latest",
     "prettier-plugin-tailwindcss": "latest",
     "turbo": "latest"

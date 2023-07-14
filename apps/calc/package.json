@@ -30,6 +30,7 @@
   "type": "module",
   "dependencies": {
     "carbon-components-svelte": "^0.77.0",
+    "carbon-icons-svelte": "^12.0.0",
     "carbon-pictograms-svelte": "^12.5.0",
     "carbon-preprocess-svelte": "^0.9.1"
   }
