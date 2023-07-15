@@ -7,7 +7,9 @@ module.exports = {
         sans: ['Futura', 'Inter', 'sans-serif'],
       },
       colors: {
-        fg: '#351F59',
+        fg: '#351f59',
+        primary: '#ac6dc1',
+        secondary: '#7492b5',
       },
     },
   },
