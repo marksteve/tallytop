@@ -3,7 +3,7 @@
   export let data
 </script>
 
-<table class="border-separate">
+<table class="border-separate border-2 border-secondary">
   <thead>
     <tr>
       <th rowspan="2" class="w-1/6 border-b" />
