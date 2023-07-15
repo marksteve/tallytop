@@ -91,15 +91,15 @@
 <Content>
   <h1>Phoenix</h1>
   <Tabs bind:selected={step}>
-    <Tab label="Enter competitors" />
-    <Tab label="Enter problems" />
-    <Tab label="Enter tops" />
-    <Tab label="Compute results" />
+    <Tab label="Competitors" />
+    <Tab label="Problems" />
+    <Tab label="Tops" />
+    <Tab label="Results" />
     <svelte:fragment slot="content">
       <TabContent>
         <Form on:submit={nextStep}>
           <FormGroup>
-            <TextArea labelText="Competitors" rows={30} bind:value={competitorsInput} />
+            <TextArea labelText="Enter competitors (one per line)" rows={30} bind:value={competitorsInput} />
           </FormGroup>
           <Button type="submit">Next</Button>
         </Form>
@@ -110,12 +110,12 @@
             <Row>
               <Column>
                 <FormGroup>
-                  <TextArea labelText="Problems" rows={30} bind:value={problemsInput} />
+                  <TextArea labelText="Enter problems (one per line)" rows={30} bind:value={problemsInput} />
                 </FormGroup>
               </Column>
               <Column>
                 <FormGroup>
-                  <TextArea labelText="Scores" rows={30} bind:value={scoresInput} />
+                  <TextArea labelText="Enter scores (should match problems)" rows={30} bind:value={scoresInput} />
                 </FormGroup>
               </Column>
             </Row>
@@ -134,7 +134,7 @@
         <Grid noGutter>
           <Row>
             <Column sm={1} md={2} lg={4}>
-              <TileGroup legend="Competitors" bind:selected={currCompetitor}>
+              <TileGroup legend="Select competitor" bind:selected={currCompetitor}>
                 {#each competitors as competitor}
                   <RadioTile value={competitor}>{competitor}</RadioTile>
                 {/each}
