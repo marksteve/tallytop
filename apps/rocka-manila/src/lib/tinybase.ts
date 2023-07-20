@@ -1,5 +1,5 @@
 import { createSessionPersister } from 'tinybase/persisters/persister-browser'
-import { createStore } from 'tinybase/with-schemas'
+import { createStore, createRelationships } from 'tinybase/with-schemas'
 
 export const store = createStore().setSchema({
   competitors: {
@@ -13,6 +13,15 @@ export const store = createStore().setSchema({
     top: { type: 'boolean' },
   },
 })
+
+export const relationships = createRelationships(store)
+relationships.setRelationshipDefinition(
+  'qualis_competitors',
+  'qualis_tally',
+  'competitors',
+  'competitor'
+)
+
 const persister = createSessionPersister(store, 'petStore')
 persister.startAutoLoad()
 persister.startAutoSave()

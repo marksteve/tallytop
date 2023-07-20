@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { listTable, store } from '$lib/tinybase'
-  import { Button, Column, Grid, RadioTile, Row, Tile, TileGroup } from 'carbon-components-svelte'
+  import { listTable, relationships, store } from '$lib/tinybase'
+  import { Button, Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
 
@@ -18,6 +18,11 @@
         competitors = store.getTable('competitors')
       })
     )
+    listeners.push(
+      store.addTableListener('qualis_tally', () => {
+        problemsCount = getProblemsCount()
+      })
+    )
   })
   onDestroy(() => {
     listeners.forEach((listenerId) => store.delListener(listenerId))
@@ -25,6 +30,10 @@
 
   let selectedCompetitor: any
   let selectedProblem: any
+  let problemsCount = 0
+  $: if (selectedCompetitor) {
+    problemsCount = getProblemsCount()
+  }
 
   const selectCompetitor = (e: any) => {
     selectedCompetitor = e.detail
@@ -33,6 +42,8 @@
   const selectProblem = (e: any) => {
     selectedProblem = e.detail
   }
+
+  const getProblemsCount = () => relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).length
 </script>
 
 <Grid padding>
@@ -50,7 +61,7 @@
     </Column>
     {#if selectedCompetitor}
       <Column lg={4}>
-        <h2>{selectedCompetitor.bib}: {selectedCompetitor.name}</h2>
+        <h2>{selectedCompetitor.bib}: {selectedCompetitor.name} ({problemsCount}/5)</h2>
         <br />
         <TileGroup legend="Problem" on:select={selectProblem}>
           {#each problems as problem}
