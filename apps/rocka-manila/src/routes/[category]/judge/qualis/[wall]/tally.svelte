@@ -45,6 +45,16 @@
     }
     store.setRow('qualis_tally', tallyId, tally)
   }
+
+  const clear = () => {
+    tally = {
+      competitor: competitor.id,
+      problem,
+      attempts: 0,
+      top: false,
+    }
+    store.delRow('qualis_tally', tallyId)
+  }
 </script>
 
 <div class="flex flex-col gap-5 items-center min-h-screen justify-center sticky top-0">
@@ -65,6 +75,11 @@
     <div class:invisible={tally.attempts < 1} class="col-span-2 flex">
       <Button kind={tally.top ? 'primary' : 'tertiary'} on:click={toggleTop} class="flex-1">
         Top
+      </Button>
+    </div>
+    <div class="col-span-2 flex">
+      <Button kind="danger-tertiary" on:click={clear} class="flex-1">
+        Clear
       </Button>
     </div>
   </div>
