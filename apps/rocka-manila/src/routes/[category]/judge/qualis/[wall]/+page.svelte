@@ -43,7 +43,8 @@
     selectedProblem = e.detail
   }
 
-  const getProblemsCount = () => relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).length
+  const getProblemsCount = () =>
+    relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).length
 </script>
 
 <Grid padding>
