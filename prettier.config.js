@@ -3,6 +3,6 @@ module.exports = {
   semi: false,
   printWidth: 100,
   plugins: [require('prettier-plugin-svelte'), require('prettier-plugin-tailwindcss')],
-  pluginSearchDirs: ['.'],
+  pluginSearchDirs: false,
   overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
 }

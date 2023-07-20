@@ -12,6 +12,7 @@ export const store = createStore().setSchema({
     competitor: { type: 'number' },
     problem: { type: 'number' },
     attempts: { type: 'number' },
+    top: { type: 'boolean' },
   },
 })
 
