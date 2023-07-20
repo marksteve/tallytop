@@ -5,9 +5,9 @@
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
 
-  const problems = Array(15)
-    .fill(null)
-    .map((_, i) => ({ score: String(i + 1) }))
+  export let data: import('./$types').PageData
+
+  const problems = data[$page.params.wall]
 
   let competitors = store.getTable('competitors')
 
@@ -53,8 +53,8 @@
         <h2>{selectedCompetitor.bib}: {selectedCompetitor.name}</h2>
         <br />
         <TileGroup legend="Problem" on:select={selectProblem}>
-          {#each problems as problem, i}
-            <RadioTile value={problem.score}>{problem.score}</RadioTile>
+          {#each problems as problem}
+            <RadioTile value={problem}>{problem}</RadioTile>
           {/each}
         </TileGroup>
       </Column>
