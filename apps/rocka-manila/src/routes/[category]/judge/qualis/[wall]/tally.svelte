@@ -5,10 +5,12 @@
   export let competitor: any
   export let problem: any
 
-  $: tallyId = `${competitor.bib}:${problem}`
+  $: tallyId = `${competitor.id}:${problem}`
   $: tally = store.hasRow('qualis_tally', tallyId)
     ? store.getRow('qualis_tally', tallyId)
     : {
+        competitor: competitor.id,
+        problem,
         attempts: 0,
         top: false,
       }

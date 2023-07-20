@@ -7,6 +7,8 @@ export const store = createStore().setSchema({
     name: { type: 'string' },
   },
   qualis_tally: {
+    competitor: { type: 'string' },
+    problem: { type: 'string' },
     attempts: { type: 'number' },
     top: { type: 'boolean' },
   },
