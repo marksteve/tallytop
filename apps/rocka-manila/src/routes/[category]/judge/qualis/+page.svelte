@@ -1,18 +1,30 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { listTable, store } from '$lib/tinybase'
   import { Button, Column, Grid, RadioTile, Row, Tile, TileGroup } from 'carbon-components-svelte'
+  import { onDestroy, onMount } from 'svelte'
+  import Tally from './tally.svelte'
 
-  let selectedCompetitor: string
-  let selectedProblem: string
-
-  let competitors = Array(30)
-    .fill(null)
-    .map((_, i) => ({ bib: String(i + 100) }))
-  let problems = Array(15)
+  const problems = Array(15)
     .fill(null)
     .map((_, i) => ({ score: String(i + 1) }))
-  let attempts = 0
-  let top = false
+
+  let competitors = store.getTable('competitors')
+
+  let listeners: string[] = []
+  onMount(() => {
+    listeners.push(
+      store.addTableListener('competitors', () => {
+        competitors = store.getTable('competitors')
+      })
+    )
+  })
+  onDestroy(() => {
+    listeners.forEach((listenerId) => store.delListener(listenerId))
+  })
+
+  let selectedCompetitor: any
+  let selectedProblem: any
 
   const selectCompetitor = (e: any) => {
     selectedCompetitor = e.detail
@@ -20,18 +32,6 @@
 
   const selectProblem = (e: any) => {
     selectedProblem = e.detail
-  }
-
-  const incAttempts = () => {
-    attempts = attempts + 1
-  }
-
-  const decAttempts = () => {
-    attempts = Math.max(0, attempts - 1)
-  }
-
-  const toggleTop = () => {
-    top = !top
   }
 </script>
 
@@ -41,16 +41,16 @@
       <h1 class="uppercase">{$page.params.category} Qualis</h1>
       <br />
       <TileGroup legend="Competitor" on:select={selectCompetitor}>
-        {#each competitors as competitor}
-          <RadioTile value={competitor.bib}>
-            {competitor.bib}
+        {#each listTable(competitors) as competitor}
+          <RadioTile value={competitor}>
+            {competitor.bib}: {competitor.name}
           </RadioTile>
         {/each}
       </TileGroup>
     </Column>
     {#if selectedCompetitor}
       <Column lg={4}>
-        <h2>{selectedCompetitor}</h2>
+        <h2>{selectedCompetitor.bib}: {selectedCompetitor.name}</h2>
         <br />
         <TileGroup legend="Problem" on:select={selectProblem}>
           {#each problems as problem, i}
@@ -61,20 +61,7 @@
     {/if}
     {#if selectedProblem}
       <Column>
-        <div class="flex flex-col gap-5 items-center min-h-screen justify-center sticky top-0">
-          <h2>{selectedCompetitor} on {selectedProblem}</h2>
-          Attempts
-          <Tile><div class="text-9xl p-5">{attempts}</div></Tile>
-          <div class="grid grid-cols-2 gap-5">
-            <Button kind="secondary" on:click={decAttempts}>-</Button>
-            <Button kind="secondary" on:click={incAttempts}>+</Button>
-            {#if attempts > 0}
-              <Button kind={top ? 'primary' : 'tertiary'} on:click={toggleTop} class="col-span-2"
-                >Top</Button
-              >
-            {/if}
-          </div>
-        </div>
+        <Tally competitor={selectedCompetitor} problem={selectedProblem} />
       </Column>
     {/if}
   </Row>
