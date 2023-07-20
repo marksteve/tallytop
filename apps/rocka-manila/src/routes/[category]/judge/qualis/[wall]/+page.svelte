@@ -7,7 +7,7 @@
 
   export let data: import('./$types').PageData
 
-  const problems = data[$page.params.wall]
+  const problems = data[$page.params.wall].map(String)
 
   let competitors = store.getTable('competitors')
 
@@ -30,6 +30,12 @@
 
   let selectedCompetitor: any
   let selectedProblem: any
+
+  $: {
+    selectedCompetitor
+    selectedProblem = undefined
+  }
+
   let problemsCount = 0
   $: if (selectedCompetitor) {
     problemsCount = getProblemsCount()
@@ -50,7 +56,7 @@
 <Grid padding>
   <Row>
     <Column lg={4}>
-      <h1 class="uppercase">{$page.params.category} Qualis</h1>
+      <h1 class="uppercase">{$page.data.category} Qualis</h1>
       <br />
       <TileGroup legend="Competitor" on:select={selectCompetitor}>
         {#each listTable(competitors) as competitor}
@@ -64,7 +70,7 @@
       <Column lg={4}>
         <h2>{selectedCompetitor.bib}: {selectedCompetitor.name} ({problemsCount}/5)</h2>
         <br />
-        <TileGroup legend="Problem" on:select={selectProblem}>
+        <TileGroup legend="Problem" on:select={selectProblem} selected={selectedProblem}>
           {#each problems as problem}
             <RadioTile value={problem}>{problem}</RadioTile>
           {/each}
@@ -81,7 +87,7 @@
 
 <div class="fixed inset-0 pointer-events-none">
   <div class="absolute bottom-5 right-5 pointer-events-auto">
-    <a href={`/${$page.params.category}/results/qualis`}>
+    <a href={`/${$page.params.category}/results`}>
       <Button>Results &rarr;</Button>
     </a>
   </div>

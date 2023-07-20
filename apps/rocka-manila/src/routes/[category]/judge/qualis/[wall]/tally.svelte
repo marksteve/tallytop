@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { qualisScore } from '$lib/rules'
   import { store } from '$lib/tinybase'
   import { Button, Tile } from 'carbon-components-svelte'
 
@@ -14,10 +15,7 @@
         attempts: 0,
         top: false,
       }
-  $: score = tally.top
-    ? (tally.attempts === 1 ? 2 : 1) * parseFloat(problem) -
-      (tally.attempts > 1 ? tally.attempts - 1 : 0) * 0.2
-    : 0
+  $: score = qualisScore(tally)
 
   const incAttempts = () => {
     tally = {
