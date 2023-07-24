@@ -29,8 +29,7 @@
 
 <script lang="ts">
   import toMilliseconds from '@sindresorhus/to-milliseconds'
-  import supabase from '@tallytop/supabase'
-  import { Howl } from 'howler'
+  import { sound } from '@pixi/sound';
   import { nanoid } from 'nanoid'
   import parseMs, { type TimeComponents } from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
@@ -40,7 +39,6 @@
   import Button from './Button.svelte'
 
   type Status = 'started' | 'running' | 'stopped'
-  type Event = 'start' | 'stop' | 'reset'
 
   let endTime: number
   let elapsed = 0
@@ -54,13 +52,13 @@
     elapsed = 0
   }
 
-  const sound = {
-    beep: new Howl({ src: '/sounds/beep.mp3' }),
-    end: new Howl({ src: '/sounds/end.mp3' }),
-    airhorn: new Howl({ src: '/sounds/airhorn.mp3' }),
-    coin: new Howl({ src: '/sounds/coin.mp3' }),
-    gameover: new Howl({ src: '/sounds/gameover.mp3' })
-  }
+  onMount(() => {
+    sound.add('beep', '/sounds/beep.mp3')
+    sound.add('end', '/sounds/end.mp3')
+    sound.add('airhorn', '/sounds/airhorn.mp3')
+    sound.add('coin', '/sounds/coin.mp3')
+    sound.add('gameover', '/sounds/gameover.mp3')
+  })
 
   export let beeps = [60, 5, 4, 3, 2, 1, 0]
   let playedBeeps: number[] = []
@@ -76,18 +74,12 @@
   export const start = (endTimeInit?: number) => {
     endTime = endTimeInit ? endTimeInit : Date.now() + duration - elapsed
     status = 'started'
-    if (!viewMode) {
-      channel.send({ type: 'broadcast', event: 'start', payload: { endTimeInit: endTime } })
-    }
   }
 
   export const stop = () => {
     const remaining = endTime - Date.now()
     elapsed = duration - remaining
     status = 'stopped'
-    if (!viewMode) {
-      channel.send({ type: 'broadcast', event: 'stop' })
-    }
   }
 
   export const reset = () => {
@@ -95,9 +87,6 @@
     elapsed = 0
     status = 'stopped'
     playedBeeps = []
-    if (!viewMode) {
-      channel.send({ type: 'broadcast', event: 'reset' })
-    }
   }
 
   const tick = () => {
@@ -112,7 +101,7 @@
       }
       if (seconds === 0) {
         stop()
-        sound.gameover.play()
+        sound.play('gameover')
         dispatch('end')
       }
 
@@ -120,14 +109,9 @@
         !playedBeeps.includes(seconds) &&
         (seconds === Math.trunc(duration / 1000) || beeps.includes(seconds))
       ) {
-        sound.coin.play()
+        sound.play('coin')
         playedBeeps = [...playedBeeps, seconds]
       }
-
-      if (!viewMode) {
-        trackTime()
-      }
-
       requestAnimationFrame(tick)
     }
   }
@@ -146,61 +130,6 @@
     : nanoid(ID_LENGTH)
   if (browser && !viewMode) {
     window.localStorage.setItem('tallytop-timer-id', id)
-  }
-
-  const channel = supabase.channel(
-    `tallytop:${id}`,
-    viewMode
-      ? undefined
-      : {
-          config: { presence: { key: id } }
-        }
-  )
-
-  onMount(() => {
-    if (!browser) {
-      return
-    }
-    if (viewMode) {
-      channel.on('broadcast', { event: '*' }, ({ event, payload }) => {
-        switch (event as Event) {
-          case 'start':
-            start(payload.endTimeInit)
-            break
-          case 'stop':
-            stop()
-            break
-          case 'reset':
-            reset()
-            break
-        }
-      })
-      channel.on('presence', { event: 'sync' }, () => {
-        const prescence = channel.presenceState()?.[id]
-        if (!prescence) {
-          return
-        }
-        time = prescence[0] as unknown as TimeComponents
-      })
-    }
-    channel.subscribe()
-  })
-
-  onDestroy(() => {
-    if (!browser) {
-      return
-    }
-    Promise.all([channel.unsubscribe(), channel.untrack()])
-  })
-
-  let broadcastLimit = 1 // rps
-  let lastBroadcast: number = 0
-
-  const trackTime = () => {
-    if (Date.now() - lastBroadcast > broadcastLimit * 1000) {
-      channel.track(time)
-      lastBroadcast = Date.now()
-    }
   }
 </script>
 
