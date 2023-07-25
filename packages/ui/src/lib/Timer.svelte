@@ -32,7 +32,6 @@
 
 <script lang="ts">
   import toMilliseconds from '@sindresorhus/to-milliseconds'
-  import { sound } from '@pixi/sound';
   import { nanoid } from 'nanoid'
   import parseMs, { type TimeComponents } from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
@@ -42,6 +41,16 @@
   import Button from './Button.svelte'
 
   type Status = 'started' | 'running' | 'stopped'
+
+  let sound
+  onMount(async () => {
+    sound = (await import('@pixi/sound')).sound
+    sound.add('beep', '/sounds/beep.mp3')
+    sound.add('end', '/sounds/end.mp3')
+    sound.add('airhorn', '/sounds/airhorn.mp3')
+    sound.add('coin', '/sounds/coin.mp3')
+    sound.add('gameover', '/sounds/gameover.mp3')
+  })
 
   let endTime: number
   let elapsed = 0
@@ -56,14 +65,6 @@
   }
   
   $: durationParts = getDurationParts(time)
-
-  onMount(() => {
-    sound.add('beep', '/sounds/beep.mp3')
-    sound.add('end', '/sounds/end.mp3')
-    sound.add('airhorn', '/sounds/airhorn.mp3')
-    sound.add('coin', '/sounds/coin.mp3')
-    sound.add('gameover', '/sounds/gameover.mp3')
-  })
 
   export let beeps = [60, 5, 4, 3, 2, 1, 0]
   let playedBeeps: number[] = []
