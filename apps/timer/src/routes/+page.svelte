@@ -54,7 +54,7 @@
   }
 </script>
 
-<div class="flex min-h-screen flex-1 text-stone-800">
+<div class="flex min-h-screen flex-1 text-rockamanila-green overflow-hidden bg-rockamanila-bg">
   <div class="absolute top-5 left-2">
     <Button variant="none" class="text-2xl" on:click={toggleQueue}>
       <div class:opacity-20={!queueShown}>
@@ -64,7 +64,7 @@
   </div>
 
   {#if queueShown}
-    <div class="flex max-h-screen flex-col gap-2 overflow-y-auto bg-stone-50 p-5 pt-16">
+    <div class="flex max-h-screen flex-col gap-2 overflow-y-auto bg-stone-50 p-5 pt-16 min-w-fit">
       {#each $timerQueue as { description, duration }, i}
         <div class="group flex items-center gap-5 px-5 leading-loose">
           <button
@@ -114,10 +114,7 @@
     </div>
   {/if}
 
-  <div class="flex flex-1 flex-col items-center justify-center gap-10 bg-white shadow-xl">
-    <div class="absolute top-5 right-10 flex flex-col items-center gap-2 text-xl font-black">
-      <Logo width="64" /> Tallytop
-    </div>
+  <div class="flex flex-1 flex-col items-center justify-center gap-5 shadow-xl p-5">
     <Timer
       {duration}
       {browser}
@@ -126,7 +123,17 @@
         timerQueue.updateTimerDuration($currentTimer, duration)
       }}
       on:end={setNextTimer}
-    />
+    >
+      <svelte:fragment slot="start" let:start>
+        <img src="/images/play.png" class="scale-75" on:click={() => start()}/>
+      </svelte:fragment>
+      <svelte:fragment slot="stop" let:stop>
+        <img src="/images/stop.png" class="scale-75" on:click={() => stop()}/>
+      </svelte:fragment>
+      <svelte:fragment slot="reset" let:reset>
+        <img src="/images/reset.png" class="scale-75" on:click={() => reset()}/>
+      </svelte:fragment>
+    </Timer>
     <div class="text-2xl">{description}</div>
   </div>
 </div>

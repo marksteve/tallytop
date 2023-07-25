@@ -13,7 +13,7 @@
     return Math.min(MAX_DURATION, toMilliseconds(nextDuration))
   }
 
-  export const formatDuration = (timeOrMs: TimeComponents | number) => {
+  const getDurationParts = (timeOrMs: TimeComponents | number) => {
     const time = typeof timeOrMs === 'number' ? parseMs(timeOrMs) : timeOrMs
     return [
       time.days * 24 + time.hours > 0
@@ -23,7 +23,10 @@
       String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0')
     ]
       .filter((p) => p !== null)
-      .join(':')
+  }
+
+  export const formatDuration = (timeOrMs: TimeComponents | number) => {
+    return getDurationParts(timeOrMs).join(':')
   }
 </script>
 
@@ -51,6 +54,8 @@
     time = parseMs(duration)
     elapsed = 0
   }
+  
+  $: durationParts = getDurationParts(time)
 
   onMount(() => {
     sound.add('beep', '/sounds/beep.mp3')
@@ -134,26 +139,34 @@
 </script>
 
 <div
-  class={`border-2 border-transparent font-mono text-[30vw] leading-none outline-none ${
-    status !== 'running' ? 'rounded border-stone-200 px-10' : ''
-  }`}
-  contenteditable={status !== 'running'}
+  class='text-[30vw] leading-none flex'
   on:blur={handleDurationChange}
 >
-  {formatDuration(time)}
+  {#each durationParts as part, i}
+    <div class='w-[40vw]'>{part}</div>
+    {#if i < durationParts.length - 1}
+      <div>:</div>
+    {/if}
+  {/each}
 </div>
 
 {#if !viewMode}
   <div class="flex gap-10 text-4xl">
     {#if status === 'stopped'}
-      <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-300" on:click={() => start()}>
-        <Play />
-      </Button>
+      <slot name="start" {start}>
+        <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-300" on:click={() => start()}>
+          <Play />
+        </Button>
+      </slot>
     {:else}
-      <Button class="bg-orange-200 px-10 py-5 hover:bg-orange-300" on:click={() => stop()}>
-        <Stop />
-      </Button>
+      <slot name="stop" {stop}>
+        <Button class="bg-orange-200 px-10 py-5 hover:bg-orange-300" on:click={() => stop()}>
+          <Stop />
+        </Button>
+      </slot>
     {/if}
-    <Button class="px-10 py-5" on:click={() => reset()}><ArrowCounterClockwise /></Button>
+    <slot name="reset" {reset}>
+      <Button class="px-10 py-5" on:click={() => reset()}><ArrowCounterClockwise /></Button>
+    </slot>
   </div>
 {/if}

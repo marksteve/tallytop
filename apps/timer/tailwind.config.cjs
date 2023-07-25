@@ -4,8 +4,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Rubik', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Bagel Fat One', 'sans-serif'],
+      },
+      colors: {
+        rockamanila: {
+          bg: '#FAE8DF',
+          green: '#0F6A5D',
+          orange: '#F99A6D',
+          magenta: '#D20D55',
+        },
       },
     },
   },
