@@ -125,13 +125,19 @@
       on:end={setNextTimer}
     >
       <svelte:fragment slot="start" let:start>
-        <img src="/images/play.png" class="scale-75" on:click={() => start()}/>
+        <button on:click={() => start()} class="active:scale-95">
+          <img alt="Start" src="/images/play.png" class="scale-75" />
+        </button>
       </svelte:fragment>
       <svelte:fragment slot="stop" let:stop>
-        <img src="/images/stop.png" class="scale-75" on:click={() => stop()}/>
+        <button on:click={() => stop()} class="active:scale-95">
+          <img alt="Stop" src="/images/stop.png" class="scale-75" />
+        </button>
       </svelte:fragment>
       <svelte:fragment slot="reset" let:reset>
-        <img src="/images/reset.png" class="scale-75" on:click={() => reset()}/>
+        <button on:click={() => reset()} class="active:scale-95">
+          <img alt="Reset" src="/images/reset.png" class="scale-75" />
+        </button>
       </svelte:fragment>
     </Timer>
     <div class="text-2xl">{description}</div>
