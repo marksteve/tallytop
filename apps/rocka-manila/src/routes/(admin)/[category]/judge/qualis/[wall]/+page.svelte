@@ -15,19 +15,17 @@
   let tallies = store.getTable('qualis_tally')
   let competitorTallies: any[] = []
 
-  let listeners: string[] = []
+  let listeners: string[]
   onMount(() => {
-    listeners.push(
+    listeners = [
       store.addTableListener('competitors', () => {
         competitors = store.getTable('competitors')
-      })
-    )
-    listeners.push(
+      }),
       store.addTableListener('qualis_tally', () => {
         tallies = store.getTable('qualis_tally')
         competitorTallies = getTallies()
       })
-    )
+    ]
   })
   onDestroy(() => {
     listeners.forEach((listenerId) => store.delListener(listenerId))

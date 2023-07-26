@@ -11,13 +11,13 @@
     .map(([bib, competitor]) => `${bib}: ${competitor.name}`)
     .join('\n')
 
-  let listeners: string[] = []
+  let listeners: string[]
   onMount(() => {
-    listeners.push(
+    listeners = [
       store.addTableListener('competitors', () => {
         competitors = store.getTable('competitors')
       })
-    )
+    ]
   })
   onDestroy(() => {
     listeners.forEach((listenerId) => store.delListener(listenerId))
