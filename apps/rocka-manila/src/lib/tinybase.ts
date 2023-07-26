@@ -1,30 +1,44 @@
 import { createSessionPersister } from 'tinybase/persisters/persister-browser'
 import { createStore, createRelationships } from 'tinybase/with-schemas'
 
-export const store = createStore().setSchema({
-  competitors: {
-    bib: { type: 'number' },
-    name: { type: 'string' },
-  },
-  qualis_tally: {
-    competitor: { type: 'string' },
-    problem: { type: 'string' },
-    attempts: { type: 'number' },
-    top: { type: 'boolean' },
-  },
-})
+const stores: Record<string, any> = {}
+const storeRelationships: Record<string, any> = {}
 
-export const relationships = createRelationships(store)
-relationships.setRelationshipDefinition(
-  'qualis_competitors',
-  'qualis_tally',
-  'competitors',
-  'competitor'
-)
+export const getStore = (name: string) => {
+  let store = stores[name]
+  store =
+    store ??
+    createStore().setSchema({
+      competitors: {
+        bib: { type: 'number' },
+        name: { type: 'string' },
+      },
+      qualis_tally: {
+        competitor: { type: 'string' },
+        problem: { type: 'string' },
+        attempts: { type: 'number' },
+        top: { type: 'boolean' },
+      },
+    })
+  const persister = createSessionPersister(store, name)
+  persister.startAutoLoad()
+  persister.startAutoSave()
+  return store
+}
 
-const persister = createSessionPersister(store, 'petStore')
-persister.startAutoLoad()
-persister.startAutoSave()
+export const getRelationships = (name: string) => {
+  let relationships = storeRelationships[name]
+  if (!relationships) {
+    relationships = createRelationships(getStore(name))
+    relationships.setRelationshipDefinition(
+      'qualis_competitors',
+      'qualis_tally',
+      'competitors',
+      'competitor'
+    )
+  }
+  return relationships
+}
 
 export const listTable = (table: any) =>
   Object.entries(table).map(([id, item]) => ({ id, ...item }))

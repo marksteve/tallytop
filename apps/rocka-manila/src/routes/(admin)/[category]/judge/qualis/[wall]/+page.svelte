@@ -1,9 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { listTable, relationships, store } from '$lib/tinybase'
+  import { getRelationships, getStore, listTable } from '$lib/tinybase'
   import { Button, Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
+
+  const store = getStore($page.params.category)
+  const relationships = getRelationships($page.params.category)
 
   export let data: import('./$types').PageData
 
@@ -44,8 +47,6 @@
   }
 
   $: tops = Object.fromEntries(competitorTallies.map((tally) => [tally.problem, tally.top]))
-
-  $: console.log(competitorTallies)
 
   const selectCompetitor = (e: any) => {
     selectedCompetitor = e.detail
@@ -94,7 +95,7 @@
     {/if}
     {#if selectedProblem}
       <Column>
-        <Tally competitor={selectedCompetitor} problem={selectedProblem} />
+        <Tally store={store} competitor={selectedCompetitor} problem={selectedProblem} />
       </Column>
     {/if}
   </Row>

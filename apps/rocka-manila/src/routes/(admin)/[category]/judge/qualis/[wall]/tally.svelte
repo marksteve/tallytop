@@ -1,8 +1,8 @@
 <script lang="ts">
   import { qualisScore } from '$lib/rules'
-  import { store } from '$lib/tinybase'
   import { Button, Tile } from 'carbon-components-svelte'
 
+  export let store: any
   export let competitor: any
   export let problem: any
 
