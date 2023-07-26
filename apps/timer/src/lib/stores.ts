@@ -36,7 +36,22 @@ export const timerQueue = (() => {
       })
     },
     removeTimer(index: number) {
-      update((value) => value.filter((_, i) => i !== index))
+      update((value) => {
+        const nextValue = value.filter((_, i) => i !== index)
+        if (nextValue.length > 0) {
+          // Get latest index
+          let nextIndex = index
+          while (nextIndex > nextValue.length - 1) {
+            nextIndex--
+          }
+          currentTimer.set(nextIndex)
+          return nextValue
+        } else {
+          // Create a new one
+          currentTimer.set(0)
+          return [{ description: 'Enter description', duration: 60 * 1000 }]
+        }
+      })
     },
   }
 })()
