@@ -11,7 +11,7 @@
 
   let competitors = store.getTable('competitors')
   let tallies = store.getTable('qualis_tally')
-  let competitorTallies:any[] = []
+  let competitorTallies: any[] = []
 
   let listeners: string[] = []
   onMount(() => {
@@ -43,7 +43,7 @@
     competitorTallies = getTallies()
   }
 
-  $: tops = Object.fromEntries(competitorTallies.map(tally => [tally.problem, tally.top]))
+  $: tops = Object.fromEntries(competitorTallies.map((tally) => [tally.problem, tally.top]))
 
   $: console.log(competitorTallies)
 
@@ -56,7 +56,9 @@
   }
 
   const getTallies = () =>
-    relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).map(id => tallies[id])
+    relationships
+      .getLocalRowIds('qualis_competitors', selectedCompetitor.id)
+      .map((id) => tallies[id])
 </script>
 
 <Grid padding>
@@ -77,7 +79,11 @@
     </Column>
     {#if selectedCompetitor}
       <Column lg={4}>
-        <h2>{selectedCompetitor.bib}: {selectedCompetitor.name} ({competitorTallies.filter(tally => tally.top).length}/5)</h2>
+        <h2>
+          {selectedCompetitor.bib}: {selectedCompetitor.name} ({competitorTallies.filter(
+            (tally) => tally.top
+          ).length}/5)
+        </h2>
         <br />
         <TileGroup legend="Select a problem" on:select={selectProblem} selected={selectedProblem}>
           {#each problems as problem}

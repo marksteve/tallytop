@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Grid, Row, Column, ClickableTile } from "carbon-components-svelte"
-  import { categories } from "$lib/constants"
+  import { Grid, Row, Column, ClickableTile } from 'carbon-components-svelte'
+  import { categories } from '$lib/constants'
 </script>
 
 <Grid padding>
   <Row>
-    {#each Object.entries(categories) as [category, label] }
+    {#each Object.entries(categories) as [category, label]}
       <Column>
         <h2 class="uppercase">{label}</h2>
         <br />

@@ -20,9 +20,8 @@
         ? String(Math.trunc(time.days * 24 + time.hours)).padStart(2, '0')
         : null,
       String(Math.trunc(time.minutes)).padStart(2, '0'),
-      String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0')
-    ]
-      .filter((p) => p !== null)
+      String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0'),
+    ].filter((p) => p !== null)
   }
 
   export const formatDuration = (timeOrMs: TimeComponents | number) => {
@@ -63,7 +62,7 @@
     time = parseMs(duration)
     elapsed = 0
   }
-  
+
   $: durationParts = getDurationParts(time)
 
   export let beeps = [60, 5, 4, 3, 2, 1, 0]
@@ -139,12 +138,9 @@
   }
 </script>
 
-<div
-  class='text-[30vw] leading-none flex'
-  on:blur={handleDurationChange}
->
+<div class="text-[30vw] leading-none flex" on:blur={handleDurationChange}>
   {#each durationParts as part, i}
-    <div class='w-[40vw]'>{part}</div>
+    <div class="w-[40vw]">{part}</div>
     {#if i < durationParts.length - 1}
       <div>:</div>
     {/if}
