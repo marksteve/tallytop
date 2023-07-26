@@ -8,7 +8,7 @@ const categories = {
 }
 
 export function load({ params }) {
-  const category = categories[params.category]
+  const category = categories[params.category as keyof typeof categories]
   if (!category) {
     throw error(404, 'Not found')
   }

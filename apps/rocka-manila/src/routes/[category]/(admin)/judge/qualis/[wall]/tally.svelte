@@ -55,7 +55,7 @@
   }
 </script>
 
-<div class="flex flex-col gap-5 items-center min-h-screen justify-center sticky top-0">
+<div class="flex flex-col gap-5 items-center p-5 justify-center sticky top-0">
   <h2>{competitor.bib}: {competitor.name} on {problem}</h2>
   <div class="flex gap-5">
     <div class="flex flex-col gap-5 items-center">

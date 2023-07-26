@@ -10,6 +10,8 @@
   const problems = data[$page.params.wall].map(String)
 
   let competitors = store.getTable('competitors')
+  let tallies = store.getTable('qualis_tally')
+  let competitorTallies:any[] = []
 
   let listeners: string[] = []
   onMount(() => {
@@ -20,7 +22,8 @@
     )
     listeners.push(
       store.addTableListener('qualis_tally', () => {
-        problemsCount = getProblemsCount()
+        tallies = store.getTable('qualis_tally')
+        competitorTallies = getTallies()
       })
     )
   })
@@ -36,10 +39,13 @@
     selectedProblem = undefined
   }
 
-  let problemsCount = 0
   $: if (selectedCompetitor) {
-    problemsCount = getProblemsCount()
+    competitorTallies = getTallies()
   }
+
+  $: tops = Object.fromEntries(competitorTallies.map(tally => [tally.problem, tally.top]))
+
+  $: console.log(competitorTallies)
 
   const selectCompetitor = (e: any) => {
     selectedCompetitor = e.detail
@@ -49,11 +55,11 @@
     selectedProblem = e.detail
   }
 
-  const getProblemsCount = () =>
-    relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).length
+  const getTallies = () =>
+    relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).map(id => tallies[id])
 </script>
 
-<Grid padding>
+<Grid padding class="min-h-screen items-center">
   <Row>
     <Column lg={4}>
       <h1 class="uppercase">{$page.data.category} Qualis</h1>
@@ -68,11 +74,11 @@
     </Column>
     {#if selectedCompetitor}
       <Column lg={4}>
-        <h2>{selectedCompetitor.bib}: {selectedCompetitor.name} ({problemsCount}/5)</h2>
+        <h2>{selectedCompetitor.bib}: {selectedCompetitor.name} ({competitorTallies.filter(tally => tally.top).length}/5)</h2>
         <br />
         <TileGroup legend="Problem" on:select={selectProblem} selected={selectedProblem}>
           {#each problems as problem}
-            <RadioTile value={problem}>{problem}</RadioTile>
+            <RadioTile value={problem} light={tops[problem]}>{problem}</RadioTile>
           {/each}
         </TileGroup>
       </Column>

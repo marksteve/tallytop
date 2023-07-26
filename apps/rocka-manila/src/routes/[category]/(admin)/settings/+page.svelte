@@ -34,9 +34,17 @@
 
 <Grid padding>
   <Row>
-    <Column><h1 class="uppercase">{$page.params.category} Settings</h1></Column>
+    <Column><h1 class="uppercase">{$page.data.category} Settings</h1></Column>
   </Row>
   <Row>
+    <Column>
+      <TextArea
+        labelText="Competitors"
+        on:change={setCompetitors}
+        value={competitorsText}
+        rows={20}
+      />
+    </Column>
     <Column>
       <DataTable
         headers={[
@@ -44,14 +52,6 @@
           { key: 'name', value: 'Name' },
         ]}
         rows={listTable(competitors)}
-      />
-    </Column>
-    <Column>
-      <TextArea
-        labelText="Competitors"
-        on:change={setCompetitors}
-        value={competitorsText}
-        rows={20}
       />
     </Column>
   </Row>
