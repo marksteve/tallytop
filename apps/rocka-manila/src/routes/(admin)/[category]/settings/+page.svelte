@@ -1,10 +1,10 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { listTable, getStore } from '$lib/tinybase'
+  import { listTable, stores } from '$lib/tinybase'
   import { Column, Grid, DataTable, Row, TextArea } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
 
-  const store = getStore($page.params.category)
+  const { store } = $stores[$page.params.category]
 
   let competitors = store.getTable('competitors')
   $: competitorsText = Object.entries(competitors)

@@ -1,12 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { qualisScore } from '$lib/rules'
-  import { getRelationships, getStore } from '$lib/tinybase'
+  import { stores } from '$lib/tinybase'
   import { DataTable, Tag, Tile } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
 
-  const store = getStore($page.params.category)
-  const relationships = getRelationships($page.params.category)
+  const { store, relationships } = $stores[$page.params.category]
 
   let competitors = store.getTable('competitors')
   let tallies = store.getTable('qualis_tally')

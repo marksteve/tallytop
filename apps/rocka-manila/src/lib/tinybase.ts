@@ -1,44 +1,37 @@
+import { readable } from 'svelte/store'
 import { createSessionPersister } from 'tinybase/persisters/persister-browser'
-import { createStore, createRelationships } from 'tinybase/with-schemas'
+import { createRelationships, createStore } from 'tinybase/with-schemas'
+import { categories } from './constants'
 
-const stores: Record<string, any> = {}
-const storeRelationships: Record<string, any> = {}
-
-export const getStore = (name: string) => {
-  let store = stores[name]
-  store =
-    store ??
-    createStore().setSchema({
-      competitors: {
-        bib: { type: 'number' },
-        name: { type: 'string' },
-      },
-      qualis_tally: {
-        competitor: { type: 'string' },
-        problem: { type: 'string' },
-        attempts: { type: 'number' },
-        top: { type: 'boolean' },
-      },
-    })
+const getStore = (name: string) => {
+  const store = createStore().setSchema({
+    competitors: {
+      bib: { type: 'number' },
+      name: { type: 'string' },
+    },
+    qualis_tally: {
+      competitor: { type: 'string' },
+      problem: { type: 'string' },
+      attempts: { type: 'number' },
+      top: { type: 'boolean' },
+    },
+  })
+  const relationships = createRelationships(store)
+  relationships.setRelationshipDefinition(
+    'qualis_competitors',
+    'qualis_tally',
+    'competitors',
+    'competitor'
+  )
   const persister = createSessionPersister(store, name)
   persister.startAutoLoad()
   persister.startAutoSave()
-  return store
+  return { store, relationships }
 }
 
-export const getRelationships = (name: string) => {
-  let relationships = storeRelationships[name]
-  if (!relationships) {
-    relationships = createRelationships(getStore(name))
-    relationships.setRelationshipDefinition(
-      'qualis_competitors',
-      'qualis_tally',
-      'competitors',
-      'competitor'
-    )
-  }
-  return relationships
-}
+export const stores = readable<Record<string, any>>(
+  Object.fromEntries(Object.keys(categories).map((category) => [category, getStore(category)]))
+)
 
 export const listTable = (table: any) =>
   Object.entries(table).map(([id, item]) => ({ id, ...item }))

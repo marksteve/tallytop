@@ -1,12 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { getRelationships, getStore, listTable } from '$lib/tinybase'
+  import { stores, listTable } from '$lib/tinybase'
   import { Button, Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
 
-  const store = getStore($page.params.category)
-  const relationships = getRelationships($page.params.category)
+  const { store, relationships } = $stores[$page.params.category]
 
   export let data: import('./$types').PageData
 
