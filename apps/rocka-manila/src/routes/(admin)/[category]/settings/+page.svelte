@@ -39,7 +39,8 @@
   <Row>
     <Column>
       <TextArea
-        labelText="Competitors"
+        labelText="Input competitors (Format - bib_number: competitor_name)"
+        placeholder="101: Spongebob Squarepants"
         on:change={setCompetitors}
         value={competitorsText}
         rows={20}
