@@ -1,7 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { qualisScore } from '$lib/rules'
+  import { qualisProblemsCutoff, qualisScore } from '$lib/rules'
   import { stores } from '$lib/tinybase'
+  import { formatScore } from '$lib/utils'
   import { DataTable, Tag, Tile } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
 
@@ -34,7 +35,7 @@
         id,
         bib: competitor.bib,
         name: competitor.name,
-        score: getScore(tallies).toFixed(2),
+        score: formatScore(getScore(tallies)),
         problems: getProblems(tallies),
       }
     })
@@ -44,12 +45,20 @@
     relationships
       .getLocalRowIds('qualis_competitors', competitorId)
       .map((tallyId) => tallies[tallyId])
+
   const getScore = (tallies) =>
-    tallies.map((tally) => qualisScore(tally)).reduce((a, b) => a + b, 0)
+    tallies
+      .sort((a, b) => qualisScore(b) - qualisScore(a))
+      .slice(0, qualisProblemsCutoff)
+      .map((tally) => qualisScore(tally)).reduce((a, b) => a + b, 0)
+
   const getProblems = (tallies) =>
     tallies
-      .sort((a, b) => parseFloat(a.problem) - parseFloat(b.problem))
-      .map((tally) => `${tally.problem}: ${qualisScore(tally)} pts`)
+      .sort((a, b) => qualisScore(b) - qualisScore(a))
+      .map((tally, i) => ({
+        label: `${tally.problem}: ${formatScore(qualisScore(tally))} pts`,
+        counted: i < qualisProblemsCutoff,
+      }))
 </script>
 
 <Tile light>
@@ -67,7 +76,7 @@
       <svelte:fragment slot="cell" let:row let:cell>
         {#if cell.key === 'problems'}
           {#each cell.value as problem}
-            <Tag>{problem}</Tag>
+            <Tag disabled={!problem.counted}>{problem.label}</Tag>
           {/each}
         {:else}
           {cell.value}

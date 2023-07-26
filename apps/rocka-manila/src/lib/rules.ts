@@ -1,3 +1,5 @@
+export const qualisProblemsCutoff = 5
+
 export const qualisScore = (tally: any) => {
   const flash = tally.attempts === 1
   return Math.max(
