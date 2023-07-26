@@ -7,7 +7,7 @@
 
   export let data: import('./$types').PageData
 
-  const problems = data[$page.params.wall].map(String)
+  const problems = data.walls[$page.params.wall].map(String)
 
   let competitors = store.getTable('competitors')
   let tallies = store.getTable('qualis_tally')
@@ -59,12 +59,15 @@
     relationships.getLocalRowIds('qualis_competitors', selectedCompetitor.id).map(id => tallies[id])
 </script>
 
-<Grid padding class="min-h-screen items-center">
+<Grid padding>
+  <Row>
+    <Column>
+      <h1 class="uppercase">{$page.data.category} Qualis</h1>
+    </Column>
+  </Row>
   <Row>
     <Column lg={4}>
-      <h1 class="uppercase">{$page.data.category} Qualis</h1>
-      <br />
-      <TileGroup legend="Competitor" on:select={selectCompetitor}>
+      <TileGroup legend="Select a competitor" on:select={selectCompetitor}>
         {#each listTable(competitors) as competitor}
           <RadioTile value={competitor}>
             {competitor.bib}: {competitor.name}
@@ -76,7 +79,7 @@
       <Column lg={4}>
         <h2>{selectedCompetitor.bib}: {selectedCompetitor.name} ({competitorTallies.filter(tally => tally.top).length}/5)</h2>
         <br />
-        <TileGroup legend="Problem" on:select={selectProblem} selected={selectedProblem}>
+        <TileGroup legend="Select a problem" on:select={selectProblem} selected={selectedProblem}>
           {#each problems as problem}
             <RadioTile value={problem} light={tops[problem]}>{problem}</RadioTile>
           {/each}

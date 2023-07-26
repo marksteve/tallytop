@@ -75,8 +75,10 @@
         Top
       </Button>
     </div>
-    <div class="col-span-2 flex">
-      <Button kind="danger-tertiary" on:click={clear} class="flex-1">Clear</Button>
-    </div>
+    {#if tally.attempts}
+      <div class="col-span-2 flex">
+        <Button kind="danger-tertiary" on:click={clear} class="flex-1">Clear</Button>
+      </div>
+    {/if}
   </div>
 </div>
