@@ -12,7 +12,7 @@
   onMount(async () => {
     sound = (await import('@pixi/sound')).sound
     sound.add('ooh-wee', '/sounds/ooh-wee.mp3')
-    sound.add('makeba', '/sounds/makeba.mp3')
+    sound.add('can-i-get', '/sounds/can-i-get.mp3')
   })
 
   let queueShown = false
@@ -69,13 +69,12 @@
       sound.play('ooh-wee')
     }
     if (e.detail.seconds === 5) {
-      sound.play('makeba')
+      sound.play('can-i-get')
     }
   }
 
   const handleEnd = () => {
     setNextTimer()
-    sound.play('ooh-wee')
   }
 </script>
 
