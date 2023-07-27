@@ -1,12 +1,19 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { currentTimer, timerQueue } from '$lib/stores'
-  import { Button, formatDuration, Logo, Timer } from '@tallytop/ui'
+  import { Button, Timer, formatDuration } from '@tallytop/ui'
   import Backspace from 'phosphor-svelte/lib/Backspace'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
   import Repeat from 'phosphor-svelte/lib/Repeat'
-  import { tick } from 'svelte'
+  import { tick, onMount } from 'svelte'
+
+  let sound
+  onMount(async () => {
+    sound = (await import('@pixi/sound')).sound
+    sound.add('ooh-wee', '/sounds/ooh-wee.mp3')
+    sound.add('makeba', '/sounds/makeba.mp3')
+  })
 
   let queueShown = false
   const toggleQueue = () => (queueShown = !queueShown)
@@ -51,6 +58,20 @@
 
   const toggleRepeat = () => {
     repeat = !repeat
+  }
+
+  const handleBeep = (e: CustomEvent<{ seconds: number }>) => {
+    if (e.detail.seconds === 60) {
+      sound.play('ooh-wee')
+    }
+    if (e.detail.seconds === 5) {
+      sound.play('makeba')
+    }
+  }
+
+  const handleEnd = () => {
+    setNextTimer()
+    sound.play('ooh-wee')
   }
 </script>
 
@@ -122,7 +143,8 @@
       on:changeduration={({ detail: { duration } }) => {
         timerQueue.updateTimerDuration($currentTimer, duration)
       }}
-      on:end={setNextTimer}
+      on:beep={handleBeep}
+      on:end={handleEnd}
     >
       <svelte:fragment slot="start" let:start>
         <button on:click={() => start()} class="active:scale-95">

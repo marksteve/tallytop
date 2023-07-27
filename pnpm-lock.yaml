@@ -253,7 +253,7 @@ importers:
     dependencies:
       tinybase:
         specifier: ^4.0.0
-        version: 4.0.0
+        version: 4.0.0(prettier@2.8.8)
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^2.0.0
@@ -291,6 +291,9 @@ importers:
 
   apps/timer:
     dependencies:
+      '@pixi/sound':
+        specifier: ^5.2.0
+        version: 5.2.0(@pixi/assets@7.2.4)(@pixi/core@7.2.4)
       '@tallytop/ui':
         specifier: 1.0.1
         version: link:../../packages/ui
@@ -416,9 +419,6 @@ importers:
 
   packages/ui:
     dependencies:
-      '@pixi/sound':
-        specifier: ^5.2.0
-        version: 5.2.0(@pixi/assets@7.2.4)(@pixi/core@7.2.4)
       '@sindresorhus/to-milliseconds':
         specifier: ^2.0.0
         version: 2.0.0
@@ -3847,7 +3847,6 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: true
 
   /ps-tree@1.2.0:
     resolution: {integrity: sha512-0VnamPPYHl4uaU/nSFeZZpR21QAWRz+sRv4iW9+v/GS/J5U5iZB5BNN6J0RMoOvdx2gWM2+ZFMIm58q24e4UYA==}
@@ -4575,7 +4574,7 @@ packages:
       globrex: 0.1.2
     dev: true
 
-  /tinybase@4.0.0:
+  /tinybase@4.0.0(prettier@2.8.8):
     resolution: {integrity: sha512-+2yxUb64Xb9LiGZM/lm+W4wE9rS+IaD9lSZ3RvdSbORNtUesJmCKO3C98hZy4CHik5HVThQ4TS4bffJ5yYjdAQ==}
     hasBin: true
     peerDependencies:
@@ -4601,6 +4600,8 @@ packages:
         optional: true
       yjs:
         optional: true
+    dependencies:
+      prettier: 2.8.8
     dev: false
 
   /to-regex-range@5.0.1:

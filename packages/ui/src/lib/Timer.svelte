@@ -36,20 +36,10 @@
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import Button from './Button.svelte'
 
   type Status = 'started' | 'running' | 'stopped'
-
-  let sound
-  onMount(async () => {
-    sound = (await import('@pixi/sound')).sound
-    sound.add('beep', '/sounds/beep.mp3')
-    sound.add('end', '/sounds/end.mp3')
-    sound.add('airhorn', '/sounds/airhorn.mp3')
-    sound.add('coin', '/sounds/coin.mp3')
-    sound.add('gameover', '/sounds/gameover.mp3')
-  })
 
   let endTime: number
   let elapsed = 0
@@ -106,7 +96,6 @@
       }
       if (seconds === 0) {
         stop()
-        sound.play('gameover')
         dispatch('end')
       }
 
@@ -114,7 +103,7 @@
         !playedBeeps.includes(seconds) &&
         (seconds === Math.trunc(duration / 1000) || beeps.includes(seconds))
       ) {
-        sound.play('coin')
+        dispatch('beep', { seconds })
         playedBeeps = [...playedBeeps, seconds]
       }
       requestAnimationFrame(tick)

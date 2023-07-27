@@ -13,6 +13,7 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "dependencies": {
+    "@pixi/sound": "^5.2.0",
     "@tallytop/ui": "1.0.1",
     "phosphor-svelte": "^1.2.1"
   },
