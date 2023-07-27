@@ -62,7 +62,7 @@
       }))
     
   const setCategory  = (e) => {
-    location.href = `/${e.target.value}/results`
+    location.href = `/${e.target.value}/results/qualis`
   }
 </script>
 

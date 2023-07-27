@@ -100,7 +100,7 @@
 
 <div class="fixed inset-0 pointer-events-none">
   <div class="absolute bottom-5 right-5 pointer-events-auto">
-    <a href={`/${$page.params.category}/results`}>
+    <a href={`/${$page.params.category}/results/qualis`}>
       <Button>Results &rarr;</Button>
     </a>
   </div>
