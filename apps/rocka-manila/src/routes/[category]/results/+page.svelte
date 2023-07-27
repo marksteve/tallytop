@@ -1,10 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { categories } from '$lib/constants'
   import { qualisProblemsCutoff, qualisScore } from '$lib/rules'
   import { stores } from '$lib/tinybase'
   import { formatScore } from '$lib/utils'
-  import { DataTable, Tag, Tile } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
+  import 'wired-elements'
 
   const { store, relationships } = $stores[$page.params.category]
 
@@ -56,32 +57,48 @@
     tallies
       .sort((a, b) => qualisScore(b) - qualisScore(a))
       .map((tally, i) => ({
-        label: `${tally.problem}: ${formatScore(qualisScore(tally))} pts`,
+        name: tally.problem,
+        score: formatScore(qualisScore(tally)),
         counted: i < qualisProblemsCutoff,
       }))
+    
+  const setCategory  = (e) => {
+    location.href = `/${e.target.value}/results`
+  }
 </script>
 
-<Tile light>
-  <div class="flex flex-col gap-5">
-    <h1 class="uppercase">{$page.data.category} Qualis</h1>
-    <DataTable
-      headers={[
-        { key: 'bib', value: 'Bib' },
-        { key: 'name', value: 'Name' },
-        { key: 'score', value: 'Score' },
-        { key: 'problems', value: 'Problems' },
-      ]}
-      rows={results}
-    >
-      <svelte:fragment slot="cell" let:row let:cell>
-        {#if cell.key === 'problems'}
-          {#each cell.value as problem}
-            <Tag disabled={!problem.counted}>{problem.label}</Tag>
-          {/each}
-        {:else}
-          {cell.value}
-        {/if}
-      </svelte:fragment>
-    </DataTable>
+<div class="flex flex-col gap-5 bg-rockamanila-bg min-h-screen items-center p-5">
+  <div class="max-w-sm flex flex-col gap-3">
+    <img src="/images/rocka-manila-logo.png" alt="Rocka Manila" />
+    <img src="/images/qualis.svg" alt="Qualis" />
+    <img src="/images/scores.svg" alt="Scores" />
+    <div class="self-center relative">
+      <select class="appearance-none bg-transparent text-rockamanila-magenta text-4xl pr-12" value={$page.params.category} on:change={setCategory}>
+        {#each Object.entries(categories) as [category, label]}
+          <option value={category}>{label}</option>
+        {/each}
+      </select>
+      <span class="pointer-events-none rounded-lg bg-rockamanila-green text-rockamanila-bg rotate-90 text-4xl px-2 pb-[6px] leading-none absolute right-0">
+        &gt;
+      </span>
+    </div>
   </div>
-</Tile>
+  <div class="max-w-screen-lg w-full">
+    {#each results as result}
+      <img src="/images/line.svg" alt="Line" />
+      <div class="flex text-rockamanila-green text-2xl p-2">
+        <div class="w-20">{result.bib}</div>
+        <div class="flex-1">{result.name}</div>
+        <div class="w-1/3 text-rockamanila-magenta flex items-center">
+          <div class="w-1/3">{result.score}</div>
+          <div class="flex gap-2 items-center">
+            {#each result.problems as problem}
+              <div class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center" class:opacity-20={!problem.counted} title={problem.score}>{problem.name}</div>
+            {/each}
+          </div>
+        </div>
+      </div>
+    {/each}
+    <img src="/images/line.svg" alt="Line" class="rotate-180" />
+  </div>
+</div>
