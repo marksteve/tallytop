@@ -16,7 +16,7 @@
     listeners = [
       store.addTableListener('competitors', () => {
         competitors = store.getTable('competitors')
-      })
+      }),
     ]
   })
   onDestroy(() => {

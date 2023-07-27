@@ -24,7 +24,7 @@
       store.addTableListener('qualis_tally', () => {
         tallies = store.getTable('qualis_tally')
         competitorTallies = getTallies()
-      })
+      }),
     ]
   })
   onDestroy(() => {
@@ -92,7 +92,7 @@
     {/if}
     {#if selectedProblem}
       <Column>
-        <Tally store={store} competitor={selectedCompetitor} problem={selectedProblem} />
+        <Tally {store} competitor={selectedCompetitor} problem={selectedProblem} />
       </Column>
     {/if}
   </Row>

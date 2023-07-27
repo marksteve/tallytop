@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { Button } from "carbon-components-svelte"
+  import { Button } from 'carbon-components-svelte'
 </script>
 
 <slot />

@@ -50,7 +50,8 @@
     tallies
       .sort((a, b) => qualisScore(b) - qualisScore(a))
       .slice(0, qualisProblemsCutoff)
-      .map((tally) => qualisScore(tally)).reduce((a, b) => a + b, 0)
+      .map((tally) => qualisScore(tally))
+      .reduce((a, b) => a + b, 0)
 
   const getProblems = (tallies) =>
     tallies
@@ -60,8 +61,8 @@
         score: formatScore(qualisScore(tally)),
         counted: i < qualisProblemsCutoff,
       }))
-    
-  const setCategory  = (e) => {
+
+  const setCategory = (e) => {
     location.href = `/${e.target.value}/results/qualis`
   }
 </script>
@@ -72,12 +73,18 @@
     <img src="/images/qualis.svg" alt="Qualis" />
     <img src="/images/scores.svg" alt="Scores" />
     <div class="self-center relative">
-      <select class="appearance-none bg-transparent text-rockamanila-magenta text-4xl pr-12" value={$page.params.category} on:change={setCategory}>
+      <select
+        class="appearance-none bg-transparent text-rockamanila-magenta text-4xl pr-12"
+        value={$page.params.category}
+        on:change={setCategory}
+      >
         {#each Object.entries(categories) as [category, label]}
           <option value={category}>{label}</option>
         {/each}
       </select>
-      <span class="pointer-events-none rounded-lg bg-rockamanila-green text-rockamanila-bg rotate-90 text-4xl px-2 pb-[6px] leading-none absolute right-0">
+      <span
+        class="pointer-events-none rounded-lg bg-rockamanila-green text-rockamanila-bg rotate-90 text-4xl px-2 pb-[6px] leading-none absolute right-0"
+      >
         &gt;
       </span>
     </div>
@@ -92,7 +99,13 @@
           <div class="w-1/3">{result.score}</div>
           <div class="flex gap-2 items-center">
             {#each result.problems as problem}
-              <div class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center" class:opacity-20={!problem.counted} title={problem.score}>{problem.name}</div>
+              <div
+                class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center"
+                class:opacity-20={!problem.counted}
+                title={problem.score}
+              >
+                {problem.name}
+              </div>
             {/each}
           </div>
         </div>
