@@ -5,7 +5,6 @@
   import { stores } from '$lib/tinybase'
   import { formatScore } from '$lib/utils'
   import { onDestroy, onMount } from 'svelte'
-  import 'wired-elements'
 
   const { store, relationships } = $stores[$page.params.category]
 
