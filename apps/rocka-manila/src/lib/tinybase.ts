@@ -1,6 +1,10 @@
+import { HocuspocusProvider } from '@hocuspocus/provider'
 import { readable } from 'svelte/store'
-import { createSessionPersister } from 'tinybase/persisters/persister-browser'
+import type { Store } from 'tinybase'
+import { createYjsPersister } from 'tinybase/persisters/persister-yjs'
 import { createRelationships, createStore } from 'tinybase/with-schemas'
+import { IndexeddbPersistence } from 'y-indexeddb'
+import * as Y from 'yjs'
 import { categories } from './constants'
 
 const getStore = (name: string) => {
@@ -23,7 +27,14 @@ const getStore = (name: string) => {
     'competitors',
     'competitor'
   )
-  const persister = createSessionPersister(store, name)
+  const ydoc = new Y.Doc()
+  new IndexeddbPersistence(name, ydoc)
+  new HocuspocusProvider({
+    url: 'ws://localhost:1234',
+    name,
+    document: ydoc,
+  })
+  const persister = createYjsPersister(store as Store, ydoc)
   persister.startAutoLoad()
   persister.startAutoSave()
   return { store, relationships }

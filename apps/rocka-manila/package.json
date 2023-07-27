@@ -24,6 +24,9 @@
   },
   "type": "module",
   "dependencies": {
-    "tinybase": "^4.0.0"
+    "@hocuspocus/provider": "^2.2.3",
+    "tinybase": "^4.0.0",
+    "y-indexeddb": "^9.0.11",
+    "yjs": "^13.6.7"
   }
 }
