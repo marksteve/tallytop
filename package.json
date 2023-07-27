@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@tallytop/eslint-config-custom": "workspace:*",
+    "dotenv-cli": "^7.2.1",
     "eslint": "^8.45.0",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.1",

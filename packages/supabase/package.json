@@ -2,7 +2,6 @@
   "name": "@tallytop/supabase",
   "version": "0.0.0",
   "description": "Wraps supabase for supa easy usage",
-  "type": "module",
   "module": "index.ts",
   "svelte": "index.ts",
   "license": "MIT",
@@ -15,5 +14,6 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.2.1"
-  }
+  },
+  "type": "module"
 }

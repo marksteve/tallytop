@@ -11,6 +11,9 @@ importers:
       '@tallytop/eslint-config-custom':
         specifier: workspace:*
         version: link:packages/eslint-config-custom
+      dotenv-cli:
+        specifier: ^7.2.1
+        version: 7.2.1
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -256,10 +259,7 @@ importers:
         version: 2.2.3(y-protocols@1.0.5)(yjs@13.6.7)
       tinybase:
         specifier: ^4.0.0
-        version: 4.0.0(prettier@2.8.8)(yjs@13.6.7)
-      y-indexeddb:
-        specifier: ^9.0.11
-        version: 9.0.11(yjs@13.6.7)
+        version: 4.0.0(yjs@13.6.7)
       yjs:
         specifier: ^13.6.7
         version: 13.6.7
@@ -2702,10 +2702,24 @@ packages:
     dependencies:
       esutils: 2.0.3
 
+  /dotenv-cli@7.2.1:
+    resolution: {integrity: sha512-ODHbGTskqRtXAzZapDPvgNuDVQApu4oKX8lZW7Y0+9hKA6le1ZJlyRS687oU9FXjOVEDU/VFV6zI125HzhM1UQ==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
+    dev: true
+
+  /dotenv-expand@10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: true
+
   /dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
-    dev: false
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -4441,6 +4455,7 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+    dev: true
 
   /promise-inflight@1.0.1:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
@@ -5304,7 +5319,7 @@ packages:
       globrex: 0.1.2
     dev: true
 
-  /tinybase@4.0.0(prettier@2.8.8)(yjs@13.6.7):
+  /tinybase@4.0.0(yjs@13.6.7):
     resolution: {integrity: sha512-+2yxUb64Xb9LiGZM/lm+W4wE9rS+IaD9lSZ3RvdSbORNtUesJmCKO3C98hZy4CHik5HVThQ4TS4bffJ5yYjdAQ==}
     hasBin: true
     peerDependencies:
@@ -5331,7 +5346,6 @@ packages:
       yjs:
         optional: true
     dependencies:
-      prettier: 2.8.8
       yjs: 13.6.7
     dev: false
 
@@ -5787,15 +5801,6 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
     dev: true
-
-  /y-indexeddb@9.0.11(yjs@13.6.7):
-    resolution: {integrity: sha512-HOKQ70qW1h2WJGtOKu9rE8fbX86ExVZedecndMuhwax3yM4DQsQzCTGHt/jvTrFZr/9Ahvd8neD6aZ4dMMjtdg==}
-    peerDependencies:
-      yjs: ^13.0.0
-    dependencies:
-      lib0: 0.2.78
-      yjs: 13.6.7
-    dev: false
 
   /y-protocols@1.0.5:
     resolution: {integrity: sha512-Wil92b7cGk712lRHDqS4T90IczF6RkcvCwAD0A2OPg+adKmOe+nOiT/N2hvpQIWS3zfjmtL4CPaH5sIW1Hkm/A==}
