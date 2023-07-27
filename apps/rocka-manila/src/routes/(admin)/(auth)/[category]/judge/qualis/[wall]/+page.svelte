@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { stores, listTable } from '$lib/tinybase'
-  import { Button, Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
+  import { Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
 
@@ -97,11 +97,3 @@
     {/if}
   </Row>
 </Grid>
-
-<div class="fixed inset-0 pointer-events-none">
-  <div class="absolute bottom-5 right-5 pointer-events-auto">
-    <a href={`/${$page.params.category}/results/qualis`}>
-      <Button>Results &rarr;</Button>
-    </a>
-  </div>
-</div>
