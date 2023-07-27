@@ -69,12 +69,14 @@
   export const start = (endTimeInit?: number) => {
     endTime = endTimeInit ? endTimeInit : Date.now() + duration - elapsed
     status = 'started'
+    dispatch('start')
   }
 
   export const stop = () => {
     const remaining = endTime - Date.now()
     elapsed = duration - remaining
     status = 'stopped'
+    dispatch('stop')
   }
 
   export const reset = () => {
@@ -82,6 +84,7 @@
     elapsed = 0
     status = 'stopped'
     playedBeeps = []
+    dispatch('reset')
   }
 
   const tick = () => {

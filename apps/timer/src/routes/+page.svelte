@@ -60,6 +60,10 @@
     repeat = !repeat
   }
 
+  const handleStart = () => {
+    sound.play('ooh-wee')
+  }
+
   const handleBeep = (e: CustomEvent<{ seconds: number }>) => {
     if (e.detail.seconds === 60) {
       sound.play('ooh-wee')
@@ -143,6 +147,7 @@
       on:changeduration={({ detail: { duration } }) => {
         timerQueue.updateTimerDuration($currentTimer, duration)
       }}
+      on:start={handleStart}
       on:beep={handleBeep}
       on:end={handleEnd}
     >
