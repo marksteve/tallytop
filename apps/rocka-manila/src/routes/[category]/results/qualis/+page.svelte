@@ -95,7 +95,7 @@
       <div class="flex text-rockamanila-green text-2xl p-2">
         <div class="w-20">{result.bib}</div>
         <div class="flex-1">{result.name}</div>
-        <div class="w-1/3 text-rockamanila-magenta flex items-center">
+        <div class="w-1/3 sm:w-1/2 text-rockamanila-magenta flex items-center">
           <div class="w-1/3">{result.score}</div>
           <div class="flex gap-2 items-center">
             {#each result.problems as problem}

@@ -22,7 +22,7 @@
 <slot />
 
 {#if !synced}
-  <div class="absolute inset-0 bg-rockamanila-bg/50 text-rockamanila-magenta text-9xl flex justify-center items-center">
+  <div class="absolute inset-0 bg-rockamanila-bg/50 text-rockamanila-magenta text-9xl flex justify-center items-center sm:text-3xl">
     Loading&hellip;
   </div>
 {/if}
