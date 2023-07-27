@@ -4,6 +4,8 @@
   import { stores } from '$lib/tinybase'
   import { HocuspocusProvider } from '@hocuspocus/provider'
 
+  let synced = false
+
   const { ydoc } = $stores[$page.params.category]
 
   new HocuspocusProvider({
@@ -11,7 +13,16 @@
     name: $page.params.category,
     document: ydoc,
     token: 'public',
+    onSynced() {
+      synced = true
+    },
   })
 </script>
 
 <slot />
+
+{#if !synced}
+  <div class="absolute inset-0 bg-rockamanila-bg/50 text-rockamanila-magenta text-9xl flex justify-center items-center">
+    Loading&hellip;
+  </div>
+{/if}
