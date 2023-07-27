@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "dotenv -- node index.js"
+    "start": "node index.js",
+    "dev": "dotenv -- pnpm run start"
   },
   "dependencies": {
     "@hocuspocus/extension-logger": "^2.2.3",
     "@hocuspocus/extension-sqlite": "^2.2.3",
     "@hocuspocus/server": "^2.2.3"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.0"
   },
   "type": "module"
 }
