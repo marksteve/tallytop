@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { categories } from '$lib/constants'
-  import { qualisProblemsCutoff, qualisScore } from '$lib/rules'
+  import { finalsCutoff, qualisProblemsCutoff, qualisScore } from '$lib/rules'
   import { stores } from '$lib/tinybase'
   import { formatScore } from '$lib/utils'
   import { onDestroy, onMount } from 'svelte'
@@ -9,6 +9,7 @@
   const { store, relationships } = $stores[$page.params.category]
 
   let competitors = store.getTable('competitors')
+  let settings = store.getTable('settings')
   let tallies = store.getTable('qualis_tally')
 
   let listeners: string[]
@@ -16,6 +17,9 @@
     listeners = [
       store.addTableListener('competitors', () => {
         competitors = store.getTable('competitors')
+      }),
+      store.addTableListener('settings', () => {
+        settings = store.getTable('settings')
       }),
       store.addTableListener('qualis_tally', () => {
         tallies = store.getTable('qualis_tally')
@@ -40,6 +44,7 @@
       }
     })
     .sort((a, b) => b.score - a.score)
+  $: finalistsShown = settings[$page.params.category]?.completed
 
   const getTallies = (competitorId) =>
     relationships
@@ -90,9 +95,12 @@
     </div>
   </div>
   <div class="max-w-screen-lg w-full">
-    {#each results as result}
+    {#each results as result, i}
       <img src="/images/line.svg" alt="Line" />
-      <div class="flex text-rockamanila-green text-2xl p-2 gap-1">
+      <div
+        class="flex text-rockamanila-green text-2xl p-2 gap-1 my-1 rounded-lg"
+        class:bg-rockamanila-orange={finalistsShown && i < finalsCutoff}
+      >
         <div class="w-16">{result.bib}</div>
         <div class="flex-1">{result.name}</div>
         <div

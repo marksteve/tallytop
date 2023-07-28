@@ -9,3 +9,5 @@ export const qualisScore = (tally: any) => {
       : 0
   )
 }
+
+export const finalsCutoff = 6

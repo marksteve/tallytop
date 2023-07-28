@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { afterNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { stores } from '$lib/tinybase'
   import { Button, Toggle } from 'carbon-components-svelte'
@@ -6,14 +7,25 @@
 
   const { store } = $stores[$page.params.category]
 
+  let synced = false
   let completed = false
+
+  afterNavigate(() => {
+    const settings = store.getTable('settings')
+    const categorySetting = settings[$page.params.category]
+    if (typeof categorySetting !== 'undefined') {
+      completed = categorySetting.completed
+      synced = true
+    }
+  })
 
   let listeners: string[]
   onMount(() => {
     listeners = [
       store.addTableListener('settings', () => {
         const settings = store.getTable('settings')
-        completed = settings[$page.params.category]
+        completed = settings[$page.params.category].completed
+        synced = true
       }),
     ]
   })
@@ -21,7 +33,7 @@
     listeners.forEach((listenerId) => store.delListener(listenerId))
   })
 
-  $: {
+  $: if (synced) {
     store.setRow('settings', $page.params.category, { completed })
   } 
 
