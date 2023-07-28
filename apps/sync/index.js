@@ -10,6 +10,7 @@ const server = new Hocuspocus({
     if (token !== process.env.SYNC_TOKEN) {
       data.connection.readOnly = true
     }
+    console.log({ token })
     return {}
   },
 })

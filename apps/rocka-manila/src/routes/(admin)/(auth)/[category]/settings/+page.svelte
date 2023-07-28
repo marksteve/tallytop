@@ -1,12 +1,16 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { synced } from '$lib/stores'
   import { listTable, stores } from '$lib/tinybase'
   import { CodeSnippet, Column, DataTable, Grid, Row, TextArea } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
 
   const { store } = $stores[$page.params.category]
 
-  let competitors = store.getTable('competitors')
+  let competitors = {}
+  $: if ($synced) {
+    competitors = store.getTable('competitors')
+  }
 
   let listeners: string[]
   onMount(() => {

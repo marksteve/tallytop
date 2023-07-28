@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { stores, listTable } from '$lib/tinybase'
+  import { synced } from '$lib/stores'
+  import { listTable, stores } from '$lib/tinybase'
   import { Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
@@ -11,9 +12,15 @@
 
   const problems = data.walls[$page.params.wall].map(String)
 
-  let competitors = store.getTable('competitors')
-  let tallies = store.getTable('qualis_tally')
-  let competitorTallies: any[] = []
+  let competitors = {}
+  let tallies = {}
+  let competitorTallies: any = []
+
+  $: if ($synced) {
+    competitors = store.getTable('competitors')
+    tallies = store.getTable('qualis_tally')
+    competitorTallies = []
+  }
 
   let listeners: string[]
   onMount(() => {

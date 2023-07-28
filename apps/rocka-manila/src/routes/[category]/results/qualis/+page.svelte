@@ -2,15 +2,21 @@
   import { page } from '$app/stores'
   import { categories } from '$lib/constants'
   import { finalsCutoff, qualisProblemsCutoff, qualisScore } from '$lib/rules'
+  import { synced } from '$lib/stores'
   import { stores } from '$lib/tinybase'
   import { formatScore } from '$lib/utils'
   import { onDestroy, onMount } from 'svelte'
 
   const { store, relationships } = $stores[$page.params.category]
 
-  let competitors = store.getTable('competitors')
-  let settings = store.getTable('settings')
-  let tallies = store.getTable('qualis_tally')
+  let competitors = {}
+  let settings = {}
+  let tallies = {}
+  $: if ($synced) {
+    competitors = store.getTable('competitors')
+    settings = store.getTable('settings')
+    tallies = store.getTable('qualis_tally')
+  }
 
   let listeners: string[]
   onMount(() => {

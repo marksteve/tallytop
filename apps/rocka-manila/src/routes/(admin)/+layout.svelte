@@ -1,34 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { env } from '$env/dynamic/public'
-  import { stores } from '$lib/tinybase'
-  import { HocuspocusProvider } from '@hocuspocus/provider'
-  import { Button, Loading } from 'carbon-components-svelte'
+  import { Button } from 'carbon-components-svelte'
   import 'carbon-components-svelte/css/white.css'
-    import { onDestroy } from 'svelte'
-
-  let synced = false
-  let provider: HocuspocusProvider
-
-  $: ydoc = ($stores[$page.params.category] ?? {}).ydoc
-
-  $: if (ydoc) {
-    provider = new HocuspocusProvider({
-      url: env.PUBLIC_SYNC_URL,
-      name: $page.params.category,
-      document: ydoc,
-      token: $page.data.token ?? 'public',
-      onSynced() {
-        synced = true
-      }
-    })
-  }
-
-  onDestroy(() => {
-    if (provider) {
-      provider.destroy()
-    }
-  })
 </script>
 
 <h1
@@ -41,7 +14,3 @@
 </h1>
 
 <slot />
-
-{#if !synced}
-  <Loading />
-{/if}

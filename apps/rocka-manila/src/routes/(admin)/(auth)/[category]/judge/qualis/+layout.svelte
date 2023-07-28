@@ -1,31 +1,26 @@
 <script lang="ts">
-  import { afterNavigate } from '$app/navigation'
   import { page } from '$app/stores'
+  import { synced } from '$lib/stores'
   import { stores } from '$lib/tinybase'
   import { Button, Toggle } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
 
   const { store } = $stores[$page.params.category]
 
-  let synced = false
-  let completed = false
+  $: settingsId = `${$page.params.category}:qualis`
 
-  afterNavigate(() => {
+  let completed = false
+  $: if ($synced) {
     const settings = store.getTable('settings')
-    const categorySetting = settings[$page.params.category]
-    if (typeof categorySetting !== 'undefined') {
-      completed = categorySetting.completed
-      synced = true
-    }
-  })
+    completed = settings[settingsId]?.completed ?? false
+  }
 
   let listeners: string[]
   onMount(() => {
     listeners = [
       store.addTableListener('settings', () => {
         const settings = store.getTable('settings')
-        completed = settings[$page.params.category].completed
-        synced = true
+        completed = settings[settingsId]?.completed ?? false
       }),
     ]
   })
@@ -33,10 +28,9 @@
     listeners.forEach((listenerId) => store.delListener(listenerId))
   })
 
-  $: if (synced) {
-    store.setRow('settings', $page.params.category, { completed })
+  $: if ($synced) {
+    store.setRow('settings', settingsId, { completed })
   } 
-
 </script>
 
 <slot />
