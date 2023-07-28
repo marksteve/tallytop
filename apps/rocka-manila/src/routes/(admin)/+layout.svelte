@@ -3,19 +3,32 @@
   import { env } from '$env/dynamic/public'
   import { stores } from '$lib/tinybase'
   import { HocuspocusProvider } from '@hocuspocus/provider'
-  import { Button } from 'carbon-components-svelte'
+  import { Button, Loading } from 'carbon-components-svelte'
   import 'carbon-components-svelte/css/white.css'
+    import { onDestroy } from 'svelte'
+
+  let synced = false
+  let provider: HocuspocusProvider
 
   $: ydoc = ($stores[$page.params.category] ?? {}).ydoc
 
   $: if (ydoc) {
-    new HocuspocusProvider({
+    provider = new HocuspocusProvider({
       url: env.PUBLIC_SYNC_URL,
       name: $page.params.category,
       document: ydoc,
       token: $page.data.token ?? 'public',
+      onSynced() {
+        synced = true
+      }
     })
   }
+
+  onDestroy(() => {
+    if (provider) {
+      provider.destroy()
+    }
+  })
 </script>
 
 <h1
