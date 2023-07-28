@@ -92,12 +92,14 @@
   <div class="max-w-screen-lg w-full">
     {#each results as result}
       <img src="/images/line.svg" alt="Line" />
-      <div class="flex text-rockamanila-green text-2xl p-2">
-        <div class="w-20">{result.bib}</div>
+      <div class="flex text-rockamanila-green text-2xl p-2 gap-1">
+        <div class="w-16">{result.bib}</div>
         <div class="flex-1">{result.name}</div>
-        <div class="w-1/3 sm:w-1/2 text-rockamanila-magenta flex items-center">
+        <div
+          class="text-rockamanila-magenta flex flex-col w-1/4 lg:flex-row lg:items-center lg:w-1/3"
+        >
           <div class="w-1/3">{result.score}</div>
-          <div class="flex gap-2 items-center">
+          <div class="flex gap-1 items-center flex-wrap">
             {#each result.problems as problem}
               <div
                 class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center"

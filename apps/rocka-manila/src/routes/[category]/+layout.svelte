@@ -22,7 +22,7 @@
 <slot />
 
 {#if !synced}
-  <div class="absolute inset-0 bg-rockamanila-bg/50 text-rockamanila-magenta text-9xl flex justify-center items-center sm:text-3xl">
-    Loading&hellip;
+  <div class="absolute inset-0 bg-rockamanila-bg/90 flex justify-center items-center">
+    <img src="/images/sun.svg" class="animate-[spin_3s_linear_infinite] w-40" alt="Sun" />
   </div>
 {/if}
