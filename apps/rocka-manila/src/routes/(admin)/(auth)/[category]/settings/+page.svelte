@@ -1,15 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { listTable, stores } from '$lib/tinybase'
-  import { Column, Grid, DataTable, Row, TextArea } from 'carbon-components-svelte'
+  import { CodeSnippet, Column, DataTable, Grid, Row, TextArea } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
 
   const { store } = $stores[$page.params.category]
 
   let competitors = store.getTable('competitors')
-  $: competitorsText = Object.entries(competitors)
-    .map(([bib, competitor]) => `${bib}: ${competitor.name}`)
-    .join('\n')
 
   let listeners: string[]
   onMount(() => {
@@ -22,6 +19,10 @@
   onDestroy(() => {
     listeners.forEach((listenerId) => store.delListener(listenerId))
   })
+
+  $: competitorsText = Object.entries(competitors)
+    .map(([bib, competitor]) => `${bib}: ${competitor.name}`)
+    .join('\n')
 
   const setCompetitors = (e: any) => {
     const competitors = Object.fromEntries(
@@ -40,13 +41,21 @@
   </Row>
   <Row>
     <Column>
+      <h2 class="uppercase">Competitors</h2>
+    </Column>
+  </Row>
+  <Row>
+    <Column>
       <TextArea
-        labelText="Input competitors (Format - bib_number: competitor_name)"
         placeholder="101: Spongebob Squarepants"
         on:change={setCompetitors}
         value={competitorsText}
         rows={20}
       />
+      <br />
+      Format
+      <br /><br />
+      <CodeSnippet>bib_number: competitor_name</CodeSnippet>
     </Column>
     <Column>
       <DataTable

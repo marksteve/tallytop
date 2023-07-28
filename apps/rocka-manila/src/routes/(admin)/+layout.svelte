@@ -9,7 +9,6 @@
   $: ydoc = ($stores[$page.params.category] ?? {}).ydoc
 
   $: if (ydoc) {
-    console.log($page.data.token)
     new HocuspocusProvider({
       url: env.PUBLIC_SYNC_URL,
       name: $page.params.category,

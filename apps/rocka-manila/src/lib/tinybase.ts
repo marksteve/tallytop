@@ -11,6 +11,9 @@ const initStore = () => {
       bib: { type: 'number' },
       name: { type: 'string' },
     },
+    settings: {
+      completed: { type: 'boolean' },
+    },
     qualis_tally: {
       competitor: { type: 'string' },
       problem: { type: 'string' },
@@ -21,7 +24,7 @@ const initStore = () => {
       competitor: { type: 'string' },
       problem: { type: 'string' },
       attempts: { type: 'string' },
-    }
+    },
   })
   const relationships = createRelationships(store)
   relationships.setRelationshipDefinition(
