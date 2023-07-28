@@ -1,11 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { categories } from '$lib/constants'
-  import { finalsCutoff, qualisProblemsCutoff, qualisScore } from '$lib/rules'
+  import { podiumCutoff } from '$lib/rules'
   import { synced } from '$lib/stores'
   import { stores } from '$lib/tinybase'
-  import { formatScore } from '$lib/utils'
   import { onDestroy, onMount } from 'svelte'
+  import attemptIcon from './attempt.svg'
+  import zoneIcon from './zone.svg'
+  import topIcon from './top.svg'
 
   const { store, relationships } = $stores[$page.params.category]
 
@@ -15,7 +17,7 @@
   $: if ($synced) {
     competitors = store.getTable('competitors')
     settings = store.getTable('settings')
-    tallies = store.getTable('qualis_tally')
+    tallies = store.getTable('finals_tally')
   }
 
   let listeners: string[]
@@ -27,8 +29,8 @@
       store.addTableListener('settings', () => {
         settings = store.getTable('settings')
       }),
-      store.addTableListener('qualis_tally', () => {
-        tallies = store.getTable('qualis_tally')
+      store.addTableListener('finals_tally', () => {
+        tallies = store.getTable('finals_tally')
       }),
     ]
   })
@@ -40,13 +42,15 @@
 
   $: results = Object.entries(competitors)
     .map(([id, competitor]) => {
-      const tallies = getTallies(id)
+      const problems = Object.fromEntries(getTallies(id).map((tally) => [
+        tally.problem,
+        tally
+      ]))
       return {
         id,
         bib: competitor.bib,
         name: competitor.name,
-        score: formatScore(getScore(tallies)),
-        problems: getProblems(tallies),
+        problems,
       }
     })
     .sort((a, b) => b.score - a.score)
@@ -54,34 +58,30 @@
 
   const getTallies = (competitorId) =>
     relationships
-      .getLocalRowIds('qualis_competitors', competitorId)
+      .getLocalRowIds('finals_competitors', competitorId)
       .map((tallyId) => tallies[tallyId])
 
-  const getScore = (tallies) =>
-    tallies
-      .sort((a, b) => qualisScore(b) - qualisScore(a))
-      .slice(0, qualisProblemsCutoff)
-      .map((tally) => qualisScore(tally))
-      .reduce((a, b) => a + b, 0)
-
-  const getProblems = (tallies) =>
-    tallies
-      .sort((a, b) => qualisScore(b) - qualisScore(a))
-      .map((tally, i) => ({
-        name: tally.problem,
-        score: formatScore(qualisScore(tally)),
-        counted: i < qualisProblemsCutoff,
-      }))
-
   const setCategory = (e) => {
-    location.href = `/${e.target.value}/results/qualis`
+    location.href = `/${e.target.value}/results/finals`
+  }
+
+  const problemIcon = (attempts: string) => {
+    if (!attempts) return
+    switch (true) {
+      case attempts.includes('a'):
+        return attemptIcon
+      case attempts.includes('z'):
+        return zoneIcon
+      case attempts.includes('T'):
+        return topIcon
+    }
   }
 </script>
 
 <div class="flex flex-col gap-5 bg-rockamanila-bg min-h-screen items-center p-5">
   <div class="max-w-sm flex flex-col gap-3">
     <img src="/images/rocka-manila-logo.png" alt="Rocka Manila" />
-    <img src="/images/qualis.svg" alt="Qualis" />
+    <img src="/images/finals.svg" alt="Qualis" />
     <img src="/images/scores.svg" alt="Scores" />
     <div class="self-center relative">
       <select
@@ -105,25 +105,20 @@
       <img src="/images/line.svg" alt="Line" />
       <div
         class="flex text-rockamanila-green text-2xl p-2 gap-1 my-1 rounded-lg"
-        class:bg-rockamanila-orange={rankShown && i < finalsCutoff}
+        class:bg-rockamanila-orange={rankShown && i < podiumCutoff}
       >
         <div class="w-16">{result.bib}</div>
         <div class="flex-1">{result.name}</div>
         <div
-          class="text-rockamanila-magenta flex flex-col w-1/4 lg:flex-row lg:items-center lg:w-1/3"
+          class="text-rockamanila-magenta flex gap-2"
         >
-          <div class="w-1/3">{result.score}</div>
-          <div class="flex gap-1 items-center flex-wrap">
-            {#each result.problems as problem}
-              <div
-                class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center"
-                class:opacity-20={!problem.counted}
-                title={problem.score}
-              >
-                {problem.name}
-              </div>
-            {/each}
-          </div>
+          {#each Array(4).keys() as problem}
+            {#if problemIcon(result.problems?.[problem]?.attempts)}
+              <img src={problemIcon(result.problems?.[problem]?.attempts)} alt={String(problem)} class="h-10" />
+            {:else}
+              <img src={problemIcon('a')} alt={String(problem)} class="opacity-10 h-10" />
+            {/if}
+          {/each}
         </div>
       </div>
     {/each}
