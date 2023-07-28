@@ -17,11 +17,22 @@ const initStore = () => {
       attempts: { type: 'number' },
       top: { type: 'boolean' },
     },
+    finals_tally: {
+      competitor: { type: 'string' },
+      problem: { type: 'string' },
+      attempts: { type: 'string' },
+    }
   })
   const relationships = createRelationships(store)
   relationships.setRelationshipDefinition(
     'qualis_competitors',
     'qualis_tally',
+    'competitors',
+    'competitor'
+  )
+  relationships.setRelationshipDefinition(
+    'finals_competitors',
+    'finals_tally',
     'competitors',
     'competitor'
   )
