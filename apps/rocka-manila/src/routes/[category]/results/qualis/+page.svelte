@@ -115,7 +115,7 @@
           <div class="w-1/3">{result.score}</div>
           <div class="flex gap-1 items-center flex-wrap">
             {#each result.problems as problem}
-              {#if problem.score}
+              {#if problem.score !== '0'}
                 <div
                   class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center"
                   class:opacity-20={!problem.counted}
