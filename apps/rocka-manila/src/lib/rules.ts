@@ -28,7 +28,7 @@ export const countTopAttempts = (problems) => {
 }
 
 export const countZones = (problems) => {
-  return Object.values(problems).filter((problem) => problem.attempts.includes('z')).length
+  return Object.values(problems).filter((problem) => problem.attempts.includes('z') || problem.attempts.includes('T')).length
 }
 
 export const countZoneAttempts = (problems) => {
