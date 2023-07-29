@@ -49,12 +49,11 @@
         id,
         bib: competitor.bib,
         name: competitor.name,
-        score: getQualisScore(tallies),
+        qualisScore: getQualisScore(tallies),
       }
     })
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => b.qualisScore - a.qualisScore)
     .slice(0, finalsCutoff)
-    .sort((a, b) => a.score - b.score)
 
   const getQualisTallies = (competitorId) => relationships
     .getLocalRowIds('qualis_competitors', competitorId)
@@ -80,18 +79,20 @@
         tally.problem,
         tally
       ]))
+      const qualisScore = getQualisScore(getQualisTallies(id))
       return {
         id,
         bib: competitor.bib,
         name: competitor.name,
         problems,
+        qualisScore,
         tops: countTops(problems),
         zones: countZones(problems),
         topAttempts: countTopAttempts(problems),
         zoneAttempts: countZoneAttempts(problems),
       }
     })
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => b.qualisScore - a.qualisScore)
     .sort((a, b) => a.zoneAttempts - b.zoneAttempts)
     .sort((a, b) => a.topAttempts - b.topAttempts)
     .sort((a, b) => b.zones - a.zones)
