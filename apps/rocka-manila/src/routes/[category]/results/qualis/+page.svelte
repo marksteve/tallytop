@@ -78,7 +78,7 @@
   }
 </script>
 
-<div class="flex flex-col gap-5 bg-rockamanila-bg min-h-screen items-center p-5">
+<div class="flex flex-col gap-5 bg-rockamanila-bg min-h-screen items-center p-5 pb-20">
   <div class="max-w-sm flex flex-col gap-3">
     <img src="/images/rocka-manila-logo.png" alt="Rocka Manila" />
     <img src="/images/qualis.svg" alt="Qualis" />

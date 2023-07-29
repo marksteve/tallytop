@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { categories } from '$lib/constants'
-  import { podiumCutoff } from '$lib/rules'
+  import { countTopAttempts, countTops, countZoneAttempts, countZones, finalsCutoff, podiumCutoff, qualisProblemsCutoff, qualisScore } from '$lib/rules'
   import { synced } from '$lib/stores'
   import { stores } from '$lib/tinybase'
   import { onDestroy, onMount } from 'svelte'
@@ -13,10 +13,12 @@
 
   let competitors = {}
   let settings = {}
+  let qualisTallies = {}
   let tallies = {}
   $: if ($synced) {
     competitors = store.getTable('competitors')
     settings = store.getTable('settings')
+    qualisTallies = store.getTable('qualis_tally')
     tallies = store.getTable('finals_tally')
   }
 
@@ -40,7 +42,39 @@
     })
   })
 
+  $: qualisCompetitors = Object.entries(competitors)
+    .map(([id, competitor]) => {
+      const tallies = getQualisTallies(id)
+      return {
+        id,
+        bib: competitor.bib,
+        name: competitor.name,
+        score: getQualisScore(tallies),
+      }
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, finalsCutoff)
+    .sort((a, b) => a.score - b.score)
+
+  const getQualisTallies = (competitorId) => relationships
+    .getLocalRowIds('qualis_competitors', competitorId)
+    .map((tallyId) => qualisTallies[tallyId])
+
+  const getQualisScore = (tallies) => {
+    return tallies
+      ? tallies
+        .sort((a, b) => qualisScore(b) - qualisScore(a))
+        .slice(0, qualisProblemsCutoff)
+        .map((tally) => qualisScore(tally))
+        .reduce((a, b) => a + b, 0)
+      : 0
+  }
+
   $: results = Object.entries(competitors)
+    .filter(([competitor]) => {
+      const qualisIds = qualisCompetitors.map(({ id }) => id)
+      return qualisIds.includes(competitor)
+    })
     .map(([id, competitor]) => {
       const problems = Object.fromEntries(getTallies(id).map((tally) => [
         tally.problem,
@@ -51,10 +85,20 @@
         bib: competitor.bib,
         name: competitor.name,
         problems,
+        tops: countTops(problems),
+        zones: countZones(problems),
+        topAttempts: countTopAttempts(problems),
+        zoneAttempts: countZoneAttempts(problems),
       }
     })
     .sort((a, b) => b.score - a.score)
+    .sort((a, b) => a.zoneAttempts - b.zoneAttempts)
+    .sort((a, b) => a.topAttempts - b.topAttempts)
+    .sort((a, b) => b.zones - a.zones)
+    .sort((a, b) => b.tops - a.tops)
+
   $: rankShown = settings[$page.params.category]?.completed
+
 
   const getTallies = (competitorId) =>
     relationships
@@ -68,17 +112,17 @@
   const problemIcon = (attempts: string) => {
     if (!attempts) return
     switch (true) {
-      case attempts.includes('a'):
-        return attemptIcon
-      case attempts.includes('z'):
-        return zoneIcon
       case attempts.includes('T'):
         return topIcon
+      case attempts.includes('z'):
+        return zoneIcon
+      default:
+        return attemptIcon
     }
   }
 </script>
 
-<div class="flex flex-col gap-5 bg-rockamanila-bg min-h-screen items-center p-5">
+<div class="flex flex-col gap-5 bg-rockamanila-bg min-h-screen items-center p-5 pb-20">
   <div class="max-w-sm flex flex-col gap-3">
     <img src="/images/rocka-manila-logo.png" alt="Rocka Manila" />
     <img src="/images/finals.svg" alt="Qualis" />
@@ -110,15 +154,23 @@
         <div class="w-16">{result.bib}</div>
         <div class="flex-1">{result.name}</div>
         <div
-          class="text-rockamanila-magenta flex gap-2"
+          class="text-rockamanila-magenta flex gap-2 flex-col lg:flex-row"
         >
-          {#each Array(4).keys() as problem}
-            {#if problemIcon(result.problems?.[problem]?.attempts)}
-              <img src={problemIcon(result.problems?.[problem]?.attempts)} alt={String(problem)} class="h-10" />
-            {:else}
-              <img src={problemIcon('a')} alt={String(problem)} class="opacity-10 h-10" />
-            {/if}
-          {/each}
+          <div class="flex gap-2">
+            {#each Array(4).keys() as problem}
+              {#if problemIcon(result.problems?.[problem + 1]?.attempts)}
+                <img src={problemIcon(result.problems?.[problem + 1]?.attempts)} alt={String(problem + 1)} class="h-10" />
+              {:else}
+                <img src={problemIcon('a')} alt={String(problem + 1)} class="opacity-10 h-10" />
+              {/if}
+            {/each}
+          </div>
+          <div class="flex gap-2 px-10">
+            <div>T{result.tops}</div>
+            <div>z{result.zones}</div>
+            <div>Ta{result.topAttempts}</div>
+            <div>za{result.zoneAttempts}</div>
+          </div>
         </div>
       </div>
     {/each}

@@ -24,7 +24,7 @@
       store.addTableListener('competitors', () => {
         competitors = store.getTable('competitors')
       }),
-      store.addTableListener('finals_tally', () => {
+      store.addTableListener('qualis_tally', () => {
         qualisTallies = store.getTable('qualis_tally')
       }),
     ]
@@ -35,7 +35,7 @@
 
   $: qualisCompetitors = Object.entries(competitors)
     .map(([id, competitor]) => {
-      const tallies = getTallies(id)
+      const tallies = getQualisTallies(id)
       return {
         id,
         bib: competitor.bib,
@@ -47,7 +47,7 @@
     .slice(0, finalsCutoff)
     .sort((a, b) => a.score - b.score)
 
-  const getTallies = (competitorId) => relationships
+  const getQualisTallies = (competitorId) => relationships
     .getLocalRowIds('qualis_competitors', competitorId)
     .map((tallyId) => qualisTallies[tallyId])
 

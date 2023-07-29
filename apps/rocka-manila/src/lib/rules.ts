@@ -12,4 +12,24 @@ export const qualisScore = (tally: any) => {
 
 export const finalsCutoff = 6
 
+export const countTops = (problems) => {
+  return Object.values(problems).filter((problem) => problem.attempts.includes('T')).length
+}
+
+export const countTopAttempts = (problems) => {
+  return Object.values(problems)
+    .map((problem) => problem.attempts.indexOf('T') + 1)
+    .reduce((prev, curr) => prev + curr, 0)
+}
+
+export const countZones = (problems) => {
+  return Object.values(problems).filter((problem) => problem.attempts.includes('z')).length
+}
+
+export const countZoneAttempts = (problems) => {
+  return Object.values(problems)
+    .map((problem) => problem.attempts.indexOf('z') + 1)
+    .reduce((prev, curr) => prev + curr, 0)
+}
+
 export const podiumCutoff = 3
