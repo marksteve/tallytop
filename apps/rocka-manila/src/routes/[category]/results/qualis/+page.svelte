@@ -50,7 +50,7 @@
       }
     })
     .sort((a, b) => b.score - a.score)
-  $: rankShown = settings[$page.params.category]?.completed
+  $: rankShown = settings[`${$page.params.category}:qualis`]?.completed
 
   const getTallies = (competitorId) =>
     relationships
