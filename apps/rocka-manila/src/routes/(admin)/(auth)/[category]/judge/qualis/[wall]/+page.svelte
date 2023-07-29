@@ -84,17 +84,19 @@
     </Column>
     {#if selectedCompetitor}
       <Column lg={4}>
-        <h2>
-          {selectedCompetitor.bib}: {selectedCompetitor.name} ({competitorTallies.filter(
-            (tally) => tally.top
-          ).length}/5)
-        </h2>
-        <br />
-        <TileGroup legend="Select a problem" on:select={selectProblem} selected={selectedProblem}>
-          {#each problems as problem}
-            <RadioTile value={problem} light={tops[problem]}>{problem}</RadioTile>
-          {/each}
-        </TileGroup>
+        <div class="sticky top-10">
+          <h2>
+            {selectedCompetitor.bib}: {selectedCompetitor.name} ({competitorTallies.filter(
+              (tally) => tally.top
+            ).length}/5)
+          </h2>
+          <br />
+          <TileGroup legend="Select a problem" on:select={selectProblem} selected={selectedProblem}>
+            {#each problems as problem}
+              <RadioTile value={problem} light={tops[problem]}>{problem}</RadioTile>
+            {/each}
+          </TileGroup>
+        </div>
       </Column>
     {/if}
     {#if selectedProblem}
