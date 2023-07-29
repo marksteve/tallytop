@@ -115,13 +115,15 @@
           <div class="w-1/3">{result.score}</div>
           <div class="flex gap-1 items-center flex-wrap">
             {#each result.problems as problem}
-              <div
-                class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center"
-                class:opacity-20={!problem.counted}
-                title={problem.score}
-              >
-                {problem.name}
-              </div>
+              {#if problem.score}
+                <div
+                  class="text-sm rounded-full bg-rockamanila-green text-rockamanila-bg w-5 text-center"
+                  class:opacity-20={!problem.counted}
+                  title={problem.score}
+                >
+                  {problem.name}
+                </div>
+              {/if}
             {/each}
           </div>
         </div>
