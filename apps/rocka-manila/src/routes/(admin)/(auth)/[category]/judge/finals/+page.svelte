@@ -1,16 +1,22 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { stores, listTable } from '$lib/tinybase'
+  import { finalsCutoff, qualisProblemsCutoff, qualisScore } from '$lib/rules'
+  import { listTable, stores } from '$lib/tinybase'
   import { Column, Grid, RadioTile, Row, TileGroup } from 'carbon-components-svelte'
   import { onDestroy, onMount } from 'svelte'
   import Tally from './tally.svelte'
+    import { synced } from '$lib/stores'
 
-  const { store } = $stores[$page.params.category]
+  const { store, relationships } = $stores[$page.params.category]
 
   const problems = $page.data.problems[$page.params.category].map(String)
 
-  let competitors = store.getTable('competitors')
-  let tallies = store.getTable('finals_tally')
+  let competitors = {}
+  let qualisTallies = {}
+  $: if ($synced) {
+    competitors = store.getTable('competitors')
+    qualisTallies = store.getTable('qualis_tally')
+  }
 
   let listeners: string[]
   onMount(() => {
@@ -19,13 +25,42 @@
         competitors = store.getTable('competitors')
       }),
       store.addTableListener('finals_tally', () => {
-        tallies = store.getTable('finals_tally')
+        qualisTallies = store.getTable('qualis_tally')
       }),
     ]
   })
   onDestroy(() => {
     listeners.forEach((listenerId) => store.delListener(listenerId))
   })
+
+  $: qualisCompetitors = Object.entries(competitors)
+    .map(([id, competitor]) => {
+      const tallies = getTallies(id)
+      return {
+        id,
+        bib: competitor.bib,
+        name: competitor.name,
+        score: getQualisScore(tallies),
+      }
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, finalsCutoff)
+    .sort((a, b) => a.score - b.score)
+
+  const getTallies = (competitorId) => relationships
+    .getLocalRowIds('qualis_competitors', competitorId)
+    .map((tallyId) => qualisTallies[tallyId])
+
+  const getQualisScore = (tallies) => {
+    console.log(tallies)
+    return tallies
+      ? tallies
+        .sort((a, b) => qualisScore(b) - qualisScore(a))
+        .slice(0, qualisProblemsCutoff)
+        .map((tally) => qualisScore(tally))
+        .reduce((a, b) => a + b, 0)
+      : 0
+  }
 
   let selectedProblem: any
   let selectedCompetitor: any
@@ -65,7 +100,7 @@
         </h2>
         <br />
         <TileGroup legend="Select a competitor" on:select={selectCompetitor}>
-          {#each listTable(competitors) as competitor}
+          {#each listTable(qualisCompetitors) as competitor}
             <RadioTile value={competitor}>
               {competitor.bib}: {competitor.name}
             </RadioTile>
