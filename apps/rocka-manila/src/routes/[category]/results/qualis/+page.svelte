@@ -105,7 +105,7 @@
       <img src="/images/line.svg" alt="Line" />
       <div
         class="flex text-rockamanila-green text-2xl p-2 gap-1 my-1 rounded-lg"
-        class:bg-rockamanila-orange={rankShown && i < finalsCutoff}
+        class:bg-rockamanila-orange={rankShown && i < finalsCutoff[$page.params.category]}
       >
         <div class="w-16">{result.bib}</div>
         <div class="flex-1">{result.name}</div>

@@ -53,7 +53,7 @@
       }
     })
     .sort((a, b) => b.qualisScore - a.qualisScore)
-    .slice(0, finalsCutoff)
+    .slice(0, finalsCutoff[$page.params.category])
 
   const getQualisTallies = (competitorId) => relationships
     .getLocalRowIds('qualis_competitors', competitorId)

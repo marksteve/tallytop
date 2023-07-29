@@ -44,7 +44,7 @@
       }
     })
     .sort((a, b) => b.score - a.score)
-    .slice(0, finalsCutoff)
+    .slice(0, finalsCutoff[$page.params.category])
     .sort((a, b) => a.score - b.score)
 
   const getQualisTallies = (competitorId) => relationships

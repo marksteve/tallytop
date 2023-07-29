@@ -10,7 +10,12 @@ export const qualisScore = (tally: any) => {
   )
 }
 
-export const finalsCutoff = 6
+export const finalsCutoff = {
+  novice_men: 7,
+  novice_women: 6,
+  inter_men: 6,
+  inter_women: 6,
+}
 
 export const countTops = (problems) => {
   return Object.values(problems).filter((problem) => problem.attempts.includes('T')).length
