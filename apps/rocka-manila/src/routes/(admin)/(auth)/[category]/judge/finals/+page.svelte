@@ -52,7 +52,6 @@
     .map((tallyId) => qualisTallies[tallyId])
 
   const getQualisScore = (tallies) => {
-    console.log(tallies)
     return tallies
       ? tallies
         .sort((a, b) => qualisScore(b) - qualisScore(a))
