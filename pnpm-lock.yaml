@@ -383,6 +383,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.45.0
         version: 5.45.0(eslint@8.28.0)(typescript@5.0.2)
+      autoprefixer:
+        specifier: ^10.4.13
+        version: 10.4.13(postcss@8.4.24)
       eslint:
         specifier: ^8.28.0
         version: 8.28.0
@@ -392,6 +395,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^2.30.0
         version: 2.30.0(eslint@8.28.0)(svelte@4.0.5)
+      postcss:
+        specifier: ^8.4.20
+        version: 8.4.24
       prettier:
         specifier: ^2.8.0
         version: 2.8.8
@@ -404,6 +410,9 @@ importers:
       svelte-check:
         specifier: ^3.4.3
         version: 3.4.3(postcss@8.4.24)(svelte@4.0.5)
+      tailwindcss:
+        specifier: ^3.2.4
+        version: 3.2.4(postcss@8.4.24)
       tslib:
         specifier: ^2.4.1
         version: 2.4.1
