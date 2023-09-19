@@ -8,11 +8,11 @@
   import Repeat from 'phosphor-svelte/lib/Repeat'
   import { tick, onMount } from 'svelte'
 
-  let sound
+  let sound: import('@pixi/sound').SoundLibrary
   onMount(async () => {
     sound = (await import('@pixi/sound')).sound
-    sound.add('ooh-wee', '/sounds/ooh-wee.mp3')
-    sound.add('can-i-get', '/sounds/can-i-get.mp3')
+    sound.add('beep', '/sounds/beep.mp3')
+    sound.add('end', '/sounds/end.mp3')
   })
 
   let queueShown = false
@@ -35,7 +35,7 @@
     currentTimerDescription?.select()
   }
 
-  let timer
+  let timer: Timer
 
   const setNextTimer = async () => {
     $currentTimer++
@@ -60,68 +60,83 @@
     repeat = !repeat
   }
 
+  let running = false
+
   const handleStart = () => {
-    sound.play('ooh-wee')
+    running = true
+    sound.play('beep')
+  }
+
+  const handleStop = () => {
+    running = false
   }
 
   const handleBeep = (e: CustomEvent<{ seconds: number }>) => {
     if (e.detail.seconds === 60) {
-      sound.play('ooh-wee')
+      sound.play('beep')
     }
-    if (e.detail.seconds === 5) {
-      sound.play('can-i-get')
+    if (e.detail.seconds <= 5) {
+      sound.play('beep')
     }
   }
 
   const handleEnd = () => {
+    running = false
+    sound.play('end')
     setNextTimer()
   }
 </script>
 
-<div class="flex min-h-screen flex-1 text-rockamanila-green overflow-hidden bg-rockamanila-bg">
-  <div class="absolute top-5 left-2">
-    <Button variant="none" class="text-2xl" on:click={toggleQueue}>
-      <div class:opacity-20={!queueShown}>
-        <Queue />
-      </div>
-    </Button>
-  </div>
+<div class="flex min-h-screen flex-1 overflow-hidden">
+  {#if !running}
+    <div class="absolute top-5 left-2">
+      <Button variant="none" class="text-2xl" on:click={toggleQueue}>
+        <div class="flex gap-5 items-center" class:opacity-20={!queueShown}>
+          <Queue />
+          Edit timers
+        </div>
+      </Button>
+    </div>
+  {/if}
 
   {#if queueShown}
-    <div class="flex max-h-screen flex-col gap-2 overflow-y-auto bg-stone-50 p-5 pt-16 min-w-fit">
-      {#each $timerQueue as { description, duration }, i}
-        <div class="group flex items-center gap-5 px-5 leading-loose">
-          <button
-            class={`flex h-5 w-5 items-center justify-center rounded-full text-xs leading-none ${
-              i === $currentTimer
-                ? `bg-stone-400 text-stone-50`
-                : `text-stone-400 hover:bg-stone-200`
-            }`}
-            on:click={() => ($currentTimer = i)}
-          >
-            {i + 1}
-          </button>
-          <input
-            class="bg-transparent"
-            type="text"
-            value={description}
-            on:change={(e) => timerQueue.updateTimerDescription(i, e.target.value)}
-            bind:this={currentTimerDescription}
-          />
-          <input
-            class="w-20 bg-transparent font-mono"
-            type="text"
-            value={formatDuration(duration)}
-            on:change={(e) => timerQueue.updateTimerDuration(i, e.target.value)}
-          />
-          <button
-            class="opacity-0 group-hover:opacity-100"
-            on:click={() => timerQueue.removeTimer(i)}
-          >
-            <Backspace />
-          </button>
-        </div>
-      {/each}
+    <div class="max-h-screen overflow-y-auto bg-stone-50 p-5 pt-14 min-w-fit">
+      <div class="flex flex-col gap-2 py-5">
+        {#each $timerQueue as { description, duration }, i}
+          <div class="group flex items-center gap-5 px-5 leading-loose">
+            <button
+              class={`flex h-5 w-5 items-center justify-center rounded-full text-xs leading-none ${
+                i === $currentTimer
+                  ? `bg-stone-400 text-stone-50`
+                  : `text-stone-400 hover:bg-stone-200`
+              }`}
+              on:click={() => ($currentTimer = i)}
+            >
+              {i + 1}
+            </button>
+            <input
+              class="bg-transparent"
+              type="text"
+              value={description}
+              placeholder="Enter description"
+              on:change={(e) => timerQueue.updateTimerDescription(i, e.target.value)}
+              bind:this={currentTimerDescription}
+            />
+            <input
+              class="w-20 bg-transparent tabular-nums"
+              type="text"
+              value={formatDuration(duration)}
+              on:change={(e) => timerQueue.updateTimerDuration(i, e.target.value)}
+            />
+            <button
+              class="opacity-0 group-hover:opacity-100"
+              on:click={() => timerQueue.removeTimer(i)}
+            >
+              <Backspace />
+            </button>
+          </div>
+        {/each}
+      </div>
       <div class="flex gap-5">
         <Button class="flex flex-1 items-center justify-center gap-2" on:click={handleNewTimer}>
           <Plus /> New timer
@@ -147,25 +162,10 @@
         timerQueue.updateTimerDuration($currentTimer, duration)
       }}
       on:start={handleStart}
+      on:stop={handleStop}
       on:beep={handleBeep}
       on:end={handleEnd}
-    >
-      <svelte:fragment slot="start" let:start>
-        <button on:click={() => start()} class="active:scale-95">
-          <img alt="Start" src="/images/play.png" class="scale-75" />
-        </button>
-      </svelte:fragment>
-      <svelte:fragment slot="stop" let:stop>
-        <button on:click={() => stop()} class="active:scale-95">
-          <img alt="Stop" src="/images/stop.png" class="scale-75" />
-        </button>
-      </svelte:fragment>
-      <svelte:fragment slot="reset" let:reset>
-        <button on:click={() => reset()} class="active:scale-95">
-          <img alt="Reset" src="/images/reset.png" class="scale-75" />
-        </button>
-      </svelte:fragment>
-    </Timer>
+    />
     <div class="text-2xl">{description}</div>
   </div>
 </div>
