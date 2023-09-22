@@ -1,4 +1,7 @@
-import { getSupabase, type TypedSupabaseClient } from '@supabase/auth-helpers-sveltekit'
+import {
+  getSupabase,
+  type TypedSupabaseClient,
+} from '@supabase/auth-helpers-sveltekit'
 import { redirect } from '@sveltejs/kit'
 import type { Actions } from './$types'
 
@@ -12,7 +15,7 @@ const record = async (
   supabaseClient: TypedSupabaseClient,
   team: string,
   problem: string,
-  type: 'top' | 'flash' | null
+  type: 'top' | 'flash' | null,
 ) => {
   if (type === null) {
     const { error } = await supabaseClient

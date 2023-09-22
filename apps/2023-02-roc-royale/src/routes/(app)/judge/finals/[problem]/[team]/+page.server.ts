@@ -1,4 +1,7 @@
-import { getSupabase, type TypedSupabaseClient } from '@supabase/auth-helpers-sveltekit'
+import {
+  getSupabase,
+  type TypedSupabaseClient,
+} from '@supabase/auth-helpers-sveltekit'
 import type { Actions } from './$types'
 
 export const actions = {

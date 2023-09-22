@@ -31,13 +31,13 @@ const initStore = () => {
     'qualis_competitors',
     'qualis_tally',
     'competitors',
-    'competitor'
+    'competitor',
   )
   relationships.setRelationshipDefinition(
     'finals_competitors',
     'finals_tally',
     'competitors',
-    'competitor'
+    'competitor',
   )
   const ydoc = new Y.Doc()
   const persister = createYjsPersister(store as Store, ydoc)
@@ -47,7 +47,9 @@ const initStore = () => {
 }
 
 export const stores = readable<Record<string, any>>(
-  Object.fromEntries(Object.keys(categories).map((category) => [category, initStore(category)]))
+  Object.fromEntries(
+    Object.keys(categories).map((category) => [category, initStore(category)]),
+  ),
 )
 
 export const listTable = (table: any) =>

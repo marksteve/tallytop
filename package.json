@@ -10,10 +10,18 @@
     "@tallytop/eslint-config-custom": "workspace:*",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.45.0",
-    "prettier": "^2.8.8",
-    "prettier-plugin-svelte": "^2.10.1",
-    "prettier-plugin-tailwindcss": "latest",
+    "prettier": "^3.0.3",
+    "prettier-plugin-svelte": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.4",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.15.0"
+  "packageManager": "pnpm@7.15.0",
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "plugins": [
+      "prettier-plugin-svelte",
+      "prettier-plugin-tailwindcss"
+    ]
+  }
 }

@@ -5,8 +5,10 @@ export const qualisScore = (tally: any) => {
   return Math.max(
     0,
     tally.top
-      ? parseFloat(tally.problem) + (flash ? 2 : 0) - (flash ? 0 : tally.attempts - 1) * 0.2
-      : 0
+      ? parseFloat(tally.problem) +
+          (flash ? 2 : 0) -
+          (flash ? 0 : tally.attempts - 1) * 0.2
+      : 0,
   )
 }
 
@@ -18,7 +20,9 @@ export const finalsCutoff = {
 }
 
 export const countTops = (problems) => {
-  return Object.values(problems).filter((problem) => problem.attempts.includes('T')).length
+  return Object.values(problems).filter((problem) =>
+    problem.attempts.includes('T'),
+  ).length
 }
 
 export const countTopAttempts = (problems) => {
@@ -28,7 +32,10 @@ export const countTopAttempts = (problems) => {
 }
 
 export const countZones = (problems) => {
-  return Object.values(problems).filter((problem) => problem.attempts.includes('z') || problem.attempts.includes('T')).length
+  return Object.values(problems).filter(
+    (problem) =>
+      problem.attempts.includes('z') || problem.attempts.includes('T'),
+  ).length
 }
 
 export const countZoneAttempts = (problems) => {

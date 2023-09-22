@@ -3,7 +3,7 @@ import { parseDuration } from '@tallytop/ui'
 
 export const timerQueue = (() => {
   const { update, ...store } = writable(
-    [{ description: 'Climb', duration: 4 * 60 * 1000 }]
+    [{ description: 'Climb', duration: 4 * 60 * 1000 }],
     // Array(40)
     //   .fill([
     //     {
@@ -21,7 +21,10 @@ export const timerQueue = (() => {
   return {
     ...store,
     newTimer() {
-      update((value) => [...value, { description: 'Enter description', duration: 60 * 1000 }])
+      update((value) => [
+        ...value,
+        { description: 'Enter description', duration: 60 * 1000 },
+      ])
     },
     updateTimerDescription(index: number, description: string) {
       update((value) => {
@@ -31,7 +34,8 @@ export const timerQueue = (() => {
     },
     updateTimerDuration(index: number, duration: string | number) {
       update((value) => {
-        value[index].duration = typeof duration === 'string' ? parseDuration(duration) : duration
+        value[index].duration =
+          typeof duration === 'string' ? parseDuration(duration) : duration
         return value
       })
     },
