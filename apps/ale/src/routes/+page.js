@@ -41,7 +41,7 @@ const parseScores = (scores) => {
   return parsed
 }
 
-export function load({ params }) {
+export function load() {
   const novice = parseScores(noviceData)
   const inter = parseScores(interData)
   const open = parseScores(openData)

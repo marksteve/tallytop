@@ -4,7 +4,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
+      "outputs": [".svelte-kit/**", "build/**"]
     },
     "lint": {},
     "dev": {

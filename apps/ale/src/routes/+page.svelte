@@ -1,4 +1,5 @@
 <script>
+  /* eslint @typescript-eslint/no-unused-vars: 0 */
   /** @type {import('./$types').PageData} */
   export let data
 </script>
