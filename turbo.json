@@ -1,15 +1,16 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
     },
-    "lint": {
-      "outputs": []
-    },
+    "lint": {},
     "dev": {
-      "cache": false
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
     },
     "start": {}
   }
