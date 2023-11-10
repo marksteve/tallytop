@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'neue-montreal';
+  src:
+    url('/fonts/neuemontreal-regular-webfont.woff2') format('woff2'),
+    url('/fonts/neuemontreal-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'migra-italic';
+  src:
+    url('/fonts/migraitalic-extralightitalic-webfont.woff2') format('woff2'),
+    url('/fonts/migraitalic-extralightitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
