@@ -1,8 +1,11 @@
 <script>
+  import Playground from '$lib/components/playground.svelte'
   import Star from '$lib/components/star.svelte'
 </script>
 
-<main class="flex h-screen w-screen items-center justify-center">
+<Playground />
+
+<main class="relative flex h-screen w-screen items-center justify-center">
   <div
     class="text-brand-red border-brand-red rounded-tl-full rounded-tr-full border p-10 text-center"
   >
