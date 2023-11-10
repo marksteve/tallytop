@@ -12,9 +12,10 @@ module.exports = {
       },
       colors: {
         brand: {
-          peach: '#fff5eb',
-          green: '#00b06b',
-          red: '#ce323a',
+          peach: '#fef6ec',
+          yellow: '#e8aa3e',
+          green: '#07ae71',
+          red: '#ca3f43',
         },
       },
     },
