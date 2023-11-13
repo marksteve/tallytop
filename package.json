@@ -18,8 +18,9 @@
   },
   "packageManager": "pnpm@8.6.3",
   "prettier": {
-    "singleQuote": true,
+    "htmlWhitespaceSensitivity": "ignore",
     "semi": false,
+    "singleQuote": true,
     "plugins": [
       "prettier-plugin-svelte",
       "prettier-plugin-tailwindcss"

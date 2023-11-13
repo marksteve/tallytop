@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Playground from '$lib/components/playground.svelte'
   import Star from '$lib/components/star.svelte'
 </script>
