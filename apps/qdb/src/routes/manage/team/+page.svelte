@@ -59,7 +59,10 @@
 </script>
 
 <div class="grid grid-cols-3 items-start gap-5 p-5">
-  <h1 class="text-brand-red col-span-3 font-serif text-6xl">Manage Teams</h1>
+  <h1 class="text-brand-red col-span-3 font-serif text-6xl">
+    <img src="/images/logo.png" alt="Logo" class="inline-block w-24 align-middle" />
+    Manage Teams
+  </h1>
   <div class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5">
     {#if teams.length === 0}
       <div class="p-10 text-center">
