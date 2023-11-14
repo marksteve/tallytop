@@ -1,6 +1,7 @@
 <script lang="ts">
   import Button from '$lib/components/button.svelte'
   import Input from '$lib/components/input.svelte'
+  import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
   import { listTeams, type Team } from '$reflect/team'
   import { nanoid } from 'nanoid'
@@ -14,12 +15,6 @@
       teams = data
     },
   )
-
-  const categories = {
-    mens: '👨',
-    womens: '👩',
-    youth: '🧒',
-  }
 
   const Category = z.enum(['mens', 'womens', 'youth'])
 
@@ -46,6 +41,7 @@
       return
     }
     const members: Team['members'] = ([1, 2, 3] as const).map((i) => ({
+      id: nanoid(),
       name: teamForm[`member_name_${i}`],
       category: teamForm[`member_category_${i}`],
     }))
@@ -60,7 +56,11 @@
 
 <div class="grid grid-cols-3 items-start gap-5 p-5">
   <h1 class="text-brand-red col-span-3 font-serif text-6xl">
-    <img src="/images/logo.png" alt="Logo" class="inline-block w-24 align-middle" />
+    <img
+      src="/images/logo.png"
+      alt="Logo"
+      class="inline-block w-24 align-middle"
+    />
     Manage Teams
   </h1>
   <div class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5">
@@ -76,7 +76,7 @@
         <h2 class="col-span-2 text-3xl">#{team.order} {team.name}</h2>
         {#each team.members as member}
           <div class="flex items-center gap-5">
-            <div class="text-3xl">{categories[member.category]}</div>
+            <div class="text-3xl">{labels.categories[member.category]}</div>
             {member.name}
           </div>
         {/each}
@@ -100,18 +100,16 @@
     {#each [1, 2, 3] as i}
       <div class="accent-brand-green flex items-center gap-5">
         <Input name={`member_name_${i}`} placeholder="Member Name" />
-        <label class="text-3xl">
-          <input type="radio" name={`member_category_${i}`} value="mens" />
-          👨
-        </label>
-        <label class="text-3xl">
-          <input type="radio" name={`member_category_${i}`} value="womens" />
-          👩
-        </label>
-        <label class="text-3xl">
-          <input type="radio" name={`member_category_${i}`} value="youth" />
-          🧒
-        </label>
+        {#each Object.entries(labels.categories) as [category, label]}
+          <label class="text-3xl">
+            <input
+              type="radio"
+              name={`member_category_${i}`}
+              value={category}
+            />
+            {label}
+          </label>
+        {/each}
       </div>
     {/each}
     <Button type="submit" class="self-start">Add team</Button>

@@ -1,6 +1,7 @@
 import { generate } from '@rocicorp/rails'
 
 export type Member = {
+  id: string
   name: string
   category: 'mens' | 'womens' | 'youth'
 }
