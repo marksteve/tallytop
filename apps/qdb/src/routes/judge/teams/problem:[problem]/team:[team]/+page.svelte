@@ -6,7 +6,6 @@
   import { getTeam, type Team } from '$reflect/team'
   import { Splide, SplideSlide } from '@splidejs/svelte-splide'
   import type { SplideEvents } from '@splidejs/svelte-splide/components/Splide/Splide.svelte'
-  import '@splidejs/svelte-splide/css'
 
   let team: Team | undefined
   $: members = team?.members ?? []
@@ -32,17 +31,17 @@
   <Splide
     class="w-full"
     options={{
-      arrows: false,
-      pagination: false,
+      direction: 'ttb',
       gap: 20,
       heightRatio: 1,
+      pagination: false,
     }}
     on:active={selectMember}
   >
     {#each members as member}
       <SplideSlide>
         <div
-          class="text-brand-red flex h-full flex-col items-center justify-center rounded-tl-full rounded-tr-full border border-current"
+          class="text-brand-red flex h-full flex-col items-center justify-center rounded-full border border-current"
         >
           <div class="font-serif text-3xl">
             {labels.categories[member.category]}

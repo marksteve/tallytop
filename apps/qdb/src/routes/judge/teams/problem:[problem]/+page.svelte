@@ -5,7 +5,6 @@
   import { listTeams, type Team } from '$reflect/team'
   import { Splide, SplideSlide } from '@splidejs/svelte-splide'
   import type { SplideEvents } from '@splidejs/svelte-splide/components/Splide/Splide.svelte'
-  import '@splidejs/svelte-splide/css'
 
   let teams: Team[] = []
 
@@ -30,17 +29,17 @@
   <Splide
     class="w-full"
     options={{
-      arrows: false,
-      pagination: false,
+      direction: 'ttb',
       gap: 20,
       heightRatio: 1,
+      pagination: false,
     }}
     on:active={selectTeam}
   >
     {#each teams as team}
       <SplideSlide>
         <div
-          class="text-brand-red flex h-full flex-col items-center justify-center rounded-tl-full rounded-tr-full border border-current"
+          class="text-brand-red flex h-full flex-col items-center justify-center rounded-full border border-current"
         >
           <div class="font-serif text-3xl">Team</div>
           <div class="text-6xl">{team.name}</div>
