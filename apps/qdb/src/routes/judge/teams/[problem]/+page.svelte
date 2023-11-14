@@ -1,15 +1,26 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import Button from '$lib/components/button.svelte'
+  import { r } from '$lib/reflect'
+  import { listTeams, type Team } from '$reflect/team'
   import { Splide, SplideSlide } from '@splidejs/svelte-splide'
   import type { SplideEvents } from '@splidejs/svelte-splide/components/Splide/Splide.svelte'
   import '@splidejs/svelte-splide/css'
 
-  const problems = [...Array(6).keys()].map((i) => i + 1)
+  let teams: Team[] = []
 
-  let selectedProblem = 1
+  r.subscribe(
+    (tx) => listTeams(tx),
+    (data) => {
+      teams = data
+    },
+  )
 
-  const selectProblem = (e: SplideEvents['active']) => {
-    selectedProblem = problems[e.detail.Slide.index]
+  let selectedTeam: Team
+  $: selectedTeam = teams[0]
+
+  const selectTeam = (e: SplideEvents['active']) => {
+    selectedTeam = teams[e.detail.Slide.index]
   }
 </script>
 
@@ -24,20 +35,22 @@
       gap: 20,
       heightRatio: 1,
     }}
-    on:active={selectProblem}
+    on:active={selectTeam}
   >
-    {#each problems as problem}
+    {#each teams as team}
       <SplideSlide>
         <div
           class="text-brand-red flex h-full flex-col items-center justify-center rounded-tl-full rounded-tr-full border border-current"
         >
-          <div class="font-serif text-3xl">Problem</div>
-          <div class="text-9xl">{problem}</div>
+          <div class="font-serif text-3xl">Team</div>
+          <div class="text-6xl">{team.name}</div>
         </div>
       </SplideSlide>
     {/each}
   </Splide>
   <Button class="text-3xl">
-    <a href={`/judge/teams/${selectedProblem}`}>Go</a>
+    <a href={`/judge/teams/${$page.params.problem}/${selectedTeam?.id}`}>
+      Go
+    </a>
   </Button>
 </div>
