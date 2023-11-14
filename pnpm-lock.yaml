@@ -227,6 +227,9 @@ importers:
       '@rocicorp/reflect':
         specifier: ^0.37.202311060940
         version: 0.37.202311060940(react-dom@18.2.0)(react@18.2.0)
+      '@splidejs/svelte-splide':
+        specifier: ^0.2.9
+        version: 0.2.9
       matter-js:
         specifier: ^0.19.0
         version: 0.19.0
@@ -1794,6 +1797,16 @@ packages:
   /@sindresorhus/to-milliseconds@2.0.0:
     resolution: {integrity: sha512-Gkdb2ufaJjg+E2ThIo3MVIV8bqW4ytkSjr/aFE/4Cz1gUZidffhlqlbZGT1jURHB5V5wyMu3KMPz39BSJq/+CA==}
     engines: {node: '>=12'}
+
+  /@splidejs/splide@4.1.4:
+    resolution: {integrity: sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==}
+    dev: false
+
+  /@splidejs/svelte-splide@0.2.9:
+    resolution: {integrity: sha512-04ekJnDIJKEAhklKQMhkg4Yx0Ihtkk18eA9JeHPON0lDTngQxlOYdEYTJWH2UON45VxmVqoLHv04I++JphO36w==}
+    dependencies:
+      '@splidejs/splide': 4.1.4
+    dev: false
 
   /@supabase/auth-helpers-shared@0.2.4(@supabase/supabase-js@2.7.1):
     resolution: {integrity: sha512-c+hi3N6DhjPTzjXGOokre4gmMZOqt0f1ORrwZwi2s07pk3cbkmn77DwwVtlYMNi3oZNYRQqAfxJu83UzpJrrmg==}
