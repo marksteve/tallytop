@@ -73,7 +73,7 @@
     {/if}
     {#each teams as team}
       <div class="grid grid-cols-6 items-center gap-5">
-        <h2 class="col-span-2 text-3xl">#{team.order} {team.name}</h2>
+        <h2 class="col-span-2 text-3xl">#{team.number} {team.name}</h2>
         {#each team.members as member}
           <div class="flex items-center gap-5">
             <div class="text-3xl">{labels.categories[member.category]}</div>

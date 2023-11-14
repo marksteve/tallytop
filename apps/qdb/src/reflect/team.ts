@@ -10,7 +10,7 @@ export type Team = {
   id: string
   name: string
   members: Member[]
-  order: number
+  number: number
 }
 
 export const {
