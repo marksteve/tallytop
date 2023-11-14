@@ -2,9 +2,9 @@
   import Button from '$lib/components/button.svelte'
   import Input from '$lib/components/input.svelte'
   import { r } from '$lib/reflect'
+  import { listTeams, type Team } from '$reflect/team'
   import { nanoid } from 'nanoid'
   import { z } from 'zod'
-  import { listTeams, type Team } from '../../../reflect/team'
 
   let teams: Team[] = []
 
@@ -35,7 +35,8 @@
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault()
-    const data = new FormData(e.target as HTMLFormElement)
+    const form = e.target as HTMLFormElement
+    const data = new FormData(form)
     const teamForm = await TeamForm.parseAsync(
       Object.fromEntries(data.entries()),
     ).catch((err) => {
@@ -48,11 +49,12 @@
       name: teamForm[`member_name_${i}`],
       category: teamForm[`member_category_${i}`],
     }))
-    r.mutate.putTeam({
+    await r.mutate.createTeam({
       id: nanoid(),
       name: teamForm.team_name,
       members,
     })
+    form.reset()
   }
 </script>
 
@@ -67,8 +69,8 @@
       </div>
     {/if}
     {#each teams as team}
-      <div class="grid grid-cols-5 items-center gap-5">
-        <h2 class="text-3xl">{team.name}</h2>
+      <div class="grid grid-cols-6 items-center gap-5">
+        <h2 class="col-span-2 text-3xl">#{team.order} {team.name}</h2>
         {#each team.members as member}
           <div class="flex items-center gap-5">
             <div class="text-3xl">{categories[member.category]}</div>
@@ -90,6 +92,7 @@
     on:submit={handleSubmit}
     class="flex flex-col gap-5 rounded-3xl border bg-white p-5"
   >
+    <h2 class="text-3xl">New Team</h2>
     <Input name="team_name" placeholder="Team Name" />
     {#each [1, 2, 3] as i}
       <div class="accent-brand-green flex items-center gap-5">
