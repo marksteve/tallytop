@@ -46,7 +46,7 @@
           <div class="font-serif text-3xl">
             {labels.categories[member.category]}
           </div>
-          <div class="text-6xl">{member.name}</div>
+          <div class="text-center text-6xl">{member.name}</div>
         </div>
       </SplideSlide>
     {/each}
