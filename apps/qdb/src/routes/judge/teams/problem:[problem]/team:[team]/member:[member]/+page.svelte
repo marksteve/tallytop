@@ -19,7 +19,18 @@
     },
   )
 
+  let attemptsKey = ''
   let attempts = ''
+
+  $: if (team && member) {
+    attemptsKey = ['teams', problem, team.id, member.id].join('/')
+  }
+  $: r.subscribe(
+    (tx) => tx.get<string>(attemptsKey),
+    (data) => {
+      attempts = data ?? ''
+    },
+  )
 
   const attempt = () => {
     attempts = attempts + 'a'
@@ -53,6 +64,10 @@
     if (!team || !member) {
       return
     }
+    await r.mutate.putAttempts({
+      key: attemptsKey,
+      value: attempts,
+    })
   }
 </script>
 

@@ -1,4 +1,5 @@
 import { generate } from '@rocicorp/rails'
+import type { WriteTransaction } from '@rocicorp/reflect'
 
 export type Member = {
   id: string
@@ -20,3 +21,11 @@ export const {
   delete: deleteTeam,
   list: listTeams,
 } = generate<Team>('team')
+
+export const createTeam = async (
+  tx: WriteTransaction,
+  team: Omit<Team, 'number'>,
+) => {
+  const number = (await listTeams(tx)).length + 1
+  await putTeam(tx, { ...team, number })
+}
