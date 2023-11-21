@@ -9,6 +9,8 @@ module.exports = {
       fontFamily: {
         sans: ['neue-montreal', 'sans-serif'],
         serif: ['migra-italic', 'serif'],
+        tanker: ['Tanker', 'sans-serif'],
+        supreme: ['Supreme', 'sans-serif'],
       },
       colors: {
         brand: {

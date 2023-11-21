@@ -1,0 +1,5 @@
+@import url('https://api.fontshare.com/v2/css?f[]=supreme@400,700&f[]=tanker@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
