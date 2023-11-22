@@ -6,6 +6,7 @@
   import { r } from '$lib/reflect'
   import { button } from '$lib/variants'
   import { getTeam, listTeams, type Team } from '$reflect/team'
+  import { cva } from 'class-variance-authority'
   import { tick } from 'svelte'
 
   $: problem = $page.params.problem
@@ -100,6 +101,31 @@
     })
     isSaved = true
   }
+
+  let fullScore = false
+
+  const toggleFullScore = () => {
+    fullScore = !fullScore
+  }
+
+  const scoreModal = cva('p-4', {
+    variants: {
+      fullScore: {
+        true: [
+          'absolute',
+          'bg-white',
+          'flex',
+          'inset-0',
+          'items-center',
+          'justify-center',
+          'leading-none',
+          'text-[80vmin]',
+          'text-center',
+        ],
+        false: 'text-3xl',
+      },
+    },
+  })
 </script>
 
 {#if member}
@@ -114,7 +140,9 @@
           <img src={icons[attempt]} alt={attempt} />
         {/each}
       </div>
-      <div class="p-4 text-3xl">{attemptsToText(attempts)}</div>
+      <div class={scoreModal({ fullScore })} on:click={toggleFullScore}>
+        {attemptsToText(attempts)}
+      </div>
       <div class="grid grid-cols-2 gap-1">
         {#each Object.entries(labels.attempts) as [key, label]}
           <Button on:click={actions[key]}>{label}</Button>
