@@ -7,10 +7,10 @@
 <div class={list()}>
   {#each problems as problem}
     <a
-      href={`/judge/teams/problem:${problem}`}
+      href={`./teams/problem:${problem}`}
       class={listItem({ class: 'font-tanker text-3xl' })}
     >
-      Problem {problem}
+      problem {problem}
     </a>
   {/each}
 </div>
