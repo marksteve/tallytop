@@ -1,26 +1,41 @@
 <script lang="ts">
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
   import { list, listItem } from '$lib/variants'
-  import { listTeams, type Team } from '$reflect/team'
+  import {
+    listCompetitorsByCategory,
+    type Competitor,
+  } from '$reflect/competitor'
 
-  let teams: Team[] = []
+  let subscribers: Array<() => void> = []
+  let competitors: Competitor[] = []
 
-  r.subscribe(
-    (tx) => listTeams(tx),
-    (data) => {
-      teams = data
-    },
-  )
+  $: category = `open-${$page.params.category}`
+
+  beforeNavigate(() => {
+    subscribers.forEach((unsubscribe) => unsubscribe())
+  })
+
+  $: subscribers = [
+    ...subscribers,
+    r.subscribe(
+      (tx) => listCompetitorsByCategory(tx, category),
+      (data) => {
+        competitors = data
+      },
+    ),
+  ]
 </script>
 
 <div class={list()}>
-  {#each teams as team}
+  {#each competitors as competitor}
     <a
-      href={`./problem:${$page.params.problem}/team:${team.id}`}
-      class={listItem({ class: 'font-tanker text-3xl' })}
+      href={`./problem:${$page.params.problem}/competitor:${competitor.id}`}
+      class={listItem({ class: 'font-tanker flex gap-2 text-3xl' })}
     >
-      {team.name}
+      <span class="text-slate-400">#{competitor.number}</span>
+      {competitor.name}
     </a>
   {/each}
 </div>

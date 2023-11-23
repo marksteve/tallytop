@@ -24,9 +24,13 @@ export const createCompetitor = async (
   await putCompetitor(tx, { ...competitor, number })
 }
 
+const sortByNumber = (a: Competitor, b: Competitor) => a.number - b.number
+
 export const listCompetitorsByCategory = async (
   tx: ReadTransaction,
   category: Competitor['category'],
 ) => {
-  return (await listCompetitors(tx)).filter((c) => c.category === category)
+  return (await listCompetitors(tx))
+    .filter((c) => c.category === category)
+    .toSorted(sortByNumber)
 }
