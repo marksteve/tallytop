@@ -12,7 +12,7 @@
     qualis
   </a>
   <a
-    href={`./open-${$page.params.category}/qualis`}
+    href={`./open-${$page.params.category}/finals`}
     class={variants.listItem({ class: 'font-tanker text-3xl' })}
   >
     finals
