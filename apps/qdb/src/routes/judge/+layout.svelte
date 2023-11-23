@@ -3,6 +3,10 @@
   import '../../tallytop.css'
 </script>
 
+<svelte:head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+</svelte:head>
+
 <div
   class="absolute inset-0 grid min-h-screen grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
 >
