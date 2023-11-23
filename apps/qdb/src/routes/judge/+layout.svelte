@@ -25,7 +25,7 @@
     {#each $page.data.menu as item}
       <a
         href={`/${item.path.join('/')}`}
-        class="flex-1 border-t border-current p-2 text-center text-lg"
+        class="flex-1 whitespace-nowrap border-t border-current p-2 text-center text-lg"
       >
         {item.label}
       </a>
