@@ -120,12 +120,22 @@
         return bodies[n]([x, y], node)
       })
 
-    const ground = Bodies.rectangle(width / 2, height, width, 10, {
-      isStatic: true,
-      render: { visible: false },
-    })
+    const ground = [
+      Bodies.rectangle(width / 2, height, width, 10, {
+        isStatic: true,
+        render: { visible: false },
+      }),
+      Bodies.rectangle(0, 0, 10, height * 2, {
+        isStatic: true,
+        render: { visible: false },
+      }),
+      Bodies.rectangle(width, 0, 10, height * 2, {
+        isStatic: true,
+        render: { visible: false },
+      }),
+    ]
 
-    Composite.add(engine.world, [...holds, ground])
+    Composite.add(engine.world, [...holds, ...ground])
 
     Render.run(render)
 

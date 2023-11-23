@@ -7,11 +7,15 @@
 
 <main class="relative flex h-screen w-screen items-center justify-center">
   <div
-    class="text-brand-red border-brand-red rounded-tl-full rounded-tr-full border p-10 text-center"
+    class="text-brand-red border-brand-red bg-brand-peach/90 rounded-tl-full rounded-tr-full border p-10 text-center"
   >
-    <div class="text-6xl">2023</div>
-    <div class="font-serif text-8xl">Queso de<br />Boulder</div>
-    <div class="py-5 text-6xl">
+    <div class="text-4xl md:text-6xl">2023</div>
+    <div class="font-serif text-6xl md:text-8xl">
+      Queso de
+      <br />
+      Boulder
+    </div>
+    <div class="py-5 text-4xl md:text-6xl">
       <Star />
       a bhive
       <Star />
