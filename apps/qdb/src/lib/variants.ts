@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
-export const list = cva(['grid', '[grid-auto-rows:20vh]'])
+export const list = cva(['grid', '[grid-auto-rows:20vh]', 'h-full'])
 
 export const listItem = cva([
   'bg-white',

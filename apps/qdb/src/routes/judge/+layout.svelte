@@ -4,9 +4,9 @@
 </script>
 
 <div
-  class="grid min-h-screen grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
+  class="absolute inset-0 grid min-h-screen grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
 >
-  <div class="font-tanker sticky top-0 flex flex-wrap bg-white shadow-lg">
+  <div class="font-tanker z-10 flex flex-wrap bg-white shadow-lg">
     <div class="w-full p-2 text-center text-lg">tallytop</div>
     {#each $page.data.menu as item}
       <a
@@ -17,5 +17,7 @@
       </a>
     {/each}
   </div>
-  <slot />
+  <div class="overflow-y-auto">
+    <slot />
+  </div>
 </div>
