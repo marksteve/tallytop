@@ -28,7 +28,7 @@
   "type": "module",
   "dependencies": {
     "@rocicorp/rails": "^0.8.0",
-    "@rocicorp/reflect": "^0.37.202311060940",
+    "@rocicorp/reflect": "^0.38.202311200859",
     "@splidejs/svelte-splide": "^0.2.9",
     "class-variance-authority": "^0.7.0",
     "matter-js": "^0.19.0",

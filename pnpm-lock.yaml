@@ -225,8 +225,8 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0(react-dom@18.2.0)(react@18.2.0)
       '@rocicorp/reflect':
-        specifier: ^0.37.202311060940
-        version: 0.37.202311060940(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^0.38.202311200859
+        version: 0.38.202311200859(react-dom@18.2.0)(react@18.2.0)
       '@splidejs/svelte-splide':
         specifier: ^0.2.9
         version: 0.2.9
@@ -1765,8 +1765,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@rocicorp/reflect@0.37.202311060940(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-oX7/SErPaJXKxBqxaGqX9PdTVlTIzQGzqBCALon0vcjBiLmLk4ofWKEBH+cZ8I8TKCoqfoytr1yJJXBnMODPqg==}
+  /@rocicorp/reflect@0.38.202311200859(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-5p5l/7RIBdLtjyMkJXkvmN2Oh35xxEAA0ZGtbpwMS9HUOWzhXj9pukETMcLlOXQEi3UH6qJYALpNFGlJ2ynG0Q==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
