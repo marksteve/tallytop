@@ -43,7 +43,7 @@ export const scoreModal = cva('p-4', {
         'items-center',
         'justify-center',
         'leading-none',
-        'text-[80vmin]',
+        'text-[60vmin]',
         'text-center',
         'z-50',
       ],

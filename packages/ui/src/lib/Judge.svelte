@@ -61,10 +61,10 @@
   <div class={scoreModal({ fullScore })} on:click={toggleFullScore}>
     {attemptsToText($attempts)}
   </div>
-  <div class="grid grid-cols-2 gap-1">
+  <div class="grid grid-cols-3 gap-x-1 gap-y-4">
     {#each Object.entries(labels) as [key, label]}
-      <Button on:click={actions[key]}>{label}</Button>
+      <Button on:click={actions[key]} class="text-3xl">{label}</Button>
     {/each}
-    <Button on:click={erase}>Erase</Button>
+    <Button on:click={erase} class="col-start-2">Erase</Button>
   </div>
 </div>
