@@ -31,3 +31,23 @@ export const button = cva(['bg-slate-200', 'p-2', 'text-center'], {
 })
 
 export type ButtonProps = VariantProps<typeof button>
+
+export const scoreModal = cva('p-4', {
+  variants: {
+    fullScore: {
+      true: [
+        'absolute',
+        'bg-white',
+        'flex',
+        'inset-0',
+        'items-center',
+        'justify-center',
+        'leading-none',
+        'text-[80vmin]',
+        'text-center',
+        'z-50',
+      ],
+      false: 'text-3xl',
+    },
+  },
+})

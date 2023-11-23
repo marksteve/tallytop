@@ -4,13 +4,12 @@
   import Button from '$lib/components/button.svelte'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
-  import { button } from '$lib/variants'
+  import { button, scoreModal } from '$lib/variants'
   import {
     getCompetitor,
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
-  import { cva } from 'class-variance-authority'
   import { tick } from 'svelte'
 
   $: category = `open-${$page.params.category}`
@@ -103,25 +102,6 @@
   const toggleFullScore = () => {
     fullScore = !fullScore
   }
-
-  const scoreModal = cva('p-4', {
-    variants: {
-      fullScore: {
-        true: [
-          'absolute',
-          'bg-white',
-          'flex',
-          'inset-0',
-          'items-center',
-          'justify-center',
-          'leading-none',
-          'text-[80vmin]',
-          'text-center',
-        ],
-        false: 'text-3xl',
-      },
-    },
-  })
 </script>
 
 {#if competitor}
