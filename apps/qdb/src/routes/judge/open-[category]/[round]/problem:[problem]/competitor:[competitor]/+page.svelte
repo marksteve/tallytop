@@ -38,7 +38,7 @@
   let attemptsKey = ''
 
   $: if (competitor) {
-    attemptsKey = [category, round, problem, competitor.id].join('/')
+    attemptsKey = [category, round, competitor.id, problem].join('/')
   }
 
   const attempts = writable('')
