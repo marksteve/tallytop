@@ -1,8 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+
+  let category: string = $page.url.pathname.split('/')[2]
 
   const handleSelectCategory = (e) => {
-    const category = e.target.value
+    category = e.target.value
     goto(`/manage/${category}`)
   }
 </script>
@@ -15,7 +18,11 @@
       class="inline-block w-24 align-middle"
     />
     Manage
-    <select class="bg-transparent font-serif" on:change={handleSelectCategory}>
+    <select
+      class="bg-transparent font-serif"
+      on:change={handleSelectCategory}
+      bind:value={category}
+    >
       <option value="open-m">Open Men's</option>
       <option value="open-w">Open Women's</option>
       <option value="teams">Teams</option>
