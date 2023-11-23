@@ -54,64 +54,51 @@
   }
 </script>
 
-<div class="grid grid-cols-3 items-start gap-5 p-5">
-  <h1 class="text-brand-red col-span-3 font-serif text-6xl">
-    <img
-      src="/images/logo.png"
-      alt="Logo"
-      class="inline-block w-24 align-middle"
-    />
-    Manage Teams
-  </h1>
-  <div class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5">
-    {#if teams.length === 0}
-      <div class="p-10 text-center">
-        No teams yet.
-        <br />
-        Add the first one 👉
-      </div>
-    {/if}
-    {#each teams as team}
-      <div class="grid grid-cols-6 items-center gap-5">
-        <h2 class="col-span-2 text-3xl">#{team.number} {team.name}</h2>
-        {#each team.members as member}
-          <div class="flex items-center gap-5">
-            <div class="text-3xl">{labels.categories[member.category]}</div>
-            {member.name}
-          </div>
-        {/each}
-        <div class="text-right">
-          <Button
-            class="bg-brand-red"
-            on:click={() => r.mutate.deleteTeam(team.id)}
-          >
-            Delete
-          </Button>
+<div class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5">
+  {#if teams.length === 0}
+    <div class="p-10 text-center">
+      No teams yet.
+      <br />
+      Add the first one 👉
+    </div>
+  {/if}
+  {#each teams as team}
+    <div class="grid grid-cols-6 items-center gap-5">
+      <h2 class="col-span-2 text-3xl">#{team.number} {team.name}</h2>
+      {#each team.members as member}
+        <div class="flex items-center gap-5">
+          <div class="text-3xl">{labels.categories[member.category]}</div>
+          {member.name}
         </div>
+      {/each}
+      <div class="text-right">
+        <Button
+          class="bg-brand-red"
+          on:click={() => r.mutate.deleteTeam(team.id)}
+        >
+          Delete
+        </Button>
       </div>
-    {/each}
-  </div>
-  <form
-    on:submit={handleSubmit}
-    class="flex flex-col gap-5 rounded-3xl border bg-white p-5"
-  >
-    <h2 class="text-3xl">New Team</h2>
-    <Input name="team_name" placeholder="Team Name" />
-    {#each [1, 2, 3] as i}
-      <div class="accent-brand-green flex items-center gap-5">
-        <Input name={`member_name_${i}`} placeholder="Member Name" />
-        {#each Object.entries(labels.categories) as [category, label]}
-          <label class="text-3xl">
-            <input
-              type="radio"
-              name={`member_category_${i}`}
-              value={category}
-            />
-            {label}
-          </label>
-        {/each}
-      </div>
-    {/each}
-    <Button type="submit" class="self-start">Add team</Button>
-  </form>
+    </div>
+  {/each}
 </div>
+
+<form
+  on:submit={handleSubmit}
+  class="flex flex-col gap-5 rounded-3xl border bg-white p-5"
+>
+  <h2 class="text-3xl">New Team</h2>
+  <Input name="team_name" placeholder="Team Name" />
+  {#each [1, 2, 3] as i}
+    <div class="accent-brand-green flex items-center gap-5">
+      <Input name={`member_name_${i}`} placeholder="Member Name" />
+      {#each Object.entries(labels.categories) as [category, label]}
+        <label class="text-3xl">
+          <input type="radio" name={`member_category_${i}`} value={category} />
+          {label}
+        </label>
+      {/each}
+    </div>
+  {/each}
+  <Button type="submit" class="self-start">Add team</Button>
+</form>
