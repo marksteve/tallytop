@@ -1,9 +1,9 @@
 <script lang="ts">
+  import Button from '$lib/components/button.svelte'
   import Input from '$lib/components/input.svelte'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
   import { listTeams, type Team } from '$reflect/team'
-  import { Button } from '@tallytop/ui'
   import { nanoid } from 'nanoid'
   import { z } from 'zod'
 
@@ -73,7 +73,7 @@
       {/each}
       <div class="text-right">
         <Button
-          class="bg-brand-red"
+          class="!bg-brand-red"
           on:click={() => r.mutate.deleteTeam(team.id)}
         >
           Delete

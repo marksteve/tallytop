@@ -1,13 +1,13 @@
 <script lang="ts">
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
+  import Button from '$lib/components/button.svelte'
   import Input from '$lib/components/input.svelte'
   import { r } from '$lib/reflect'
   import {
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
-  import { Button } from '@tallytop/ui'
   import { nanoid } from 'nanoid'
   import { z } from 'zod'
 
@@ -74,7 +74,7 @@
       </h2>
       <div class="text-right">
         <Button
-          class="bg-brand-red text-white"
+          class="!bg-brand-red"
           on:click={() => r.mutate.deleteCompetitor(competitor.id)}
         >
           Delete
