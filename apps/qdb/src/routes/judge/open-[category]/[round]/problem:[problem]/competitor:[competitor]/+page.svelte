@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
   import {
@@ -62,6 +63,8 @@
     })
     $isSaved = true
   }
+
+  beforeNavigate(() => save())
 </script>
 
 {#if competitor}
@@ -80,7 +83,7 @@
         <div class={variants.button({ disabled: true })}>prev</div>
       {/if}
       <Button on:click={save} variant="primary" disabled={$isSaved}>
-        Save
+        save
       </Button>
       {#if nextCompetitor}
         <a href={`./competitor:${nextCompetitor.id}`} class={variants.button()}>

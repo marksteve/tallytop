@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
@@ -67,6 +68,8 @@
     })
     $isSaved = true
   }
+
+  beforeNavigate(() => save())
 </script>
 
 {#if member}
@@ -77,11 +80,15 @@
     </div>
     <Judge {attempts} {isSaved} />
     <div class="grid w-full grid-cols-3 gap-1 p-1">
-      <a href={`./member:${prevMember.id}`} class={variants.button()}>prev</a>
+      <a href={`./member:${prevMember.id}`} class={variants.button()}>
+        prev member
+      </a>
       <Button on:click={save} variant="primary" disabled={$isSaved}>
-        Save
+        save
       </Button>
-      <a href={`./member:${nextMember.id}`} class={variants.button()}>next</a>
+      <a href={`./member:${nextMember.id}`} class={variants.button()}>
+        next member
+      </a>
       <a
         href={`../team:${nextTeam.id}`}
         class={variants.button({ class: 'col-start-2' })}
