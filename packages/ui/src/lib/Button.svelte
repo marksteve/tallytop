@@ -1,26 +1,13 @@
 <script lang="ts">
-  let extraClass = ''
-  export { extraClass as class }
+  import { button, type ButtonProps } from './variants.js'
 
-  let buttonClass = `px-5 leading-loose`
-
-  export let rounded = true
-
-  if (rounded) {
-    buttonClass = `${buttonClass} rounded-full`
-  }
-
-  export let variant: 'none' | 'plain' = 'plain'
-  switch (variant) {
-    case 'none':
-      break
-    case 'plain':
-    default:
-      buttonClass = `${buttonClass} bg-stone-200 hover:bg-stone-300`
-      break
-  }
+  export let variant: ButtonProps['variant'] = null
 </script>
 
-<button {...$$props} class={`${buttonClass} ${extraClass ?? ''}`} on:click>
+<button
+  {...$$props}
+  on:click
+  class={button({ variant, class: $$props.class, disabled: $$props.disabled })}
+>
   <slot />
 </button>
