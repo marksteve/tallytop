@@ -11,6 +11,9 @@
 
 <svelte:head>
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="preload" as="image" href="/attempt.svg" />
+  <link rel="preload" as="image" href="/zone.svg" />
+  <link rel="preload" as="image" href="/top.svg" />
 </svelte:head>
 
 <div
