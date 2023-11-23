@@ -1,12 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { attemptsToText } from '$lib/attempts'
   import Button from '$lib/components/button.svelte'
+  import Judge from '$lib/components/judge.svelte'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
-  import { button, scoreModal } from '$lib/variants'
+  import { button } from '$lib/variants'
   import { getTeam, listTeams, type Team } from '$reflect/team'
-  import { tick } from 'svelte'
+  import { writable } from 'svelte/store'
 
   $: problem = $page.params.problem
 
@@ -43,52 +43,21 @@
   )
 
   let attemptsKey = ''
-  let attempts = ''
-  let isSaved = false
 
   $: if (team && member) {
     attemptsKey = ['teams', problem, team.id, member.id].join('/')
   }
+
+  const attempts = writable('')
+  const isSaved = writable(false)
+
   $: r.subscribe(
     (tx) => tx.get<string>(attemptsKey),
     async (data) => {
-      attempts = data ?? ''
-      await tick()
-      isSaved = true
+      $attempts = data ?? ''
+      $isSaved = true
     },
   )
-  $: {
-    attempts
-    isSaved = false
-  }
-
-  const attempt = () => {
-    attempts = attempts + 'a'
-  }
-
-  const zone = () => {
-    attempts = attempts.slice(0, -1) + (attempts.endsWith('z') ? 'a' : 'z')
-  }
-
-  const top = () => {
-    attempts = attempts.slice(0, -1) + (attempts.endsWith('t') ? 'a' : 't')
-  }
-
-  const erase = () => {
-    attempts = attempts.slice(0, -1)
-  }
-
-  const actions: Record<string, () => void> = {
-    a: attempt,
-    z: zone,
-    t: top,
-  }
-
-  const icons: Record<string, string> = {
-    a: '/attempt.svg',
-    z: '/zone.svg',
-    t: '/top.svg',
-  }
 
   const save = async () => {
     if (!team || !member) {
@@ -96,15 +65,9 @@
     }
     await r.mutate.putAttempts({
       key: attemptsKey,
-      value: attempts,
+      value: $attempts,
     })
-    isSaved = true
-  }
-
-  let fullScore = false
-
-  const toggleFullScore = () => {
-    fullScore = !fullScore
+    $isSaved = true
   }
 </script>
 
@@ -114,25 +77,10 @@
       <div>{labels.categories[member.category]}</div>
       <div>{member.name}</div>
     </div>
-    <div class="flex flex-col items-center justify-center gap-1 bg-white">
-      <div class="flex h-8 flex-wrap justify-center gap-2 p-4">
-        {#each attempts as attempt}
-          <img src={icons[attempt]} alt={attempt} />
-        {/each}
-      </div>
-      <div class={scoreModal({ fullScore })} on:click={toggleFullScore}>
-        {attemptsToText(attempts)}
-      </div>
-      <div class="grid grid-cols-2 gap-1">
-        {#each Object.entries(labels.attempts) as [key, label]}
-          <Button on:click={actions[key]}>{label}</Button>
-        {/each}
-        <Button on:click={erase}>Erase</Button>
-      </div>
-    </div>
+    <Judge {attempts} {isSaved} />
     <div class="grid w-full grid-cols-3 gap-1 p-1">
       <a href={`./member:${prevMember.id}`} class={button()}>prev</a>
-      <Button on:click={save} variant="primary" disabled={isSaved}>Save</Button>
+      <Button on:click={save} variant="primary" disabled={$isSaved}>Save</Button>
       <a href={`./member:${nextMember.id}`} class={button()}>next</a>
       <a
         href={`../team:${nextTeam.id}`}

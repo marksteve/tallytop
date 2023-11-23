@@ -1,16 +1,15 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { attemptsToText } from '$lib/attempts'
   import Button from '$lib/components/button.svelte'
-  import * as labels from '$lib/labels'
+  import Judge from '$lib/components/judge.svelte'
   import { r } from '$lib/reflect'
-  import { button, scoreModal } from '$lib/variants'
+  import { button } from '$lib/variants'
   import {
     getCompetitor,
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
-  import { tick } from 'svelte'
+  import { writable } from 'svelte/store'
 
   $: category = `open-${$page.params.category}`
   $: round = $page.params.round
@@ -39,68 +38,31 @@
   )
 
   let attemptsKey = ''
-  let attempts = ''
-  let isSaved = false
 
   $: if (competitor) {
     attemptsKey = [category, round, problem, competitor.id].join('/')
   }
+
+  const attempts = writable('')
+  const isSaved = writable(false)
+
   $: r.subscribe(
     (tx) => tx.get<string>(attemptsKey),
     async (data) => {
-      attempts = data ?? ''
-      await tick()
-      isSaved = true
+      $attempts = data ?? ''
+      $isSaved = true
     },
   )
-  $: {
-    attempts
-    isSaved = false
-  }
-
-  const attempt = () => {
-    attempts = attempts + 'a'
-  }
-
-  const zone = () => {
-    attempts = attempts.slice(0, -1) + (attempts.endsWith('z') ? 'a' : 'z')
-  }
-
-  const top = () => {
-    attempts = attempts.slice(0, -1) + (attempts.endsWith('t') ? 'a' : 't')
-  }
-
-  const erase = () => {
-    attempts = attempts.slice(0, -1)
-  }
-
-  const actions: Record<string, () => void> = {
-    a: attempt,
-    z: zone,
-    t: top,
-  }
-
-  const icons: Record<string, string> = {
-    a: '/attempt.svg',
-    z: '/zone.svg',
-    t: '/top.svg',
-  }
 
   const save = async () => {
-    if (!competitor) {
+    if (!competitor || !$attempts) {
       return
     }
     await r.mutate.putAttempts({
       key: attemptsKey,
-      value: attempts,
+      value: $attempts,
     })
-    isSaved = true
-  }
-
-  let fullScore = false
-
-  const toggleFullScore = () => {
-    fullScore = !fullScore
+    $isSaved = true
   }
 </script>
 
@@ -110,29 +72,16 @@
       <div class="text-slate-400">#{competitor.number}</div>
       <div>{competitor.name}</div>
     </div>
-    <div class="flex flex-col items-center justify-center gap-1 bg-white">
-      <div class="flex h-8 flex-wrap justify-center gap-2 p-4">
-        {#each attempts as attempt}
-          <img src={icons[attempt]} alt={attempt} />
-        {/each}
-      </div>
-      <div class={scoreModal({ fullScore })} on:click={toggleFullScore}>
-        {attemptsToText(attempts)}
-      </div>
-      <div class="grid grid-cols-2 gap-1">
-        {#each Object.entries(labels.attempts) as [key, label]}
-          <Button on:click={actions[key]}>{label}</Button>
-        {/each}
-        <Button on:click={erase}>Erase</Button>
-      </div>
-    </div>
+    <Judge {attempts} {isSaved} />
     <div class="grid w-full grid-cols-3 gap-1 p-1">
       {#if prevCompetitor}
         <a href={`./competitor:${prevCompetitor.id}`} class={button()}>prev</a>
       {:else}
         <div class={button({ disabled: true })}>prev</div>
       {/if}
-      <Button on:click={save} variant="primary" disabled={isSaved}>Save</Button>
+      <Button on:click={save} variant="primary" disabled={$isSaved}>
+        Save
+      </Button>
       {#if nextCompetitor}
         <a href={`./competitor:${nextCompetitor.id}`} class={button()}>next</a>
       {:else}
