@@ -1,14 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Button from '$lib/components/button.svelte'
-  import Judge from '$lib/components/judge.svelte'
   import { r } from '$lib/reflect'
-  import { button } from '$lib/variants'
   import {
     getCompetitor,
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
+  import { Button, Judge, variants } from '@tallytop/ui'
   import { writable } from 'svelte/store'
 
   $: category = `open-${$page.params.category}`
@@ -75,17 +73,21 @@
     <Judge {attempts} {isSaved} />
     <div class="grid w-full grid-cols-3 gap-1 p-1">
       {#if prevCompetitor}
-        <a href={`./competitor:${prevCompetitor.id}`} class={button()}>prev</a>
+        <a href={`./competitor:${prevCompetitor.id}`} class={variants.button()}>
+          prev
+        </a>
       {:else}
-        <div class={button({ disabled: true })}>prev</div>
+        <div class={variants.button({ disabled: true })}>prev</div>
       {/if}
       <Button on:click={save} variant="primary" disabled={$isSaved}>
         Save
       </Button>
       {#if nextCompetitor}
-        <a href={`./competitor:${nextCompetitor.id}`} class={button()}>next</a>
+        <a href={`./competitor:${nextCompetitor.id}`} class={variants.button()}>
+          next
+        </a>
       {:else}
-        <div class={button({ disabled: true })}>next</div>
+        <div class={variants.button({ disabled: true })}>next</div>
       {/if}
     </div>
   </div>

@@ -1,11 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Button from '$lib/components/button.svelte'
-  import Judge from '$lib/components/judge.svelte'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
-  import { button } from '$lib/variants'
   import { getTeam, listTeams, type Team } from '$reflect/team'
+  import { Button, Judge, variants } from '@tallytop/ui'
   import { writable } from 'svelte/store'
 
   $: problem = $page.params.problem
@@ -79,12 +77,14 @@
     </div>
     <Judge {attempts} {isSaved} />
     <div class="grid w-full grid-cols-3 gap-1 p-1">
-      <a href={`./member:${prevMember.id}`} class={button()}>prev</a>
-      <Button on:click={save} variant="primary" disabled={$isSaved}>Save</Button>
-      <a href={`./member:${nextMember.id}`} class={button()}>next</a>
+      <a href={`./member:${prevMember.id}`} class={variants.button()}>prev</a>
+      <Button on:click={save} variant="primary" disabled={$isSaved}>
+        Save
+      </Button>
+      <a href={`./member:${nextMember.id}`} class={variants.button()}>next</a>
       <a
         href={`../team:${nextTeam.id}`}
-        class={button({ class: 'col-start-2' })}
+        class={variants.button({ class: 'col-start-2' })}
       >
         next team
       </a>

@@ -2,11 +2,11 @@
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
-  import { list, listItem } from '$lib/variants'
   import {
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
+  import { variants } from '@tallytop/ui'
 
   let subscribers: Array<() => void> = []
   let competitors: Competitor[] = []
@@ -28,11 +28,11 @@
   ]
 </script>
 
-<div class={list()}>
+<div class={variants.list()}>
   {#each competitors as competitor}
     <a
       href={`./problem:${$page.params.problem}/competitor:${competitor.id}`}
-      class={listItem({ class: 'font-tanker flex gap-2 text-3xl' })}
+      class={variants.listItem({ class: 'font-tanker flex gap-2 text-3xl' })}
     >
       <span class="text-slate-400">#{competitor.number}</span>
       {competitor.name}

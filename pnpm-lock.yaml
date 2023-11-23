@@ -40,7 +40,7 @@ importers:
         version: 2.7.1
       '@tallytop/ui':
         specifier: 1.0.1
-        version: link:../../packages/ui
+        version: 1.0.1(@sindresorhus/to-milliseconds@2.0.0)(@tallytop/supabase@packages+supabase)(@zxing/browser@0.1.1)(async-sema@3.1.1)(howler@2.2.4)(nanoid@4.0.0)(parse-ms@3.0.0)(phosphor-svelte@1.2.1)(qrcode-generator-es6@1.1.4)(svelte@3.55.0)
       phosphor-svelte:
         specifier: ^1.2.1
         version: 1.2.1(svelte@3.55.0)
@@ -95,7 +95,7 @@ importers:
         version: 2.7.1
       '@tallytop/ui':
         specifier: 1.0.1
-        version: link:../../packages/ui
+        version: 1.0.1(@sindresorhus/to-milliseconds@2.0.0)(@tallytop/supabase@packages+supabase)(@zxing/browser@0.1.1)(async-sema@3.1.1)(howler@2.2.4)(nanoid@4.0.0)(parse-ms@3.0.0)(phosphor-svelte@1.2.1)(qrcode-generator-es6@1.1.4)(svelte@3.55.0)
       phosphor-svelte:
         specifier: ^1.2.1
         version: 1.2.1(svelte@3.55.0)
@@ -230,6 +230,9 @@ importers:
       '@splidejs/svelte-splide':
         specifier: ^0.2.9
         version: 0.2.9
+      '@tallytop/ui':
+        specifier: 2.0.0
+        version: link:../../packages/ui
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -352,7 +355,7 @@ importers:
         version: 5.2.0(@pixi/assets@7.3.1)(@pixi/core@7.3.1)
       '@tallytop/ui':
         specifier: 1.0.1
-        version: link:../../packages/ui
+        version: 1.0.1(@sindresorhus/to-milliseconds@2.0.0)(@tallytop/supabase@packages+supabase)(@zxing/browser@0.1.1)(async-sema@3.1.1)(howler@2.2.4)(nanoid@4.0.0)(parse-ms@3.0.0)(phosphor-svelte@1.2.1)(qrcode-generator-es6@1.1.4)(svelte@3.55.0)
       phosphor-svelte:
         specifier: ^1.2.1
         version: 1.2.1(svelte@3.55.0)
@@ -2131,6 +2134,32 @@ packages:
       tailwindcss: 3.2.4(postcss@8.4.20)
     dev: true
 
+  /@tallytop/ui@1.0.1(@sindresorhus/to-milliseconds@2.0.0)(@tallytop/supabase@packages+supabase)(@zxing/browser@0.1.1)(async-sema@3.1.1)(howler@2.2.4)(nanoid@4.0.0)(parse-ms@3.0.0)(phosphor-svelte@1.2.1)(qrcode-generator-es6@1.1.4)(svelte@3.55.0):
+    resolution: {integrity: sha512-NA2Kh5pG0A0Gdk2hDkq3XsxmlyJTqHjVpeQ3aajVp6dd7zrdSvEmzSdB9jLDIZ+cHu85zWI6vKLVC7D3pKud9w==, tarball: https://npm.pkg.github.com/download/@tallytop/ui/1.0.1/843e489c3a6c77dcc63131c8e8ba2a8fbf5c67e9}
+    peerDependencies:
+      '@sindresorhus/to-milliseconds': ^2.0.0
+      '@tallytop/supabase': 0.0.0
+      '@zxing/browser': ^0.1.1
+      async-sema: ^3.1.1
+      howler: ^2.2.3
+      nanoid: ^4.0.0
+      parse-ms: ^3.0.0
+      phosphor-svelte: ^1.2.1
+      qrcode-generator-es6: ^1.1.4
+      svelte: ^3.54.0
+    dependencies:
+      '@sindresorhus/to-milliseconds': 2.0.0
+      '@tallytop/supabase': link:packages/supabase
+      '@zxing/browser': 0.1.1(@zxing/library@0.19.3)
+      async-sema: 3.1.1
+      howler: 2.2.4
+      nanoid: 4.0.0
+      parse-ms: 3.0.0
+      phosphor-svelte: 1.2.1(svelte@3.55.0)
+      qrcode-generator-es6: 1.1.4
+      svelte: 3.55.0
+    dev: false
+
   /@tootallnate/once@1.1.2:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
     engines: {node: '>= 6'}
@@ -3752,6 +3781,10 @@ packages:
   /has@1.0.4:
     resolution: {integrity: sha512-qdSAmqLF6209RFj4VVItywPMbm3vWylknmB3nvNiUIs72xAimcM8nVYxYr7ncvZq5qzk9MKIZR8ijqD/1QuYjQ==}
     engines: {node: '>= 0.4.0'}
+    dev: false
+
+  /howler@2.2.4:
+    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
     dev: false
 
   /http-cache-semantics@4.1.1:
