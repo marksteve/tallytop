@@ -16,12 +16,19 @@ export const {
   list: listCompetitors,
 } = generate<Competitor>('competitor')
 
+const numberPrefix = {
+  'open-m': 100,
+  'open-w': 200,
+}
+
 export const createCompetitor = async (
   tx: WriteTransaction,
   competitor: Omit<Competitor, 'number'>,
 ) => {
   const number =
-    (await listCompetitorsByCategory(tx, competitor.category)).length + 1
+    numberPrefix[competitor.category] +
+    (await listCompetitorsByCategory(tx, competitor.category)).length +
+    1
   await putCompetitor(tx, { ...competitor, number })
 }
 

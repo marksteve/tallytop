@@ -26,6 +26,6 @@ export const createTeam = async (
   tx: WriteTransaction,
   team: Omit<Team, 'number'>,
 ) => {
-  const number = (await listTeams(tx)).length + 1
+  const number = 300 + (await listTeams(tx)).length + 1
   await putTeam(tx, { ...team, number })
 }
