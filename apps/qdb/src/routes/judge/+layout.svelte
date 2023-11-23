@@ -1,6 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { onMount } from 'svelte'
   import '../../tallytop.css'
+
+  let height = 0
+  onMount(() => {
+    height = window.innerHeight
+  })
 </script>
 
 <svelte:head>
@@ -8,7 +14,8 @@
 </svelte:head>
 
 <div
-  class="absolute inset-0 grid min-h-screen grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
+  class="absolute inset-0 grid grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
+  style={`height: ${height}px`}
 >
   <div class="font-tanker z-10 flex flex-wrap bg-white shadow-lg">
     <div class="w-full p-2 text-center text-lg">tallytop</div>
