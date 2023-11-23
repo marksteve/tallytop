@@ -1,15 +1,24 @@
 <script lang="ts">
-  import { list, listItem } from '$lib/variants'
+  import { variants } from '@tallytop/ui'
 </script>
 
-<div class={list()}>
-  <a href="./judge/open-m" class={listItem({ class: 'font-tanker text-3xl' })}>
+<div class={variants.list()}>
+  <a
+    href="./judge/open-m"
+    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+  >
     open men's
   </a>
-  <a href="./judge/open-w" class={listItem({ class: 'font-tanker text-3xl' })}>
+  <a
+    href="./judge/open-w"
+    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+  >
     open women's
   </a>
-  <a href="./judge/teams" class={listItem({ class: 'font-tanker text-3xl' })}>
+  <a
+    href="./judge/teams"
+    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+  >
     teams
   </a>
 </div>
