@@ -20,7 +20,8 @@ export const createCompetitor = async (
   tx: WriteTransaction,
   competitor: Omit<Competitor, 'number'>,
 ) => {
-  const number = (await listCompetitors(tx)).length + 1
+  const number =
+    (await listCompetitorsByCategory(tx, competitor.category)).length + 1
   await putCompetitor(tx, { ...competitor, number })
 }
 
