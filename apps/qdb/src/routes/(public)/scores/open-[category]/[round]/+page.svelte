@@ -5,7 +5,8 @@
   import { r } from '$lib/reflect'
   import {
     listCompetitorsByCategory,
-    type Competitor,
+    listCompetitorsWithScores,
+    type Score,
   } from '$reflect/competitor'
 
   $: category = {
@@ -27,33 +28,9 @@
     ).keys(),
   ].map((i) => `${$page.params.category.slice(0).toUpperCase()}${i + 1}`)
 
+  let competitors: Awaited<ReturnType<typeof listCompetitorsWithScores>> = []
+
   const prefix = [`open-${$page.params.category}`, $page.params.round]
-
-  type Score = {
-    t: number
-    z: number
-    ta: number
-    za: number
-  }
-
-  let scores: Record<string, Record<string, Score>> = {}
-
-  const getScore = (attempts: string): Score => {
-    const ta = attempts.indexOf('t') + 1
-    const za = attempts.indexOf('z') + 1
-    return {
-      t: ta > 0 ? 1 : 0,
-      z: ta + za > 0 ? 1 : 0,
-      ta: ta || 0,
-      za: za || ta || 0,
-    }
-  }
-
-  type CompetitorWithScores = Competitor & {
-    scores?: Record<string, Score>
-  }
-
-  let competitors: CompetitorWithScores[] = []
 
   r.subscribe(
     async (tx) => {
@@ -61,50 +38,29 @@
         tx,
         `open-${$page.params.category}`,
       )
-      const attempts = await tx
-        .scan({ prefix: prefix.join('/') })
-        .entries()
-        .toArray()
-      return { competitors, attempts }
+      return await listCompetitorsWithScores(tx, {
+        competitors,
+        attemptsPrefix: prefix,
+        numProblems: problems.length,
+      })
     },
     (data) => {
-      for (let [key, value] of data.attempts) {
-        const [competitor, problem] = key.split('/').slice(prefix.length)
-        scores[competitor] = scores[competitor] ?? {}
-        scores[competitor][problem] = getScore(value as string)
-        if (Object.keys(scores[competitor]).length === problems.length) {
-          scores[competitor].total = Object.values(scores[competitor]).reduce(
-            (a, b) => ({
-              t: a.t + b.t,
-              z: a.z + b.z,
-              ta: a.ta + b.ta,
-              za: a.za + b.za,
-            }),
-            { t: 0, z: 0, ta: 0, za: 0 },
-          )
+      competitors = data.toSorted((a, b) => {
+        const A = a.scores.total
+        const B = b.scores.total
+        switch (true) {
+          case A.t !== B.t:
+            return B.t - A.t
+          case A.z !== B.z:
+            return B.z - A.z
+          case A.ta !== B.ta:
+            return A.ta - B.ta
+          case A.za !== B.za:
+            return A.za - B.za
+          default:
+            return 0
         }
-      }
-      competitors = data.competitors
-        .map((competitor) => ({
-          ...competitor,
-          scores: scores[competitor.id],
-        }))
-        .toSorted((a, b) => {
-          const A = a.scores.total
-          const B = b.scores.total
-          switch (true) {
-            case A.t !== B.t:
-              return B.t - A.t
-            case A.z !== B.z:
-              return B.z - A.z
-            case A.ta !== B.ta:
-              return A.ta - B.ta
-            case A.za !== B.za:
-              return A.za - B.za
-            default:
-              return 0
-          }
-        })
+      })
     },
   )
 
