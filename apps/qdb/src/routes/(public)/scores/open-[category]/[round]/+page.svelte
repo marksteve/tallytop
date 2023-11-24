@@ -43,7 +43,7 @@
     const za = attempts.indexOf('z') + 1
     return {
       t: ta > 0 ? 1 : 0,
-      z: za > 0 ? 1 : 0,
+      z: ta + za > 0 ? 1 : 0,
       ta: ta || 0,
       za: za || ta || 0,
     }
