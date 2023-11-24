@@ -21,7 +21,7 @@
   style={`height: ${height}px`}
 >
   <div class="font-tanker z-10 flex flex-wrap bg-white shadow-lg">
-    <div class="w-full p-2 text-center text-lg">tallytop</div>
+    <div class="w-full p-2 text-center text-lg"><a href="/">tallytop</a></div>
     {#each $page.data.menu as item}
       <a
         href={`/${item.path.join('/')}`}
