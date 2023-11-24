@@ -2,15 +2,24 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 export const list = cva(['grid', '[grid-auto-rows:20vh]', 'h-full'])
 
-export const listItem = cva([
-  'bg-white',
-  'border-current',
-  'border-t',
-  'flex',
-  'items-center',
-  'justify-center',
-  'shadow-lg',
-])
+export const listItem = cva(
+  [
+    'bg-white',
+    'border-current',
+    'border-t',
+    'flex',
+    'items-center',
+    'justify-center',
+    'shadow-lg',
+  ],
+  {
+    variants: {
+      selected: {
+        true: ['text-white', 'bg-slate-600'],
+      },
+    },
+  },
+)
 
 export const button = cva(['bg-slate-200', 'p-2', 'text-center'], {
   variants: {
