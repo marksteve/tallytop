@@ -72,15 +72,17 @@
         const [competitor, problem] = key.split('/').slice(prefix.length)
         scores[competitor] = scores[competitor] ?? {}
         scores[competitor][problem] = getScore(value as string)
-        scores[competitor].total = Object.values(scores[competitor]).reduce(
-          (a, b) => ({
-            t: a.t + b.t,
-            z: a.z + b.z,
-            ta: a.ta + b.ta,
-            za: a.za + b.za,
-          }),
-          { t: 0, z: 0, ta: 0, za: 0 },
-        )
+        if (Object.keys(scores[competitor]).length === problems.length) {
+          scores[competitor].total = Object.values(scores[competitor]).reduce(
+            (a, b) => ({
+              t: a.t + b.t,
+              z: a.z + b.z,
+              ta: a.ta + b.ta,
+              za: a.za + b.za,
+            }),
+            { t: 0, z: 0, ta: 0, za: 0 },
+          )
+        }
       }
       competitors = data.competitors
         .map((competitor) => ({
