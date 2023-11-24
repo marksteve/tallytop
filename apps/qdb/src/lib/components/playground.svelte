@@ -72,6 +72,8 @@
       '/images/quarter-with-bolts.png',
     )
   }
+  const logo = (coords: [number, number]) =>
+    Bodies.circle(...coords, 143, options({ texture: '/images/logo.png' }))
   const slice = (coords: [number, number], node: HTMLElement) => {
     const sliceBody = pathToVertices(node.querySelector('#slice-body'))
     return bodyFromVertices(...coords, sliceBody, '/images/slice.png')
@@ -111,14 +113,17 @@
       },
     })
 
-    const holds = Array(25)
-      .fill(null)
-      .map(() => {
-        const n = Math.floor(Math.random() * bodies.length)
-        const x = Math.floor(Math.random() * width)
-        const y = -Math.floor(Math.random() * height)
-        return bodies[n]([x, y], node)
-      })
+    const holds = [
+      ...Array(25)
+        .fill(null)
+        .map(() => {
+          const n = Math.floor(Math.random() * bodies.length)
+          const x = Math.floor(Math.random() * width)
+          const y = -Math.floor(Math.random() * height)
+          return bodies[n]([x, y], node)
+        }),
+      logo([width / 10, -height]),
+    ]
 
     const ground = [
       Bodies.rectangle(width / 2, height, width, 10, {
