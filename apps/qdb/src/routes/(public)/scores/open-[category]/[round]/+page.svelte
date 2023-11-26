@@ -9,13 +9,14 @@
     type CompetitorWithScores,
     type Score,
   } from '$reflect/competitor'
+  import { listPromotedCompetitors } from '$reflect/score'
 
   const category = `open-${$page.params.category}`
   const round = $page.params.round
 
   const categoryTitle = {
-    m: `Open Men's`,
-    w: `Open Women's`,
+    'open-m': `Open Men's`,
+    'open-w': `Open Women's`,
   }[category]
 
   const roundTitle = {
@@ -38,7 +39,10 @@
 
   r.subscribe(
     async (tx) => {
-      const competitors = await listCompetitorsByCategory(tx, category)
+      const competitors =
+        round === 'qualis'
+          ? await listCompetitorsByCategory(tx, category)
+          : await listPromotedCompetitors(tx, [category, round])
       return await listCompetitorsWithScores(tx, {
         competitors,
         attemptsPrefix,
@@ -47,7 +51,7 @@
     },
     (data) => {
       competitors = data.toSorted((a, b) => {
-        if (!a.scores || !b.scores) return 0
+        if (!a.scores.total || !b.scores.total) return 0
         const A = a.scores.total
         const B = b.scores.total
         switch (true) {
@@ -106,16 +110,20 @@
             <div class="col-start-1">#{competitor.number}</div>
             <div>{competitor.name}</div>
             {#each problems as problem, i}
-              <img
-                src={getImage(competitor.scores[i + 1])}
-                alt={problem}
-                class="h-12"
-              />
+              {#if competitor.scores[i + 1]}
+                <img
+                  src={getImage(competitor.scores[i + 1])}
+                  alt={problem}
+                  class="h-12"
+                />
+              {/if}
             {/each}
-            <div>{competitor.scores.total.t}</div>
-            <div>{competitor.scores.total.z}</div>
-            <div>{competitor.scores.total.ta}</div>
-            <div>{competitor.scores.total.za}</div>
+            {#if competitor.scores.total}
+              <div>{competitor.scores.total.t}</div>
+              <div>{competitor.scores.total.z}</div>
+              <div>{competitor.scores.total.ta}</div>
+              <div>{competitor.scores.total.za}</div>
+            {/if}
           </div>
         {/each}
       </div>

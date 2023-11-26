@@ -39,7 +39,7 @@
     },
     (data) => {
       competitors = data.toSorted((a, b) => {
-        if (!a.scores || !b.scores) return 0
+        if (!a.scores.total || !b.scores.total) return 0
         const A = a.scores.total
         const B = b.scores.total
         switch (true) {
@@ -92,13 +92,13 @@
       <span class="text-slate-400">#{competitor.number}</span>
       {competitor.name}
       <span class="w-full text-base">
-        {#if competitor.scores}
+        {#if competitor.scores.total}
           t{competitor.scores.total.t}
           z{competitor.scores.total.z}
           ta{competitor.scores.total.ta}
           za{competitor.scores.total.za}
         {:else}
-          no scores yet
+          still climbing
         {/if}
       </span>
     </button>
