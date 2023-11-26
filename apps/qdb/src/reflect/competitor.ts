@@ -61,7 +61,7 @@ const getScore = (attempts: string): Score => {
   }
 }
 
-type CompetitorWithScores = Competitor & {
+export type CompetitorWithScores = Competitor & {
   scores: Record<string, Score>
 }
 
@@ -78,12 +78,14 @@ export const listCompetitorsWithScores = async (
   },
 ): Promise<CompetitorWithScores[]> => {
   const attempts = await tx
-    .scan({ prefix: attemptsPrefix.join('/') })
+    .scan({ prefix: ['attempts', ...attemptsPrefix].join('/') })
     .entries()
     .toArray()
   const scores: Record<string, Record<string, Score>> = {}
   for (let [key, value] of attempts) {
-    const [competitor, problem] = key.split('/').slice(attemptsPrefix.length)
+    const [competitor, problem] = key
+      .split('/')
+      .slice(attemptsPrefix.length + 1)
     scores[competitor] = scores[competitor] ?? {}
     scores[competitor][problem] = getScore(value as string)
     if (Object.keys(scores[competitor]).length === numProblems) {

@@ -1,31 +1,30 @@
 <script lang="ts">
-  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
   import {
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
+  import { listPromotedCompetitors } from '$reflect/score'
   import { variants } from '@tallytop/ui'
+  
+  const category = `open-${$page.params.category}`
+  const round = $page.params.round
 
-  let subscribers: Array<() => void> = []
   let competitors: Competitor[] = []
 
-  $: category = `open-${$page.params.category}`
-
-  beforeNavigate(() => {
-    subscribers.forEach((unsubscribe) => unsubscribe())
-  })
-
-  $: subscribers = [
-    ...subscribers,
-    r.subscribe(
-      (tx) => listCompetitorsByCategory(tx, category),
-      (data) => {
-        competitors = data
-      },
-    ),
-  ]
+  r.subscribe(
+    (tx) => {
+      if (round === 'qualis') {
+        return listCompetitorsByCategory(tx, category)
+      } else {
+        return listPromotedCompetitors(tx, [category, round])
+      }
+    },
+    (data) => {
+      competitors = data
+    },
+  )
 </script>
 
 <div class={variants.list()}>

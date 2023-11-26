@@ -3,6 +3,7 @@
   import { page } from '$app/stores'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
+  import { getAttempts } from '$reflect/score'
   import { getTeam, listTeams, type Team } from '$reflect/team'
   import { Button, Judge, variants } from '@tallytop/ui'
   import { writable } from 'svelte/store'
@@ -41,22 +42,24 @@
     },
   )
 
-  let attemptsKey = ''
+  let attemptsKey: string[] = []
 
   $: if (team && member) {
-    attemptsKey = ['teams', problem, team.id, member.id].join('/')
+    attemptsKey = ['teams', problem, team.id, member.id]
   }
 
   const attempts = writable('')
   const isSaved = writable(false)
 
-  $: r.subscribe(
-    (tx) => tx.get<string>(attemptsKey),
-    async (data) => {
-      $attempts = data ?? ''
-      $isSaved = true
-    },
-  )
+  $: if (team) {
+    r.subscribe(
+      (tx) => getAttempts(tx, attemptsKey),
+      async (data) => {
+        $attempts = data ?? ''
+        $isSaved = true
+      },
+    )
+  }
 
   const save = async () => {
     if (!team || !member) {

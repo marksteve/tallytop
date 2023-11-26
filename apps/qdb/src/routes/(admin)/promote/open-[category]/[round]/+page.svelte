@@ -1,40 +1,45 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
   import {
     listCompetitorsByCategory,
     listCompetitorsWithScores,
+    type CompetitorWithScores,
   } from '$reflect/competitor'
+  import { listPromotedCompetitors } from '$reflect/score'
   import { Button, variants } from '@tallytop/ui'
+
+  const category = `open-${$page.params.category}`
+  const round = $page.params.round
 
   const numProblems = {
     qualis: 5,
     finals: 4,
-  }[$page.params.round]
+  }[round]
 
   const nextRound = {
     qualis: 'finals',
     finals: 'winners',
-  }[$page.params.round]
+  }[round]
 
-  let competitors: Awaited<ReturnType<typeof listCompetitorsWithScores>> = []
-
-  const prefix = [`open-${$page.params.category}`, $page.params.round]
+  let competitors: CompetitorWithScores[] = []
 
   r.subscribe(
     async (tx) => {
-      const competitors = await listCompetitorsByCategory(
-        tx,
-        `open-${$page.params.category}`,
-      )
+      const competitors =
+        round === 'qualis'
+          ? await listCompetitorsByCategory(tx, category)
+          : await listPromotedCompetitors(tx, [category, round])
       return await listCompetitorsWithScores(tx, {
         competitors,
-        attemptsPrefix: prefix,
+        attemptsPrefix: [category, round],
         numProblems,
       })
     },
     (data) => {
       competitors = data.toSorted((a, b) => {
+        if (!a.scores || !b.scores) return 0
         const A = a.scores.total
         const B = b.scores.total
         switch (true) {
@@ -53,14 +58,25 @@
     },
   )
 
-  let selected: typeof competitors = []
+  let selected: string[] = []
 
-  const handleSelect = (competitor) => {
+  const handleSelect = (competitor: CompetitorWithScores) => {
     if (selected.includes(competitor.id)) {
       selected = selected.filter((c) => c !== competitor.id)
     } else {
       selected = [...selected, competitor.id]
     }
+  }
+
+  const promote = async () => {
+    if (selected.length < 1) {
+      return
+    }
+    await r.mutate.promoteCompetitors({
+      key: [category, nextRound],
+      value: selected,
+    })
+    goto(`/judge/${category}/${nextRound}`)
   }
 </script>
 
@@ -68,17 +84,32 @@
   {#each competitors as competitor}
     <button
       class={variants.listItem({
-        class: 'flex gap-2 text-3xl',
+        class: 'flex flex-wrap content-center gap-2 text-3xl',
         selected: selected.includes(competitor.id),
       })}
       on:click={() => handleSelect(competitor)}
     >
       <span class="text-slate-400">#{competitor.number}</span>
       {competitor.name}
+      <span class="w-full text-base">
+        {#if competitor.scores}
+          t{competitor.scores.total.t}
+          z{competitor.scores.total.z}
+          ta{competitor.scores.total.ta}
+          za{competitor.scores.total.za}
+        {:else}
+          no scores yet
+        {/if}
+      </span>
     </button>
   {/each}
   <div class="flex p-2">
-    <Button class="h-10 flex-1">
+    <Button
+      class="h-10 flex-1"
+      variant="primary"
+      disabled={selected.length < 1}
+      on:click={promote}
+    >
       promote {selected.length} competitors to {nextRound}
     </Button>
   </div>

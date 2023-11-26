@@ -6,46 +6,48 @@
   import {
     listCompetitorsByCategory,
     listCompetitorsWithScores,
+    type CompetitorWithScores,
     type Score,
   } from '$reflect/competitor'
 
-  $: category = {
+  const category = `open-${$page.params.category}`
+  const round = $page.params.round
+
+  const categoryTitle = {
     m: `Open Men's`,
     w: `Open Women's`,
-  }[$page.params.category]
+  }[category]
 
-  $: round = {
+  const roundTitle = {
     qualis: 'Qualifiers',
     finals: 'Finals',
-  }[$page.params.round]
+  }[round]
 
   $: problems = [
     ...Array(
       {
         qualis: 5,
         finals: 4,
-      }[$page.params.round],
+      }[round],
     ).keys(),
   ].map((i) => `${$page.params.category.slice(0).toUpperCase()}${i + 1}`)
 
-  let competitors: Awaited<ReturnType<typeof listCompetitorsWithScores>> = []
+  let competitors: CompetitorWithScores[] = []
 
-  const prefix = [`open-${$page.params.category}`, $page.params.round]
+  const attemptsPrefix = [category, round]
 
   r.subscribe(
     async (tx) => {
-      const competitors = await listCompetitorsByCategory(
-        tx,
-        `open-${$page.params.category}`,
-      )
+      const competitors = await listCompetitorsByCategory(tx, category)
       return await listCompetitorsWithScores(tx, {
         competitors,
-        attemptsPrefix: prefix,
+        attemptsPrefix,
         numProblems: problems.length,
       })
     },
     (data) => {
       competitors = data.toSorted((a, b) => {
+        if (!a.scores || !b.scores) return 0
         const A = a.scores.total
         const B = b.scores.total
         switch (true) {
@@ -81,7 +83,10 @@
 <main class="relative flex h-screen w-screen items-center justify-center">
   <div class="grid w-full max-w-screen-lg p-5">
     <div class="border-brand-red flex flex-col gap-5 border-2 bg-white p-5">
-      <div class="text-brand-red font-serif text-6xl">{category} {round}</div>
+      <div class="text-brand-red font-serif text-6xl">
+        {categoryTitle}
+        {roundTitle}
+      </div>
       <div
         class="grid grid-cols-[max-content_1fr_repeat(9,max-content)] items-center gap-5"
       >

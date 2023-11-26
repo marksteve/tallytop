@@ -24,10 +24,10 @@ export const listItem = cva(
 export const button = cva(['bg-slate-200', 'p-2', 'text-center'], {
   variants: {
     variant: {
-      primary: ['text-white', 'bg-slate-600'],
+      primary: ['!text-white', '!bg-slate-600'],
     },
     disabled: {
-      true: ['text-slate-400', 'bg-slate-200/50'],
+      true: ['!text-slate-400', '!bg-slate-200/50'],
     },
   },
   compoundVariants: [

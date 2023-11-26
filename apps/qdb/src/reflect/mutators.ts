@@ -1,10 +1,10 @@
-import { putAttempts } from './attempts'
 import {
   createCompetitor,
   deleteCompetitor,
   listCompetitors,
   updateCompetitor,
 } from './competitor'
+import { promoteCompetitors, putAttempts } from './score'
 import { createTeam, deleteTeam, listTeams, updateTeam } from './team'
 
 export const mutators = {
@@ -13,13 +13,14 @@ export const mutators = {
   listTeams,
   updateTeam,
   deleteTeam,
-  // competitors
+  // competitor
   createCompetitor,
   listCompetitors,
   updateCompetitor,
   deleteCompetitor,
-  // attempts
+  // score
   putAttempts,
+  promoteCompetitors,
 }
 
 export type M = typeof mutators

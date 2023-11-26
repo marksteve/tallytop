@@ -3,55 +3,62 @@
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
   import {
-    getCompetitor,
     listCompetitorsByCategory,
     type Competitor,
   } from '$reflect/competitor'
+  import { getAttempts, listPromotedCompetitors } from '$reflect/score'
   import { Button, Judge, variants } from '@tallytop/ui'
   import { writable } from 'svelte/store'
 
-  $: category = `open-${$page.params.category}`
-  $: round = $page.params.round
-  $: problem = $page.params.problem
+  const category = `open-${$page.params.category}`
+  const round = $page.params.round
+  const problem = $page.params.problem
 
+  let competitors: Competitor[] = []
   let competitor: Competitor | undefined
   let prevCompetitor: Competitor | undefined
   let nextCompetitor: Competitor | undefined
 
-  $: r.subscribe(
-    (tx) => listCompetitorsByCategory(tx, category),
-    (data) => {
-      const competitorIndex = data
-        .map((c) => c.id)
-        .indexOf($page.params.competitor)
-      competitor = data[competitorIndex]
-      prevCompetitor = data[competitorIndex - 1]
-      nextCompetitor = data[competitorIndex + 1]
+  r.subscribe(
+    (tx) => {
+      if (round === 'qualis') {
+        return listCompetitorsByCategory(tx, category)
+      } else {
+        return listPromotedCompetitors(tx, [category, round])
+      }
     },
-  )
-  $: r.subscribe(
-    (tx) => getCompetitor(tx, $page.params.competitor),
     (data) => {
-      competitor = data
+      competitors = data
     },
   )
 
-  let attemptsKey = ''
+  $: if (competitors.length > 0) {
+    const competitorIndex = competitors
+      .map((c) => c.id)
+      .indexOf($page.params.competitor)
+    competitor = competitors[competitorIndex]
+    prevCompetitor = competitors[competitorIndex - 1]
+    nextCompetitor = competitors[competitorIndex + 1]
+  }
+
+  let attemptsKey: string[] = []
 
   $: if (competitor) {
-    attemptsKey = [category, round, competitor.id, problem].join('/')
+    attemptsKey = [category, round, competitor.id, problem]
   }
 
   const attempts = writable('')
   const isSaved = writable(false)
 
-  $: r.subscribe(
-    (tx) => tx.get<string>(attemptsKey),
-    async (data) => {
-      $attempts = data ?? ''
-      $isSaved = true
-    },
-  )
+  $: if (attemptsKey.length > 0) {
+    r.subscribe(
+      (tx) => getAttempts(tx, attemptsKey),
+      async (data) => {
+        $attempts = data ?? ''
+        $isSaved = true
+      },
+    )
+  }
 
   const save = async () => {
     if (!competitor || !$attempts) {
