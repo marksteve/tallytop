@@ -28,7 +28,7 @@
       }
     },
     (data) => {
-      competitors = data
+      competitors = round === 'qualis' ? data : data.toReversed()
     },
   )
 

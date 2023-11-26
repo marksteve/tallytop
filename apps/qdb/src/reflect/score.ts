@@ -1,5 +1,5 @@
 import type { ReadTransaction, WriteTransaction } from '@rocicorp/reflect'
-import { listCompetitors } from './competitor'
+import { getCompetitor, type Competitor } from './competitor'
 
 export const putAttempts = async (
   tx: WriteTransaction,
@@ -25,5 +25,7 @@ export const listPromotedCompetitors = async (
 ) => {
   const promoted =
     (await tx.get<string[]>(['promoted', ...key].join('/'))) ?? []
-  return (await listCompetitors(tx)).filter((c) => promoted.includes(c.id))
+  return await Promise.all<Competitor[]>(
+    promoted.map((id) => getCompetitor(tx, id)),
+  )
 }

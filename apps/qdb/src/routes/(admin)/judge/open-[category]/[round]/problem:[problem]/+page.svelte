@@ -7,7 +7,7 @@
   } from '$reflect/competitor'
   import { listPromotedCompetitors } from '$reflect/score'
   import { variants } from '@tallytop/ui'
-  
+
   const category = `open-${$page.params.category}`
   const round = $page.params.round
 
@@ -22,7 +22,7 @@
       }
     },
     (data) => {
-      competitors = data
+      competitors = round === 'qualis' ? data : data.toReversed()
     },
   )
 </script>
