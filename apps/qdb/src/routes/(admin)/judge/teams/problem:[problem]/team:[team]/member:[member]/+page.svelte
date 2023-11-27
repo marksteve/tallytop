@@ -4,7 +4,7 @@
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
   import { getAttempts } from '$reflect/score'
-  import { getTeam, listTeams, type Team } from '$reflect/team'
+  import { getTeam, listTeamsSorted, type Team } from '$reflect/team'
   import { Button, Judge, variants } from '@tallytop/ui'
   import { writable } from 'svelte/store'
 
@@ -13,7 +13,7 @@
   let teams: Team[] = []
 
   r.subscribe(
-    (tx) => listTeams(tx),
+    (tx) => listTeamsSorted(tx),
     (data) => {
       teams = data
     },

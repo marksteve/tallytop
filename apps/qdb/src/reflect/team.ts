@@ -31,6 +31,12 @@ export const createTeam = async (
   await putTeam(tx, { ...team, number })
 }
 
+const sortByNumber = (a: Team, b: Team) => a.number - b.number
+
+export const listTeamsSorted = async (tx: ReadTransaction) => {
+  return (await listTeams(tx)).toSorted(sortByNumber)
+}
+
 export const scoreMultiplier = {
   mens: 1,
   womens: 1.5,

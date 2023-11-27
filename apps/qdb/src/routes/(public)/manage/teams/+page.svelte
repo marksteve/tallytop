@@ -3,14 +3,14 @@
   import Input from '$lib/components/input.svelte'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
-  import { listTeams, type Team } from '$reflect/team'
+  import { listTeamsSorted, type Team } from '$reflect/team'
   import { nanoid } from 'nanoid'
   import { z } from 'zod'
 
   let teams: Team[] = []
 
   r.subscribe(
-    (tx) => listTeams(tx),
+    (tx) => listTeamsSorted(tx),
     (data) => {
       teams = data
     },

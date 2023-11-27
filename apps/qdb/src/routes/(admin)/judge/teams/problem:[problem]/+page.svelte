@@ -1,13 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { r } from '$lib/reflect'
-  import { listTeams, type Team } from '$reflect/team'
+  import { listTeamsSorted, type Team } from '$reflect/team'
   import { variants } from '@tallytop/ui'
 
   let teams: Team[] = []
 
   r.subscribe(
-    (tx) => listTeams(tx),
+    (tx) => listTeamsSorted(tx),
     (data) => {
       teams = data
     },
