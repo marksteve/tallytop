@@ -24,7 +24,7 @@
   let member: Team['members'][number]
   let prevMember: Team['members'][number]
   let nextMember: Team['members'][number]
-  let nextTeam: Team
+  let nextTeam: Team | undefined
 
   $: if (team) {
     members = team?.members ?? []
@@ -32,7 +32,10 @@
     prevMember =
       members[(members.indexOf(member) - 1 + members.length) % members.length]
     nextMember = members[(members.indexOf(member) + 1) % members.length]
-    nextTeam = teams[(teams.indexOf(team) + 1) % teams.length]
+    nextTeam =
+      teams.indexOf(team) + 1 < teams.length
+        ? teams[teams.indexOf(team) + 1]
+        : undefined
   }
 
   r.subscribe(
@@ -93,8 +96,8 @@
         next member
       </a>
       <a
-        href={`../team:${nextTeam.id}`}
-        class={variants.button({ class: 'col-start-2' })}
+        href={nextTeam ? `../team:${nextTeam.id}` : '#'}
+        class={variants.button({ class: 'col-start-2', disabled: !nextTeam })}
       >
         next team
       </a>
