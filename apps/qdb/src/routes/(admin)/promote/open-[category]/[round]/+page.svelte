@@ -13,11 +13,6 @@
   const category = `open-${$page.params.category}`
   const round = $page.params.round
 
-  const numProblems = {
-    qualis: 5,
-    finals: 4,
-  }[round]
-
   const nextRound = {
     qualis: 'finals',
     finals: 'winners',
@@ -34,7 +29,6 @@
       return await listCompetitorsWithScores(tx, {
         competitors,
         attemptsPrefix: [category, round],
-        numProblems,
       })
     },
     (data) => {
@@ -97,8 +91,6 @@
           z{competitor.scores.total.z}
           ta{competitor.scores.total.ta}
           za{competitor.scores.total.za}
-        {:else}
-          still climbing
         {/if}
       </span>
     </button>

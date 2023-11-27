@@ -44,19 +44,20 @@ export const scoreMultiplier = {
 }
 
 export const listTeamsWithScores = async (tx: ReadTransaction) => {
-  const numProblems = 6
   const teams = await listTeams(tx)
   const attempts = await tx
     .scan({ prefix: ['attempts', 'teams'].join('/') })
     .entries()
     .toArray()
   const scores: Record<string, Record<string, Record<string, Score>>> = {}
-  for (let [key, value] of attempts) {
+  for (const [key, value] of attempts) {
     const [team, member, problem] = key.split('/').slice(2)
     scores[team] = scores[team] ?? {}
     scores[team][member] = scores[team][member] ?? {}
     scores[team][member][problem] = getScore(value as string)
-    if (Object.keys(scores[team][member]).length === numProblems) {
+  }
+  for (const team of Object.keys(scores)) {
+    for (const member of Object.keys(scores[team])) {
       scores[team][member]['total'] = Object.values(
         scores[team][member],
       ).reduce((a, b) => {

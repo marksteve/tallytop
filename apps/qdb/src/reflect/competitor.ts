@@ -53,11 +53,9 @@ export const listCompetitorsWithScores = async (
   {
     competitors,
     attemptsPrefix,
-    numProblems,
   }: {
     competitors: Competitor[]
     attemptsPrefix: string[]
-    numProblems: number
   },
 ): Promise<CompetitorWithScores[]> => {
   const attempts = await tx
@@ -65,23 +63,23 @@ export const listCompetitorsWithScores = async (
     .entries()
     .toArray()
   const scores: Record<string, Record<string, Score>> = {}
-  for (let [key, value] of attempts) {
+  for (const [key, value] of attempts) {
     const [competitor, problem] = key
       .split('/')
       .slice(attemptsPrefix.length + 1)
     scores[competitor] = scores[competitor] ?? {}
     scores[competitor][problem] = getScore(value as string)
-    if (Object.keys(scores[competitor]).length === numProblems) {
-      scores[competitor].total = Object.values(scores[competitor]).reduce(
-        (a, b) => ({
-          t: a.t + b.t,
-          z: a.z + b.z,
-          ta: a.ta + b.ta,
-          za: a.za + b.za,
-        }),
-        { t: 0, z: 0, ta: 0, za: 0 },
-      )
-    }
+  }
+  for (const competitor of Object.keys(scores)) {
+    scores[competitor].total = Object.values(scores[competitor]).reduce(
+      (a, b) => ({
+        t: a.t + b.t,
+        z: a.z + b.z,
+        ta: a.ta + b.ta,
+        za: a.za + b.za,
+      }),
+      { t: 0, z: 0, ta: 0, za: 0 },
+    )
   }
   return competitors.map((competitor) => ({
     ...competitor,

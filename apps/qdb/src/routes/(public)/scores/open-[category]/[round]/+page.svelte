@@ -45,7 +45,6 @@
       return await listCompetitorsWithScores(tx, {
         competitors,
         attemptsPrefix,
-        numProblems: problems.length,
       })
     },
     (data) => {
