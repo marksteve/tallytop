@@ -7,9 +7,8 @@
     listCompetitorsByCategory,
     listCompetitorsWithScores,
     type CompetitorWithScores,
-    type Score,
   } from '$reflect/competitor'
-  import { listPromotedCompetitors } from '$reflect/score'
+  import { listPromotedCompetitors, type Score } from '$reflect/score'
 
   const category = `open-${$page.params.category}`
   const round = $page.params.round
@@ -24,7 +23,7 @@
     finals: 'Finals',
   }[round]
 
-  $: problems = [
+  const problems = [
     ...Array(
       {
         qualis: 5,

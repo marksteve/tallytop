@@ -45,7 +45,7 @@
   let attemptsKey: string[] = []
 
   $: if (team && member) {
-    attemptsKey = ['teams', problem, team.id, member.id]
+    attemptsKey = ['teams', team.id, member.id, problem]
   }
 
   const attempts = writable('')

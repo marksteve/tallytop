@@ -1,5 +1,6 @@
 import { generate } from '@rocicorp/rails'
 import type { ReadTransaction, WriteTransaction } from '@rocicorp/reflect'
+import { getScore, type Score } from './score'
 
 export type Competitor = {
   id: string
@@ -41,24 +42,6 @@ export const listCompetitorsByCategory = async (
   return (await listCompetitors(tx))
     .filter((c) => c.category === category)
     .toSorted(sortByNumber)
-}
-
-export type Score = {
-  t: number
-  z: number
-  ta: number
-  za: number
-}
-
-const getScore = (attempts: string): Score => {
-  const ta = attempts.indexOf('t') + 1
-  const za = attempts.indexOf('z') + 1
-  return {
-    t: ta > 0 ? 1 : 0,
-    z: ta + za > 0 ? 1 : 0,
-    ta: ta || 0,
-    za: za || ta || 0,
-  }
 }
 
 export type CompetitorWithScores = Competitor & {
