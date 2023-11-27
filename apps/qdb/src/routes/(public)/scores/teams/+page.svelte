@@ -1,6 +1,6 @@
 <script lang="ts">
   import Playground from '$lib/components/playground.svelte'
-
+  import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
   import { type Score } from '$reflect/score'
   import {
@@ -66,18 +66,18 @@
         <div>Ta</div>
         <div>Za</div>
         {#each teams as team}
-          <div class="contents text-3xl">
+          <div class="contents text-2xl">
             {#each team.members as member, i}
               <div class="col-start-1">
                 {#if i === 0}{team.name}{/if}
               </div>
-              <div>{member.name}</div>
+              <div>{labels.categories[member.category]} {member.name}</div>
               {#each problems as problem, i}
                 {#if team.scores[member.id][i + 1]}
                   <img
                     src={getImage(team.scores[member.id][i + 1])}
                     alt={problem}
-                    class="h-12"
+                    class="h-8"
                   />
                 {/if}
               {/each}
@@ -85,7 +85,7 @@
                 <div>
                   {team.scores[member.id].total.t}
                   {#if scoreMultiplier[member.category] > 1}
-                    <span class="text-base align-middle">
+                    <span class="align-middle text-base">
                       &times; {scoreMultiplier[member.category]}
                     </span>
                   {/if}
@@ -93,7 +93,7 @@
                 <div>
                   {team.scores[member.id].total.z}
                   {#if scoreMultiplier[member.category] > 1}
-                    <span class="text-base align-middle">
+                    <span class="align-middle text-base">
                       &times; {scoreMultiplier[member.category]}
                     </span>
                   {/if}
