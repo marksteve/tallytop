@@ -55,10 +55,10 @@
         switch (true) {
           case A.t !== B.t:
             return B.t - A.t
-          case A.ta !== B.ta:
-            return A.ta - B.ta
           case A.z !== B.z:
             return B.z - A.z
+          case A.ta !== B.ta:
+            return A.ta - B.ta
           case A.za !== B.za:
             return A.za - B.za
           default:
