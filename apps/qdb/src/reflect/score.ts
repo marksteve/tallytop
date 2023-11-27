@@ -43,7 +43,7 @@ export const listPromotedCompetitors = async (
 ) => {
   const promoted =
     (await tx.get<string[]>(['promoted', ...key].join('/'))) ?? []
-  return await Promise.all<Competitor[]>(
-    promoted.map((id) => getCompetitor(tx, id)),
-  )
+  return (
+    await Promise.all(promoted.map((id) => getCompetitor(tx, id)))
+  ).filter((c) => c !== undefined) as Competitor[]
 }
