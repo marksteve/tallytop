@@ -2,7 +2,7 @@
   import Playground from '$lib/components/playground.svelte'
   import * as labels from '$lib/labels'
   import { r } from '$lib/reflect'
-  import { type Score } from '$reflect/score'
+  import type { Score } from '$reflect/score'
   import {
     listTeamsWithScores,
     scoreMultiplier,
@@ -15,7 +15,7 @@
 
   r.subscribe(listTeamsWithScores, (data) => {
     teams = data.toSorted((a, b) => {
-      if (!a.scores.total || !b.scores.total) return 0
+      if (!a.scores?.total || !b.scores?.total) return 0
       const A = a.scores.total
       const B = b.scores.total
       switch (true) {
@@ -73,15 +73,17 @@
               </div>
               <div>{labels.categories[member.category]} {member.name}</div>
               {#each problems as problem, i}
-                {#if team.scores[member.id][i + 1]}
+                {#if team?.scores[member.id]?.[i + 1]}
                   <img
                     src={getImage(team.scores[member.id][i + 1])}
                     alt={problem}
                     class="h-8"
                   />
+                {:else}
+                  <div />
                 {/if}
               {/each}
-              {#if team.scores[member.id].total}
+              {#if team?.scores[member.id]?.total}
                 <div>
                   {team.scores[member.id].total.t}
                   {#if scoreMultiplier[member.category] > 1}
@@ -102,10 +104,12 @@
                 <div>{team.scores[member.id].total.za}</div>
               {/if}
             {/each}
-            <div class="col-start-9">{team.scores.total.t}</div>
-            <div>{team.scores.total.z}</div>
-            <div>{team.scores.total.ta}</div>
-            <div>{team.scores.total.za}</div>
+            {#if team.scores?.total}
+              <div class="col-start-9">{team.scores.total.t}</div>
+              <div>{team.scores.total.z}</div>
+              <div>{team.scores.total.ta}</div>
+              <div>{team.scores.total.za}</div>
+            {/if}
           </div>
         {/each}
       </div>

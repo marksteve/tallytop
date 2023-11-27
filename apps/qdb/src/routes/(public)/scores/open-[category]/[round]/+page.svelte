@@ -50,7 +50,7 @@
     },
     (data) => {
       competitors = data.toSorted((a, b) => {
-        if (!a.scores.total || !b.scores.total) return 0
+        if (!a.scores?.total || !b.scores?.total) return 0
         const A = a.scores.total
         const B = b.scores.total
         switch (true) {
@@ -109,15 +109,17 @@
             <div class="col-start-1">#{competitor.number}</div>
             <div>{competitor.name}</div>
             {#each problems as problem, i}
-              {#if competitor.scores[i + 1]}
+              {#if competitor.scores?.[i + 1]}
                 <img
                   src={getImage(competitor.scores[i + 1])}
                   alt={problem}
                   class="h-12"
                 />
+              {:else}
+                <div />
               {/if}
             {/each}
-            {#if competitor.scores.total}
+            {#if competitor.scores?.total}
               <div>{competitor.scores.total.t}</div>
               <div>{competitor.scores.total.z}</div>
               <div>{competitor.scores.total.ta}</div>

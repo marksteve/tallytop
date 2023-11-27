@@ -39,7 +39,7 @@
     },
     (data) => {
       competitors = data.toSorted((a, b) => {
-        if (!a.scores.total || !b.scores.total) return 0
+        if (!a.scores?.total || !b.scores?.total) return 0
         const A = a.scores.total
         const B = b.scores.total
         switch (true) {
