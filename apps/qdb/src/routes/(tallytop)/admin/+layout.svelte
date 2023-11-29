@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
-  import '../../tallytop.css'
+  import '../../../tallytop.css'
 
   let height = 0
   onMount(() => {

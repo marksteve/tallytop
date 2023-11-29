@@ -4,13 +4,13 @@
 
 <div class={variants.list()}>
   <a
-    href="./judge"
+    href="./admin/judge"
     class={variants.listItem({ class: 'font-tanker text-3xl' })}
   >
     judge
   </a>
   <a
-    href="./promote"
+    href="./admin/promote"
     class={variants.listItem({ class: 'font-tanker text-3xl' })}
   >
     promote
