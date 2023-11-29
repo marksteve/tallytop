@@ -3,7 +3,8 @@ import { Reflect } from '@rocicorp/reflect/client'
 import { mutators } from '../reflect/mutators'
 
 export const r = new Reflect({
-  userID: 'public',
+  userID: 'admin',
+  auth: 'password',
   roomID: 'qdb-2023',
   server: PUBLIC_REFLECT_URL,
   mutators,

@@ -1,3 +1,4 @@
+import type { WriteTransaction } from '@rocicorp/reflect'
 import {
   createCompetitor,
   deleteCompetitor,
@@ -7,20 +8,31 @@ import {
 import { promoteCompetitors, putAttempts } from './score'
 import { createTeam, deleteTeam, listTeams, updateTeam } from './team'
 
+const requireAdmin = (
+  mutator: (tx: WriteTransaction, ...args: any[]) => Promise<void>,
+) => {
+  return (tx: WriteTransaction, ...args: any[]) => {
+    if (tx.auth === undefined || tx.auth?.userID === 'admin') {
+      return mutator(tx, ...args)
+    }
+    throw new Error('Unauthorized')
+  }
+}
+
 export const mutators = {
   // teams
-  createTeam,
+  createTeam: requireAdmin(createTeam),
   listTeams,
-  updateTeam,
-  deleteTeam,
+  updateTeam: requireAdmin(updateTeam),
+  deleteTeam: requireAdmin(deleteTeam),
   // competitor
-  createCompetitor,
+  createCompetitor: requireAdmin(createCompetitor),
   listCompetitors,
-  updateCompetitor,
-  deleteCompetitor,
+  updateCompetitor: requireAdmin(updateCompetitor),
+  deleteCompetitor: requireAdmin(deleteCompetitor),
   // score
-  putAttempts,
-  promoteCompetitors,
+  putAttempts: requireAdmin(putAttempts),
+  promoteCompetitors: requireAdmin(promoteCompetitors),
 }
 
 export type M = typeof mutators
