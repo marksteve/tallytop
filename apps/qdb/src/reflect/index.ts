@@ -6,7 +6,7 @@ function makeOptions(): ReflectServerOptions<M> {
   return {
     mutators,
     authHandler: (auth: string, roomID: string, env: Env) => {
-      if (auth === env.password) {
+      if (auth === env.auth) {
         return { userID: 'admin', write: true }
       }
       return { userID: 'public' }
