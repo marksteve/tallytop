@@ -9,15 +9,15 @@
   class="relative flex h-screen w-screen flex-col items-center justify-center gap-4"
 >
   <div
-    class="text-brand-red bg-brand-peach rounded-tl-full rounded-tr-full border border-current p-4 text-center"
+    class="text-brand-red bg-brand-peach rounded-tl-full rounded-tr-full border border-current p-6 text-center"
   >
-    <div class="text-xl">2023</div>
-    <div class="font-serif text-4xl">
+    <div class="text-3xl">2023</div>
+    <div class="font-serif text-6xl">
       Queso de
       <br />
       Boulder
     </div>
-    <div class="py-2 text-2xl">
+    <div class="py-3 text-3xl">
       <Star />
       a bhive
       <Star />
