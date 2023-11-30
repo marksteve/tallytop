@@ -85,7 +85,7 @@
     {categoryTitle}
   </div>
   <div
-    class="bg-brand-red flex items-center gap-1 rounded-full px-2 uppercase leading-8 text-white"
+    class="bg-brand-red text-brand-peach flex items-center gap-1 rounded-full px-2 uppercase leading-8"
   >
     <Star class="text-brand-yellow text-lg" />
     {roundTitle}
@@ -93,7 +93,7 @@
   </div>
   {#each competitors as competitor}
     <div
-      class="border-brand-red bg-brand-peach flex flex-col gap-5 self-stretch rounded-xl border p-5 text-center"
+      class="border-brand-red bg-brand-peach flex flex-col gap-2 self-stretch rounded-xl border p-5 text-center"
     >
       <div class="text-3xl">#{competitor.number} {competitor.name}</div>
       <div class="flex justify-between">
@@ -112,16 +112,16 @@
       </div>
       {#if competitor.scores?.total}
         <div class="grid grid-cols-4 justify-around">
-          <div>T</div>
-          <div>Z</div>
-          <div>TA</div>
-          <div>ZA</div>
-          <div class="text-brand-red text-3xl">{competitor.scores.total.t}</div>
-          <div class="text-brand-red text-3xl">{competitor.scores.total.z}</div>
-          <div class="text-brand-red text-3xl">
+          <div class="text-xs">T</div>
+          <div class="text-xs">Z</div>
+          <div class="text-xs">TA</div>
+          <div class="text-xs">ZA</div>
+          <div class="text-brand-red text-xl">{competitor.scores.total.t}</div>
+          <div class="text-brand-red text-xl">{competitor.scores.total.z}</div>
+          <div class="text-brand-red text-xl">
             {competitor.scores.total.ta}
           </div>
-          <div class="text-brand-red text-3xl">
+          <div class="text-brand-red text-xl">
             {competitor.scores.total.za}
           </div>
         </div>

@@ -47,74 +47,48 @@
   }
 </script>
 
-<Playground />
-
-<main class="relative flex h-screen w-screen items-center justify-center">
-  <div class="grid w-full max-w-screen-lg p-5">
-    <div class="border-brand-red flex flex-col gap-5 border-2 bg-white p-5">
-      <div class="text-brand-red font-serif text-6xl">Teams</div>
+<main class="flex flex-col items-center gap-10 p-5">
+  <div class="text-brand-red font-serif text-6xl">Teams</div>
+  {#each teams as team}
+    <div
+      class="border-brand-red bg-brand-peach flex flex-col self-stretch rounded-xl border px-5 pb-5 text-center"
+    >
       <div
-        class="grid grid-cols-[max-content_1fr_repeat(10,max-content)] items-center gap-5"
+        class="text-brand-peach bg-brand-red -translate-y-1/2 self-center rounded-full px-3 py-1 text-3xl"
       >
-        <div></div>
-        <div></div>
-        <div class="contents text-center">
-          {#each problems as problem}
-            <div>{problem}</div>
-          {/each}
-        </div>
-        <div>T</div>
-        <div>Z</div>
-        <div>Ta</div>
-        <div>Za</div>
-        {#each teams as team}
-          <div class="contents text-2xl">
-            {#each team.members as member, i}
-              <div class="col-start-1">
-                {#if i === 0}{team.name}{/if}
-              </div>
-              <div>{labels.categories[member.category]} {member.name}</div>
-              {#each problems as problem, i}
-                {#if team?.scores[member.id]?.[i + 1]}
-                  <img
-                    src={getImage(team.scores[member.id][i + 1])}
-                    alt={problem}
-                    class="h-8"
-                  />
-                {:else}
-                  <div />
-                {/if}
-              {/each}
-              {#if team?.scores[member.id]?.total}
-                <div>
-                  {team.scores[member.id].total.t}
-                  {#if scoreMultiplier[member.category] > 1}
-                    <span class="align-middle text-base">
-                      &times; {scoreMultiplier[member.category]}
-                    </span>
-                  {/if}
-                </div>
-                <div>
-                  {team.scores[member.id].total.z}
-                  {#if scoreMultiplier[member.category] > 1}
-                    <span class="align-middle text-base">
-                      &times; {scoreMultiplier[member.category]}
-                    </span>
-                  {/if}
-                </div>
-                <div>{team.scores[member.id].total.ta}</div>
-                <div>{team.scores[member.id].total.za}</div>
-              {/if}
-            {/each}
-            {#if team.scores?.total}
-              <div class="col-start-9">{team.scores.total.t}</div>
-              <div>{team.scores.total.z}</div>
-              <div>{team.scores.total.ta}</div>
-              <div>{team.scores.total.za}</div>
-            {/if}
+        {team.name}
+      </div>
+      <div
+        class="grid grid-cols-[1fr_repeat(6,max-content)] items-center gap-1"
+      >
+        {#each team.members as member, i}
+          <div class="text-brand-red flex gap-1 text-left leading-none">
+            {labels.categories[member.category]}
+            <div>{member.name}</div>
           </div>
+          {#each problems as problem, i}
+            {#if team?.scores[member.id]?.[i + 1]}
+              <img
+                src={getImage(team.scores[member.id][i + 1])}
+                alt={problem}
+                class="h-6"
+              />
+            {/if}
+          {/each}
         {/each}
       </div>
+      {#if team.scores?.total}
+        <div class="grid grid-cols-4 justify-around pt-5">
+          <div class="text-xs">T</div>
+          <div class="text-xs">Z</div>
+          <div class="text-xs">TA</div>
+          <div class="text-xs">ZA</div>
+          <div class="text-brand-red text-xl">{team.scores.total.t}</div>
+          <div class="text-brand-red text-xl">{team.scores.total.z}</div>
+          <div class="text-brand-red text-xl">{team.scores.total.ta}</div>
+          <div class="text-brand-red text-xl">{team.scores.total.za}</div>
+        </div>
+      {/if}
     </div>
-  </div>
+  {/each}
 </main>
