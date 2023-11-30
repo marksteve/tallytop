@@ -4,7 +4,7 @@
   viewBox="0 0 48 48"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  class="inline-block"
+  class="inline-block {$$props.class}"
 >
   <path
     fill-rule="evenodd"

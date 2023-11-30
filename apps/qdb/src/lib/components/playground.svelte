@@ -72,8 +72,6 @@
       '/images/quarter-with-bolts.png',
     )
   }
-  const logo = (coords: [number, number]) =>
-    Bodies.circle(...coords, 143, options({ texture: '/images/logo.png' }))
   const slice = (coords: [number, number], node: HTMLElement) => {
     const sliceBody = pathToVertices(node.querySelector('#slice-body'))
     return bodyFromVertices(...coords, sliceBody, '/images/slice.png')
@@ -85,10 +83,17 @@
     threeQuarters,
     threeQuartersWithBolts,
     half,
+    half,
+    halfWithBolts,
     halfWithBolts,
     square,
     square,
     square,
+    square,
+    square,
+    square,
+    quarter,
+    quarter,
     quarter,
     quarter,
     slice,
@@ -114,7 +119,7 @@
     })
 
     const holds = [
-      ...Array(25)
+      ...Array(30)
         .fill(null)
         .map(() => {
           const n = Math.floor(Math.random() * bodies.length)
@@ -122,7 +127,6 @@
           const y = -Math.floor(Math.random() * height)
           return bodies[n]([x, y], node)
         }),
-      logo([width / 10, -height]),
     ]
 
     const ground = [
