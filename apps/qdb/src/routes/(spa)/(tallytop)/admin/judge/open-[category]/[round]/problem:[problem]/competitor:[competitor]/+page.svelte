@@ -76,7 +76,7 @@
 </script>
 
 {#if competitor}
-  <div class="font-tanker grid h-full grid-rows-[min-content_1fr_min-content]">
+  <div class="grid h-full grid-rows-[min-content_1fr_min-content]">
     <div class="flex justify-center gap-2 p-2 text-3xl">
       <div class="text-slate-400">#{competitor.number}</div>
       <div>{competitor.name}</div>

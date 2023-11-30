@@ -8,7 +8,7 @@
   {#each problems as problem}
     <a
       href={`./teams/problem:${problem}`}
-      class={variants.listItem({ class: 'font-tanker text-3xl' })}
+      class={variants.listItem({ class: 'text-3xl' })}
     >
       problem {problem}
     </a>

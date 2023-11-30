@@ -7,13 +7,13 @@
 <div class={variants.list()}>
   <a
     href={`./open-${$page.params.category}/qualis`}
-    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+    class={variants.listItem({ class: 'text-3xl' })}
   >
     qualis
   </a>
   <a
     href={`./open-${$page.params.category}/finals`}
-    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+    class={variants.listItem({ class: 'text-3xl' })}
   >
     finals
   </a>

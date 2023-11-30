@@ -75,7 +75,7 @@
   }
 </script>
 
-<div class={variants.list({ class: 'font-tanker' })}>
+<div class={variants.list()}>
   {#each competitors as competitor}
     <button
       class={variants.listItem({

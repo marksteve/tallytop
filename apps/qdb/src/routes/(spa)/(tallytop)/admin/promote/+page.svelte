@@ -5,13 +5,13 @@
 <div class={variants.list()}>
   <a
     href="./promote/open-m"
-    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+    class={variants.listItem({ class: 'text-3xl' })}
   >
     open men's
   </a>
   <a
     href="./promote/open-w"
-    class={variants.listItem({ class: 'font-tanker text-3xl' })}
+    class={variants.listItem({ class: 'text-3xl' })}
   >
     open women's
   </a>

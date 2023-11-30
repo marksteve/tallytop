@@ -80,7 +80,7 @@
 </script>
 
 {#if member}
-  <div class="font-tanker grid h-full grid-rows-[min-content_1fr_min-content]">
+  <div class="grid h-full grid-rows-[min-content_1fr_min-content]">
     <div class="flex flex-col p-2 text-center text-3xl">
       <div>{labels.categories[member.category]}</div>
       <div>{member.name}</div>

@@ -22,7 +22,7 @@
     {#each members as member}
       <a
         href={`./team:${team.id}/member:${member.id}`}
-        class={variants.listItem({ class: 'font-tanker gap-2 text-3xl' })}
+        class={variants.listItem({ class: 'gap-2 text-3xl' })}
       >
         <span>{labels.categories[member.category]}</span>
         <span>{member.name}</span>

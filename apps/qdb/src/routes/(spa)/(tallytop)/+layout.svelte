@@ -17,10 +17,10 @@
 </svelte:head>
 
 <div
-  class="absolute inset-0 grid grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
+  class="font-tanker absolute inset-0 grid grid-rows-[min-content_1fr] bg-slate-100 text-slate-900"
   style={`height: ${height}px`}
 >
-  <div class="font-tanker z-10 flex flex-wrap bg-white shadow-lg">
+  <div class="z-10 flex flex-wrap bg-white shadow-lg">
     <div class="w-full p-2 text-center text-lg">
       <a href="/admin">tallytop</a>
     </div>

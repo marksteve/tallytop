@@ -19,7 +19,7 @@
   {#each teams as team}
     <a
       href={`./problem:${$page.params.problem}/team:${team.id}`}
-      class={variants.listItem({ class: 'font-tanker text-3xl' })}
+      class={variants.listItem({ class: 'text-3xl' })}
     >
       {team.name}
     </a>

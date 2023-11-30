@@ -32,7 +32,7 @@
   {#each competitors as competitor}
     <a
       href={`./problem:${$page.params.problem}/competitor:${competitor.id}`}
-      class={variants.listItem({ class: 'font-tanker flex gap-2 text-3xl' })}
+      class={variants.listItem({ class: 'flex gap-2 text-3xl' })}
     >
       <span class="text-slate-400">#{competitor.number}</span>
       {competitor.name}
