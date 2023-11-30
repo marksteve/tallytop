@@ -104,7 +104,7 @@
   </div>
   {#each competitors as competitor}
     <div
-      class="border-brand-red bg-brand-peach flex w-full max-w-screen-md flex-col gap-2 rounded-xl border p-5 text-center md:grid md:grid-cols-2"
+      class="border-brand-red bg-brand-peach relative flex w-full max-w-screen-md flex-col gap-2 rounded-xl border p-5 text-center md:grid md:grid-cols-2"
     >
       <div class="text-3xl md:text-left">
         #{competitor.number}
@@ -140,6 +140,11 @@
           </div>
         </div>
       {/if}
+      <button
+        class="bg-brand-red absolute left-full top-0 flex h-8 w-8 -translate-x-2/3 -translate-y-1/3 items-center justify-center rounded-full text-xl transition-transform active:scale-150"
+      >
+        👏
+      </button>
     </div>
   {/each}
 </main>
