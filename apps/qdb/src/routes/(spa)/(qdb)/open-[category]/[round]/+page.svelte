@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Playground from '$lib/components/playground.svelte'
+  import Star from '$lib/components/star.svelte'
   import {
     listCompetitorsByCategory,
     listCompetitorsWithScores,
@@ -80,53 +80,52 @@
   }
 </script>
 
-<Playground />
-
-<main class="relative flex h-screen w-screen items-center justify-center">
-  <div class="grid w-full max-w-screen-lg p-5">
-    <div class="border-brand-red flex flex-col gap-5 border-2 bg-white p-5">
-      <div class="text-brand-red font-serif text-6xl">
-        {categoryTitle}
-        {roundTitle}
-      </div>
-      <div
-        class="grid grid-cols-[max-content_1fr_repeat(9,max-content)] items-center gap-5"
-      >
-        <div class="contents text-center">
-          <div></div>
-          <div></div>
-          {#each problems as problem}
-            <div>{problem}</div>
-          {/each}
-          <div>T</div>
-          <div>Z</div>
-          <div>Ta</div>
-          <div>Za</div>
-        </div>
-        {#each competitors as competitor}
-          <div class="contents text-3xl">
-            <div class="col-start-1">#{competitor.number}</div>
-            <div>{competitor.name}</div>
-            {#each problems as problem, i}
-              {#if competitor.scores?.[i + 1]}
-                <img
-                  src={getImage(competitor.scores[i + 1])}
-                  alt={problem}
-                  class="h-12"
-                />
-              {:else}
-                <div />
-              {/if}
-            {/each}
-            {#if competitor.scores?.total}
-              <div>{competitor.scores.total.t}</div>
-              <div>{competitor.scores.total.z}</div>
-              <div>{competitor.scores.total.ta}</div>
-              <div>{competitor.scores.total.za}</div>
+<main class="flex flex-col items-center gap-5 p-5">
+  <div class="text-brand-red font-serif text-6xl">
+    {categoryTitle}
+  </div>
+  <div
+    class="bg-brand-red flex items-center gap-1 rounded-full px-2 uppercase leading-8 text-white"
+  >
+    <Star class="text-brand-yellow text-lg" />
+    {roundTitle}
+    <Star class="text-brand-yellow text-lg" />
+  </div>
+  {#each competitors as competitor}
+    <div
+      class="border-brand-red bg-brand-peach flex flex-col gap-5 self-stretch rounded-xl border p-5 text-center"
+    >
+      <div class="text-3xl">#{competitor.number} {competitor.name}</div>
+      <div class="flex justify-between">
+        {#each problems as problem, i}
+          <div class="text-center">
+            {#if competitor.scores?.[i + 1]}
+              {problem}
+              <img
+                src={getImage(competitor.scores[i + 1])}
+                alt={problem}
+                class="h-8"
+              />
             {/if}
           </div>
         {/each}
       </div>
+      {#if competitor.scores?.total}
+        <div class="grid grid-cols-4 justify-around">
+          <div>T</div>
+          <div>Z</div>
+          <div>TA</div>
+          <div>ZA</div>
+          <div class="text-brand-red text-3xl">{competitor.scores.total.t}</div>
+          <div class="text-brand-red text-3xl">{competitor.scores.total.z}</div>
+          <div class="text-brand-red text-3xl">
+            {competitor.scores.total.ta}
+          </div>
+          <div class="text-brand-red text-3xl">
+            {competitor.scores.total.za}
+          </div>
+        </div>
+      {/if}
     </div>
-  </div>
+  {/each}
 </main>
