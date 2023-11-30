@@ -71,8 +71,19 @@
           <div>ZA</div>
         </div>
         {#each team.members as member, i}
-          <div class="text-brand-red flex gap-1 text-left leading-none">
-            {labels.categories[member.category]}
+          <div
+            class="text-brand-red flex items-center gap-1 text-left leading-none"
+          >
+            <div class="relative text-3xl">
+              {#if scoreMultiplier[member.category] > 1}
+                <div
+                  class="text-brand-peach bg-brand-red absolute bottom-1/2 right-3/4 h-6 w-6 rounded-full text-center text-xs leading-6"
+                >
+                  x{scoreMultiplier[member.category]}
+                </div>
+              {/if}
+              <div class="relative">{labels.categories[member.category]}</div>
+            </div>
             <div>{member.name}</div>
           </div>
           {#each problems as problem, i}
