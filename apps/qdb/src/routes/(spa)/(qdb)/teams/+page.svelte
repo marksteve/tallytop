@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Playground from '$lib/components/playground.svelte'
   import * as labels from '$lib/labels'
   import type { Score } from '$reflect/score'
   import {
@@ -51,7 +50,7 @@
   <div class="text-brand-red font-serif text-6xl">Teams</div>
   {#each teams as team}
     <div
-      class="border-brand-red bg-brand-peach flex flex-col self-stretch rounded-xl border px-5 pb-5 text-center"
+      class="border-brand-red bg-brand-peach flex w-full max-w-screen-md flex-col rounded-xl border px-5 pb-5 text-center"
     >
       <div
         class="text-brand-peach bg-brand-red -translate-y-1/2 self-center rounded-full px-3 py-1 text-3xl"
@@ -59,8 +58,18 @@
         {team.name}
       </div>
       <div
-        class="grid grid-cols-[1fr_repeat(6,max-content)] items-center gap-1"
+        class="grid grid-cols-[1fr_repeat(6,max-content)] items-center gap-1 md:grid-cols-[1fr_repeat(10,max-content)] md:gap-x-5"
       >
+        <div class="hidden text-xs md:contents">
+          <div />
+          {#each problems as problem, i}
+            <div>{problem}</div>
+          {/each}
+          <div>T</div>
+          <div>Z</div>
+          <div>TA</div>
+          <div>ZA</div>
+        </div>
         {#each team.members as member, i}
           <div class="text-brand-red flex gap-1 text-left leading-none">
             {labels.categories[member.category]}
@@ -75,6 +84,14 @@
               />
             {/if}
           {/each}
+          {#if team?.scores[member.id]?.total}
+            <div class="text-brand-red hidden text-xl md:contents">
+              <div class="w-10">{team.scores[member.id].total.t}</div>
+              <div class="w-10">{team.scores[member.id].total.z}</div>
+              <div class="w-10">{team.scores[member.id].total.ta}</div>
+              <div class="w-10">{team.scores[member.id].total.za}</div>
+            </div>
+          {/if}
         {/each}
       </div>
       {#if team.scores?.total}

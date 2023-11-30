@@ -93,10 +93,13 @@
   </div>
   {#each competitors as competitor}
     <div
-      class="border-brand-red bg-brand-peach flex flex-col gap-2 self-stretch rounded-xl border p-5 text-center"
+      class="border-brand-red bg-brand-peach flex w-full max-w-screen-md flex-col gap-2 rounded-xl border p-5 text-center md:grid md:grid-cols-2"
     >
-      <div class="text-3xl">#{competitor.number} {competitor.name}</div>
-      <div class="flex justify-between">
+      <div class="text-3xl md:text-left">
+        #{competitor.number}
+        {competitor.name}
+      </div>
+      <div class="row-span-2 flex justify-between md:items-center">
         {#each problems as problem, i}
           <div class="text-center">
             {#if competitor.scores?.[i + 1]}
@@ -111,7 +114,7 @@
         {/each}
       </div>
       {#if competitor.scores?.total}
-        <div class="grid grid-cols-4 justify-around">
+        <div class="grid grid-cols-4 justify-around md:justify-between">
           <div class="text-xs">T</div>
           <div class="text-xs">Z</div>
           <div class="text-xs">TA</div>
