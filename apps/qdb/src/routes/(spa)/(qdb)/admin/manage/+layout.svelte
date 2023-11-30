@@ -6,7 +6,7 @@
 
   const handleSelectCategory = (e) => {
     category = e.target.value
-    goto(`/manage/${category}`)
+    goto(`/admin/manage/${category}`)
   }
 </script>
 
