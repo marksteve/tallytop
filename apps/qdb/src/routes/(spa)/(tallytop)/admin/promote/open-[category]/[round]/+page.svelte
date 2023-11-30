@@ -71,7 +71,7 @@
       key: [category, nextRound],
       value: selected,
     })
-    goto(`/judge/${category}/${nextRound}`)
+    goto(`/admin/judge/${category}/${nextRound}`)
   }
 </script>
 

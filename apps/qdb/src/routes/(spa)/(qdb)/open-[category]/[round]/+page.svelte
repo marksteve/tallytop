@@ -10,20 +10,20 @@
 
   const { r } = $page.data
 
-  const category = `open-${$page.params.category}`
-  const round = $page.params.round
+  $: category = `open-${$page.params.category}`
+  $: round = $page.params.round
 
-  const categoryTitle = {
+  $: categoryTitle = {
     'open-m': `Open Men's`,
     'open-w': `Open Women's`,
   }[category]
 
-  const roundTitle = {
+  const roundTitles = {
     qualis: 'Qualifiers',
     finals: 'Finals',
-  }[round]
+  }
 
-  const problems = [
+  $: problems = [
     ...Array(
       {
         qualis: 5,
@@ -34,39 +34,43 @@
 
   let competitors: CompetitorWithScores[] = []
 
-  const attemptsPrefix = [category, round]
+  $: attemptsPrefix = [category, round]
 
-  r.subscribe(
-    async (tx) => {
-      const competitors =
-        round === 'qualis'
-          ? await listCompetitorsByCategory(tx, category)
-          : await listPromotedCompetitors(tx, [category, round])
-      return await listCompetitorsWithScores(tx, {
-        competitors,
-        attemptsPrefix,
-      })
-    },
-    (data) => {
-      competitors = data.toSorted((a, b) => {
-        if (!a.scores?.total || !b.scores?.total) return 0
-        const A = a.scores.total
-        const B = b.scores.total
-        switch (true) {
-          case A.t !== B.t:
-            return B.t - A.t
-          case A.z !== B.z:
-            return B.z - A.z
-          case A.ta !== B.ta:
-            return A.ta - B.ta
-          case A.za !== B.za:
-            return A.za - B.za
-          default:
-            return 0
-        }
-      })
-    },
-  )
+  let unsubscribe: () => void
+  $: {
+    unsubscribe && unsubscribe()
+    unsubscribe = r.subscribe(
+      async (tx) => {
+        const competitors =
+          round === 'qualis'
+            ? await listCompetitorsByCategory(tx, category)
+            : await listPromotedCompetitors(tx, [category, round])
+        return await listCompetitorsWithScores(tx, {
+          competitors,
+          attemptsPrefix,
+        })
+      },
+      (data) => {
+        competitors = data.toSorted((a, b) => {
+          if (!a.scores?.total || !b.scores?.total) return 0
+          const A = a.scores.total
+          const B = b.scores.total
+          switch (true) {
+            case A.t !== B.t:
+              return B.t - A.t
+            case A.z !== B.z:
+              return B.z - A.z
+            case A.ta !== B.ta:
+              return A.ta - B.ta
+            case A.za !== B.za:
+              return A.za - B.za
+            default:
+              return 0
+          }
+        })
+      },
+    )
+  }
 
   const getImage = (score: Score) => {
     switch (true) {
@@ -84,12 +88,19 @@
   <div class="text-brand-red font-serif text-6xl">
     {categoryTitle}
   </div>
-  <div
-    class="bg-brand-red text-brand-peach flex items-center gap-1 rounded-full px-2 uppercase leading-8"
-  >
-    <Star class="text-brand-yellow text-lg" />
-    {roundTitle}
-    <Star class="text-brand-yellow text-lg" />
+  <div class="flex gap-5">
+    {#each Object.entries(roundTitles) as [r, title]}
+      <a
+        href="./{r}"
+        class:bg-brand-red={round === r}
+        class:text-brand-peach={round === r}
+        class="text-brand-red border-brand-red flex items-center gap-1 rounded-full border px-2 uppercase leading-8"
+      >
+        <Star class="text-brand-yellow text-lg" />
+        {title}
+        <Star class="text-brand-yellow text-lg" />
+      </a>
+    {/each}
   </div>
   {#each competitors as competitor}
     <div
