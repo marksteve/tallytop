@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
-  let category: string = $page.url.pathname.split('/')[2]
+  let category: string = $page.url.pathname.split('/')[3]
 
   const handleSelectCategory = (e) => {
     category = e.target.value
