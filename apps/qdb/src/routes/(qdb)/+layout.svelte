@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../../app.css'
+  import 'app.css'
 </script>
 
 <svelte:head>
@@ -16,3 +16,11 @@
 </svelte:head>
 
 <slot />
+
+<style>
+  :global(body) {
+    background-image: url(/pattern.svg);
+    background-position: center;
+    @apply bg-brand-peach;
+  }
+</style>

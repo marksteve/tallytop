@@ -14,6 +14,8 @@ const config = {
     adapter: adapter(),
     alias: {
       $reflect: 'src/reflect',
+      'app.css': 'src/app.css',
+      'tallytop.css': 'src/tallytop.css',
     },
   },
 }
