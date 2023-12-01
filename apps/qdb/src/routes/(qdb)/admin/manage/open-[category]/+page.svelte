@@ -57,9 +57,25 @@
     })
     form.reset()
   }
+
+  const updateCompetitorNumbers = (e) => {
+    e.preventDefault()
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
+    const numbers = Object.fromEntries(formData.entries())
+    for (const competitor of competitors) {
+      r.mutate.updateCompetitor({
+        ...competitor,
+        number: numbers[competitor.id],
+      })
+    }
+  }
 </script>
 
-<div class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5">
+<form
+  class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5"
+  on:submit={updateCompetitorNumbers}
+>
   {#if competitors.length === 0}
     <div class="p-10 text-center">
       No competitors yet.
@@ -70,11 +86,17 @@
   {#each competitors as competitor}
     <div class="grid grid-cols-2 items-center gap-5">
       <h2 class="text-3xl">
-        #{competitor.number}
+        <Input
+          type="text"
+          name={competitor.id}
+          value={competitor.number}
+          class="w-20 text-center"
+        />
         {competitor.name}
       </h2>
       <div class="text-right">
         <Button
+          type="button"
           class="!bg-brand-red"
           on:click={() => r.mutate.deleteCompetitor(competitor.id)}
         >
@@ -83,7 +105,8 @@
       </div>
     </div>
   {/each}
-</div>
+  <Button type="submit">Save</Button>
+</form>
 
 <form
   on:submit={handleSubmit}
