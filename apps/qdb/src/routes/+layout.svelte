@@ -16,4 +16,8 @@
   })
 </script>
 
+<svelte:head>
+  <title>QDB 2023 - a bhive pamaskomp</title>
+</svelte:head>
+
 <slot />
