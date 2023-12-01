@@ -1,6 +1,6 @@
 {
   "name": "@tallytop/ui",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Styles and components for use in Tallytop apps",
   "scripts": {
     "dev": "vite dev",
