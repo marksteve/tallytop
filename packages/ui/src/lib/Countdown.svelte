@@ -1,7 +1,7 @@
 <script lang="ts">
   import parseMs from 'parse-ms'
   import { onDestroy, onMount } from 'svelte'
-  import { formatDuration } from './Timer.svelte'
+  import { formatDuration } from './duration.js'
 
   export let to: Date = new Date(Date.now() + 1000 * 60 * 60 * 24)
 
