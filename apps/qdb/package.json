@@ -29,7 +29,7 @@
   "dependencies": {
     "@rocicorp/rails": "^0.8.0",
     "@rocicorp/reflect": "^0.38.202311200859",
-    "@tallytop/ui": "2.0.0",
+    "@tallytop/ui": "3.0.0",
     "class-variance-authority": "^0.7.0",
     "matter-js": "^0.19.0",
     "nanoid": "^4.0.0",
