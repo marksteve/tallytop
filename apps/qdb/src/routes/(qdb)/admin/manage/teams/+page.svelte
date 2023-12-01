@@ -54,9 +54,25 @@
     })
     form.reset()
   }
+
+  const updateTeamNumbers = (e) => {
+    e.preventDefault()
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
+    const numbers = Object.fromEntries(formData.entries())
+    for (const team of teams) {
+      r.mutate.updateTeam({
+        ...team,
+        number: numbers[team.id],
+      })
+    }
+  }
 </script>
 
-<div class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5">
+<form
+  class="col-span-2 flex flex-col gap-5 rounded-3xl border bg-white p-5"
+  on:submit={updateTeamNumbers}
+>
   {#if teams.length === 0}
     <div class="p-10 text-center">
       No teams yet.
@@ -66,7 +82,15 @@
   {/if}
   {#each teams as team}
     <div class="grid grid-cols-6 items-center gap-5">
-      <h2 class="col-span-2 text-3xl">#{team.number} {team.name}</h2>
+      <h2 class="col-span-2 text-3xl">
+        <Input
+          type="text"
+          name={team.id}
+          value={team.number}
+          class="w-20 text-center"
+        />
+        {team.name}
+      </h2>
       {#each team.members as member}
         <div class="flex items-center gap-5">
           <div class="text-3xl">{labels.categories[member.category]}</div>
@@ -75,6 +99,7 @@
       {/each}
       <div class="text-right">
         <Button
+          type="button"
           class="!bg-brand-red"
           on:click={() => r.mutate.deleteTeam(team.id)}
         >
@@ -83,7 +108,8 @@
       </div>
     </div>
   {/each}
-</div>
+  <Button type="submit">Save</Button>
+</form>
 
 <form
   on:submit={handleSubmit}
