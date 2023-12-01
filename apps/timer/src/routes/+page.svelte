@@ -1,12 +1,16 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import Button from '$lib/components/Button.svelte'
   import { currentTimer, timerQueue } from '$lib/stores'
-  import { Button, Timer, formatDuration } from '@tallytop/ui'
+  import { Timer, formatDuration } from '@tallytop/ui'
+  import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
   import Backspace from 'phosphor-svelte/lib/Backspace'
+  import Play from 'phosphor-svelte/lib/Play'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
   import Repeat from 'phosphor-svelte/lib/Repeat'
-  import { tick, onMount } from 'svelte'
+  import Stop from 'phosphor-svelte/lib/Stop'
+  import { onMount, tick } from 'svelte'
 
   let sound: import('@pixi/sound').SoundLibrary
   onMount(async () => {
@@ -89,9 +93,9 @@
 
 <div class="flex min-h-screen flex-1 overflow-hidden">
   {#if !running}
-    <div class="absolute top-5 left-2">
+    <div class="absolute left-2 top-5">
       <Button variant="none" class="text-2xl" on:click={toggleQueue}>
-        <div class="flex gap-5 items-center" class:opacity-20={!queueShown}>
+        <div class="flex items-center gap-5" class:opacity-20={!queueShown}>
           <Queue />
           Edit timers
         </div>
@@ -100,7 +104,7 @@
   {/if}
 
   {#if queueShown}
-    <div class="max-h-screen overflow-y-auto bg-stone-50 p-5 pt-14 min-w-fit">
+    <div class="max-h-screen min-w-fit overflow-y-auto bg-stone-50 p-5 pt-14">
       <div class="flex flex-col gap-2 py-5">
         {#each $timerQueue as { description, duration }, i}
           <div class="group flex items-center gap-5 px-5 leading-loose">
@@ -119,14 +123,16 @@
               type="text"
               value={description}
               placeholder="Enter description"
-              on:change={(e) => timerQueue.updateTimerDescription(i, e.target.value)}
+              on:change={(e) =>
+                timerQueue.updateTimerDescription(i, e.target.value)}
               bind:this={currentTimerDescription}
             />
             <input
               class="w-20 bg-transparent tabular-nums"
               type="text"
               value={formatDuration(duration)}
-              on:change={(e) => timerQueue.updateTimerDuration(i, e.target.value)}
+              on:change={(e) =>
+                timerQueue.updateTimerDuration(i, e.target.value)}
             />
             <button
               class="opacity-0 group-hover:opacity-100"
@@ -138,7 +144,10 @@
         {/each}
       </div>
       <div class="flex gap-5">
-        <Button class="flex flex-1 items-center justify-center gap-2" on:click={handleNewTimer}>
+        <Button
+          class="flex flex-1 items-center justify-center gap-2"
+          on:click={handleNewTimer}
+        >
           <Plus /> New timer
         </Button>
         <Button
@@ -153,7 +162,9 @@
     </div>
   {/if}
 
-  <div class="flex flex-1 flex-col items-center justify-center gap-5 shadow-xl p-5">
+  <div
+    class="flex flex-1 flex-col items-center justify-center gap-5 p-5 shadow-xl"
+  >
     <Timer
       {duration}
       {browser}
@@ -165,7 +176,29 @@
       on:stop={handleStop}
       on:beep={handleBeep}
       on:end={handleEnd}
-    />
+    >
+      <svelte:fragment slot="start" let:start>
+        <Button
+          class="!hover:bg-emerald-300 !bg-emerald-200 px-10 py-5"
+          on:click={() => start()}
+        >
+          <Play />
+        </Button>
+      </svelte:fragment>
+      <svelte:fragment slot="stop" let:stop>
+        <Button
+          class="!hover:bg-orange-300 !bg-orange-200 px-10 py-5"
+          on:click={() => stop()}
+        >
+          <Stop />
+        </Button>
+      </svelte:fragment>
+      <svelte:fragment slot="reset" let:reset>
+        <Button class="px-10 py-5" on:click={() => reset()}>
+          <ArrowCounterClockwise />
+        </Button>
+      </svelte:fragment>
+    </Timer>
     <div class="text-2xl">{description}</div>
   </div>
 </div>
