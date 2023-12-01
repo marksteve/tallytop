@@ -79,36 +79,37 @@
       <br />
       Add the first one 👉
     </div>
-  {/if}
-  {#each teams as team}
-    <div class="grid grid-cols-6 items-center gap-5">
-      <h2 class="col-span-2 text-3xl">
-        <Input
-          type="text"
-          name={team.id}
-          value={team.number}
-          class="w-20 text-center"
-        />
-        {team.name}
-      </h2>
-      {#each team.members as member}
-        <div class="flex items-center gap-5">
-          <div class="text-3xl">{labels.categories[member.category]}</div>
-          {member.name}
+  {:else}
+    {#each teams as team}
+      <div class="grid grid-cols-6 items-center gap-5">
+        <h2 class="col-span-2 text-3xl">
+          <Input
+            type="text"
+            name={team.id}
+            value={team.number}
+            class="w-20 text-center"
+          />
+          {team.name}
+        </h2>
+        {#each team.members as member}
+          <div class="flex items-center gap-5">
+            <div class="text-3xl">{labels.categories[member.category]}</div>
+            {member.name}
+          </div>
+        {/each}
+        <div class="text-right">
+          <Button
+            type="button"
+            class="!bg-brand-red"
+            on:click={() => r.mutate.deleteTeam(team.id)}
+          >
+            Delete
+          </Button>
         </div>
-      {/each}
-      <div class="text-right">
-        <Button
-          type="button"
-          class="!bg-brand-red"
-          on:click={() => r.mutate.deleteTeam(team.id)}
-        >
-          Delete
-        </Button>
       </div>
-    </div>
-  {/each}
-  <Button type="submit">Save</Button>
+    {/each}
+    <Button type="submit">Save</Button>
+  {/if}
 </form>
 
 <form

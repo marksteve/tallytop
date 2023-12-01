@@ -82,30 +82,31 @@
       <br />
       Add the first one 👉
     </div>
-  {/if}
-  {#each competitors as competitor}
-    <div class="grid grid-cols-2 items-center gap-5">
-      <h2 class="text-3xl">
-        <Input
-          type="text"
-          name={competitor.id}
-          value={competitor.number}
-          class="w-20 text-center"
-        />
-        {competitor.name}
-      </h2>
-      <div class="text-right">
-        <Button
-          type="button"
-          class="!bg-brand-red"
-          on:click={() => r.mutate.deleteCompetitor(competitor.id)}
-        >
-          Delete
-        </Button>
+  {:else}
+    {#each competitors as competitor}
+      <div class="grid grid-cols-2 items-center gap-5">
+        <h2 class="text-3xl">
+          <Input
+            type="text"
+            name={competitor.id}
+            value={competitor.number}
+            class="w-20 text-center"
+          />
+          {competitor.name}
+        </h2>
+        <div class="text-right">
+          <Button
+            type="button"
+            class="!bg-brand-red"
+            on:click={() => r.mutate.deleteCompetitor(competitor.id)}
+          >
+            Delete
+          </Button>
+        </div>
       </div>
-    </div>
-  {/each}
-  <Button type="submit">Save</Button>
+    {/each}
+    <Button type="submit">Save</Button>
+  {/if}
 </form>
 
 <form
