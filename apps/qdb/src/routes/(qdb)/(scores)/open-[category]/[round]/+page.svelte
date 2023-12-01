@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Star from '$lib/components/star.svelte'
+  import Star from '$lib/components/Star.svelte'
   import {
     listCompetitorsByCategory,
     listCompetitorsWithScores,

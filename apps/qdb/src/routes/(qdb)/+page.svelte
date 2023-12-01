@@ -1,7 +1,7 @@
 <script>
-  import Logo from '$lib/components/logo.svelte'
-  import Playground from '$lib/components/playground.svelte'
-  import Star from '$lib/components/star.svelte'
+  import Logo from '$lib/components/Logo.svelte'
+  import Playground from '$lib/components/Playground.svelte'
+  import Star from '$lib/components/Star.svelte'
 </script>
 
 <Playground />

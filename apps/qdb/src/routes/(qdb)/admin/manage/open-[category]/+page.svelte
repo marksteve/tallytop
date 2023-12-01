@@ -1,8 +1,8 @@
 <script lang="ts">
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
-  import Button from '$lib/components/button.svelte'
-  import Input from '$lib/components/input.svelte'
+  import Button from '$lib/components/Button.svelte'
+  import Input from '$lib/components/Input.svelte'
   import {
     listCompetitorsByCategory,
     type Competitor,

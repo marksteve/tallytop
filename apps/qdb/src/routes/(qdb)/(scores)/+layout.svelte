@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Logo from '$lib/components/logo.svelte'
+  import Logo from '$lib/components/Logo.svelte'
 </script>
 
 <main class="flex flex-col items-center gap-5 p-5">

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Star from '$lib/components/star.svelte'
-  import Logo from '$lib/components/logo.svelte'
+  import Star from '$lib/components/Star.svelte'
+  import Logo from '$lib/components/Logo.svelte'
   import {
     listCompetitorsByCategory,
     listCompetitorsWithScores,

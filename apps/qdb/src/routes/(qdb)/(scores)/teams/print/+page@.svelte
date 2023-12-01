@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Logo from '$lib/components/logo.svelte'
+  import Logo from '$lib/components/Logo.svelte'
   import { listTeamsWithScores, type Team } from '$reflect/team'
   import 'app.css'
 

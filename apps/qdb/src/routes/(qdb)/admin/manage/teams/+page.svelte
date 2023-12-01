@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Button from '$lib/components/button.svelte'
-  import Input from '$lib/components/input.svelte'
+  import Button from '$lib/components/Button.svelte'
+  import Input from '$lib/components/Input.svelte'
   import * as labels from '$lib/labels'
   import { listTeamsSorted, type Team } from '$reflect/team'
   import { nanoid } from 'nanoid'
