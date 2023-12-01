@@ -1,5 +1,4 @@
 <script>
-  import Logo from '$lib/components/Logo.svelte'
   import Playground from '$lib/components/Playground.svelte'
   import Star from '$lib/components/Star.svelte'
 </script>
@@ -66,5 +65,4 @@
     <a href="/teams" class="px-4">👪 teams</a>
     <Star class="translate-x-1/2" />
   </div>
-  <Logo />
 </main>
