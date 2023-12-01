@@ -1,15 +1,12 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import Button from '$lib/components/Button.svelte'
+  import Timer, { formatDuration } from '$lib/components/Timer.svelte'
   import { currentTimer, timerQueue } from '$lib/stores'
-  import { Timer, formatDuration } from '@tallytop/ui'
-  import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
   import Backspace from 'phosphor-svelte/lib/Backspace'
-  import Play from 'phosphor-svelte/lib/Play'
   import Plus from 'phosphor-svelte/lib/Plus'
   import Queue from 'phosphor-svelte/lib/Queue'
   import Repeat from 'phosphor-svelte/lib/Repeat'
-  import Stop from 'phosphor-svelte/lib/Stop'
   import { onMount, tick } from 'svelte'
 
   let sound: import('@pixi/sound').SoundLibrary
@@ -176,29 +173,7 @@
       on:stop={handleStop}
       on:beep={handleBeep}
       on:end={handleEnd}
-    >
-      <svelte:fragment slot="start" let:start>
-        <Button
-          class="!hover:bg-emerald-300 !bg-emerald-200 px-10 py-5"
-          on:click={() => start()}
-        >
-          <Play />
-        </Button>
-      </svelte:fragment>
-      <svelte:fragment slot="stop" let:stop>
-        <Button
-          class="!hover:bg-orange-300 !bg-orange-200 px-10 py-5"
-          on:click={() => stop()}
-        >
-          <Stop />
-        </Button>
-      </svelte:fragment>
-      <svelte:fragment slot="reset" let:reset>
-        <Button class="px-10 py-5" on:click={() => reset()}>
-          <ArrowCounterClockwise />
-        </Button>
-      </svelte:fragment>
-    </Timer>
+    />
     <div class="text-2xl">{description}</div>
   </div>
 </div>

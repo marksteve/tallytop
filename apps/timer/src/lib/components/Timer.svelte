@@ -20,7 +20,10 @@
         ? String(Math.trunc(time.days * 24 + time.hours)).padStart(2, '0')
         : null,
       String(Math.trunc(time.minutes)).padStart(2, '0'),
-      String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(2, '0'),
+      String(Math.trunc(time.seconds + time.milliseconds / 1000)).padStart(
+        2,
+        '0',
+      ),
     ].filter((p) => p !== null)
   }
 
@@ -36,7 +39,7 @@
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import Button from './Button.svelte'
 
   type Status = 'started' | 'running' | 'stopped'
@@ -130,7 +133,7 @@
   }
 </script>
 
-<div class="text-[30vw] leading-none flex" on:blur={handleDurationChange}>
+<div class="flex text-[30vw] leading-none" on:blur={handleDurationChange}>
   {#each durationParts as part, i}
     <div class="w-[40vw]">{part}</div>
     {#if i < durationParts.length - 1}
@@ -143,19 +146,27 @@
   <div class="flex gap-10 text-4xl">
     {#if status === 'stopped'}
       <slot name="start" {start}>
-        <Button class="bg-emerald-200 px-10 py-5 hover:bg-emerald-300" on:click={() => start()}>
+        <Button
+          class="!bg-emerald-200 px-10 py-5 !hover:bg-emerald-300"
+          on:click={() => start()}
+        >
           <Play />
         </Button>
       </slot>
     {:else}
       <slot name="stop" {stop}>
-        <Button class="bg-orange-200 px-10 py-5 hover:bg-orange-300" on:click={() => stop()}>
+        <Button
+          class="!bg-orange-200 px-10 py-5 !hover:bg-orange-300"
+          on:click={() => stop()}
+        >
           <Stop />
         </Button>
       </slot>
     {/if}
     <slot name="reset" {reset}>
-      <Button class="px-10 py-5" on:click={() => reset()}><ArrowCounterClockwise /></Button>
+      <Button class="px-10 py-5" on:click={() => reset()}>
+        <ArrowCounterClockwise />
+      </Button>
     </slot>
   </div>
 {/if}
