@@ -208,7 +208,7 @@ importers:
         version: 4.0.5
       svelte-check:
         specifier: ^3.4.3
-        version: 3.4.3(postcss@8.4.24)(svelte@4.0.5)
+        version: 3.4.3(postcss@8.4.31)(svelte@4.0.5)
       tslib:
         specifier: ^2.4.1
         version: 2.4.1
@@ -228,7 +228,7 @@ importers:
         specifier: ^0.38.202311200859
         version: 0.38.202311200859(react-dom@18.2.0)(react@18.2.0)
       '@tallytop/ui':
-        specifier: 2.0.0
+        specifier: 3.0.0
         version: link:../../packages/ui
       class-variance-authority:
         specifier: ^0.7.0
