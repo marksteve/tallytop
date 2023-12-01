@@ -1,4 +1,5 @@
 import type { WriteTransaction } from '@rocicorp/reflect'
+import { cheer } from './cheers'
 import {
   createCompetitor,
   deleteCompetitor,
@@ -33,6 +34,8 @@ export const mutators = {
   // score
   putAttempts: requireAdmin(putAttempts),
   promoteCompetitors: requireAdmin(promoteCompetitors),
+  // cheers
+  cheer,
 }
 
 export type M = typeof mutators

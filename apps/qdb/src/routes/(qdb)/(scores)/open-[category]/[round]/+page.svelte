@@ -143,6 +143,7 @@
     {/if}
     <button
       class="bg-brand-red absolute left-full top-0 flex h-8 w-8 -translate-x-2/3 -translate-y-1/3 items-center justify-center rounded-full text-xl transition-transform active:scale-150"
+      on:click={() => r.mutate.cheer({ round, competitor: competitor.id })}
     >
       👏
     </button>

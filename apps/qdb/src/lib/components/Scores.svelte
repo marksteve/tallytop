@@ -7,6 +7,7 @@
   import type { M } from '$reflect/mutators'
   import { listPromotedCompetitors, type Score } from '$reflect/score'
   import type { Reflect } from '@rocicorp/reflect/client'
+  import confetti from 'canvas-confetti'
 
   export let r: Reflect<M>
   export let category: 'open-m' | 'open-w'
@@ -71,6 +72,30 @@
         return '/images/half-with-bolts.png'
     }
   }
+
+  let competitorNodes: Record<string, HTMLElement> = {}
+  let competitorSubscriptions: Record<string, () => void> = {}
+  $: if (competitors.length > 0) {
+    for (const competitor of competitors) {
+      if (competitorNodes[competitor.id]) continue
+      competitorSubscriptions[competitor.id] = r.subscribe(
+        (tx) => tx.get(['cheers', round, competitor.id].join('/')),
+        (data) => {
+          const { left, top, width, height } =
+            competitorNodes[competitor.id].getBoundingClientRect()
+          const x = (left + 50) / window.innerWidth
+          const y = (top + height / 2) / window.innerHeight
+          confetti({
+            particleCount: 5,
+            startVelocity: 10,
+            spread: 180,
+            origin: { x, y },
+            colors: ['#e8aa3e', '#07ae71', '#ca3f43'],
+          })
+        },
+      )
+    }
+  }
 </script>
 
 <div
@@ -91,7 +116,10 @@
     </div>
   </div>
   {#each competitors as competitor}
-    <div class="col-start-1 text-left text-xl">
+    <div
+      class="col-start-1 text-left text-xl"
+      bind:this={competitorNodes[competitor.id]}
+    >
       #{competitor.number}
       {competitor.name}
     </div>
