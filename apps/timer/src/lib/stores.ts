@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { parseDuration } from '@tallytop/ui'
+import { parseDuration } from '$lib/components/Timer.svelte'
 
 export const timerQueue = (() => {
   const { update, ...store } = writable(

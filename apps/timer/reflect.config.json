@@ -1,0 +1,8 @@
+{
+  "server": "src/reflect/index.ts",
+  "apps": {
+    "default": {
+      "appID": "lpmrdyzi"
+    }
+  }
+}

@@ -33,14 +33,17 @@
 </script>
 
 <script lang="ts">
+  import { r } from '$lib/reflect'
   import toMilliseconds from '@sindresorhus/to-milliseconds'
-  import { nanoid } from 'nanoid'
   import parseMs, { type TimeComponents } from 'parse-ms'
   import ArrowCounterClockwise from 'phosphor-svelte/lib/ArrowCounterClockwise'
   import Play from 'phosphor-svelte/lib/Play'
   import Stop from 'phosphor-svelte/lib/Stop'
   import { createEventDispatcher } from 'svelte'
   import Button from './Button.svelte'
+
+  export let viewMode = false
+  export let id: string
 
   type Status = 'started' | 'running' | 'stopped'
 
@@ -69,8 +72,8 @@
     dispatch('changeduration', { duration })
   }
 
-  export const start = (endTimeInit?: number) => {
-    endTime = endTimeInit ? endTimeInit : Date.now() + duration - elapsed
+  export const start = () => {
+    endTime = Date.now() + duration - elapsed
     status = 'started'
     dispatch('start')
   }
@@ -87,13 +90,14 @@
     elapsed = 0
     status = 'stopped'
     playedBeeps = []
-    dispatch('reset')
+    dispatch('reset', { time })
   }
 
   const tick = () => {
     if (status === 'running') {
       let remaining = endTime - Date.now() + 1000
       time = parseMs(remaining)
+      dispatch('tick', { time})
 
       const seconds = Math.trunc(remaining / 1000)
 
@@ -121,15 +125,26 @@
     tick()
   }
 
-  const ID_LENGTH = 6
-
-  export let browser = true
-  export let viewMode = false
-  export let id: string = browser
-    ? window.localStorage.getItem('tallytop-timer-id') ?? nanoid(ID_LENGTH)
-    : nanoid(ID_LENGTH)
-  if (browser && !viewMode) {
-    window.localStorage.setItem('tallytop-timer-id', id)
+  if (viewMode) {
+    r.subscribe(
+      (tx) =>
+        tx
+          .scan({ prefix: `${id}/` })
+          .entries()
+          .toArray(),
+      (data) => {
+        for (const [key, value] of data) {
+          switch (key.split('/')[1]) {
+            case 'status':
+              status = value
+              break
+            case 'time':
+              time = value
+              break
+          }
+        }
+      },
+    )
   }
 </script>
 
@@ -147,7 +162,7 @@
     {#if status === 'stopped'}
       <slot name="start" {start}>
         <Button
-          class="!bg-emerald-200 px-10 py-5 !hover:bg-emerald-300"
+          class="!hover:bg-emerald-300 !bg-emerald-200 px-10 py-5"
           on:click={() => start()}
         >
           <Play />
@@ -156,7 +171,7 @@
     {:else}
       <slot name="stop" {stop}>
         <Button
-          class="!bg-orange-200 px-10 py-5 !hover:bg-orange-300"
+          class="!hover:bg-orange-300 !bg-orange-200 px-10 py-5"
           on:click={() => stop()}
         >
           <Stop />

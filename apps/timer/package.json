@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@pixi/sound": "^5.2.2",
+    "@rocicorp/reflect": "^0.38.202311200859",
     "@sindresorhus/to-milliseconds": "^2.0.0",
     "@xstate/svelte": "^2.1.0",
     "nanoid": "^4.0.0",
@@ -24,7 +25,6 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.1.1",
     "@sveltejs/kit": "^1.27.6",
-    "@tallytop/eslint-config-custom": "workspace:*",
     "@types/howler": "^2.2.11",
     "@types/sindresorhus__to-milliseconds": "^1.1.1",
     "autoprefixer": "^10.4.16",

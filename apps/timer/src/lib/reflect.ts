@@ -1,12 +1,10 @@
 import { PUBLIC_REFLECT_URL } from '$env/static/public'
+import { mutators } from '$reflect/mutators'
 import { Reflect } from '@rocicorp/reflect/client'
-import { mutators } from '../reflect/mutators'
 
 export const r = new Reflect({
-  userID: 'admin',
-  auth: 'password',
-  roomID: 'qdb-2023',
+  userID: 'public',
+  roomID: 'tallytop-timer',
   server: PUBLIC_REFLECT_URL,
   mutators,
-  kvStore: 'idb',
 })
