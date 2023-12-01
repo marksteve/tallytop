@@ -227,9 +227,6 @@ importers:
       '@rocicorp/reflect':
         specifier: ^0.38.202311200859
         version: 0.38.202311200859(react-dom@18.2.0)(react@18.2.0)
-      '@splidejs/svelte-splide':
-        specifier: ^0.2.9
-        version: 0.2.9
       '@tallytop/ui':
         specifier: 2.0.0
         version: link:../../packages/ui
@@ -1638,7 +1635,6 @@ packages:
   /@fastify/busboy@2.1.0:
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
     engines: {node: '>=14'}
-    dev: true
 
   /@flydotio/dockerfile@0.4.0:
     resolution: {integrity: sha512-G9aEYiIqJkjJYElah2CU+ZfSOK5usLmIIFZhPhJRKrTNu+6vgsLVzBDpiYj/McU1F6rjquwUiii7HdvDQl50WQ==}
@@ -2047,16 +2043,6 @@ packages:
   /@sindresorhus/to-milliseconds@2.0.0:
     resolution: {integrity: sha512-Gkdb2ufaJjg+E2ThIo3MVIV8bqW4ytkSjr/aFE/4Cz1gUZidffhlqlbZGT1jURHB5V5wyMu3KMPz39BSJq/+CA==}
     engines: {node: '>=12'}
-
-  /@splidejs/splide@4.1.4:
-    resolution: {integrity: sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==}
-    dev: false
-
-  /@splidejs/svelte-splide@0.2.9:
-    resolution: {integrity: sha512-04ekJnDIJKEAhklKQMhkg4Yx0Ihtkk18eA9JeHPON0lDTngQxlOYdEYTJWH2UON45VxmVqoLHv04I++JphO36w==}
-    dependencies:
-      '@splidejs/splide': 4.1.4
-    dev: false
 
   /@supabase/auth-helpers-shared@0.2.4(@supabase/supabase-js@2.7.1):
     resolution: {integrity: sha512-c+hi3N6DhjPTzjXGOokre4gmMZOqt0f1ORrwZwi2s07pk3cbkmn77DwwVtlYMNi3oZNYRQqAfxJu83UzpJrrmg==}
@@ -3068,6 +3054,7 @@ packages:
     engines: {node: '>=10.16.0'}
     dependencies:
       streamsearch: 1.1.0
+    dev: true
 
   /cacache@15.3.0:
     resolution: {integrity: sha512-VVdYzXEn+cnbXpFgWs5hTT7OScegHVmLhJIR8Ufqk3iFD6A6j5iSX1KuBTfNEv4tdJWE2PzA6IVFtcLC7fN9wQ==}
@@ -4680,7 +4667,7 @@ packages:
       glob-to-regexp: 0.4.1
       source-map-support: 0.5.21
       stoppable: 1.1.0
-      undici: 5.22.1
+      undici: 5.26.5
       workerd: 1.20231025.0
       ws: 8.13.0
       youch: 3.3.3
@@ -5931,6 +5918,7 @@ packages:
   /streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
+    dev: true
 
   /string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -7003,13 +6991,13 @@ packages:
     engines: {node: '>=14.0'}
     dependencies:
       busboy: 1.6.0
+    dev: true
 
   /undici@5.26.5:
     resolution: {integrity: sha512-cSb4bPFd5qgR7qr2jYAi0hlX9n5YKK2ONKkLFkxl+v/9BvC0sOpZjBHDBSXc5lWAf5ty9oZdRXytBIHzgUcerw==}
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.1.0
-    dev: true
 
   /unique-filename@1.1.1:
     resolution: {integrity: sha512-Vmp0jIp2ln35UTXuryvjzkjGdRyf9b2lTXuSYUiPmzRcl3FDtYqAwOnTJkAngD9SWhnoJzDbTKwaOrZ+STtxNQ==}
