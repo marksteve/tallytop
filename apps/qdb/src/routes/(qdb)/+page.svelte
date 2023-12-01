@@ -1,4 +1,5 @@
 <script>
+  import Logo from '$lib/components/logo.svelte'
   import Playground from '$lib/components/playground.svelte'
   import Star from '$lib/components/star.svelte'
 </script>
@@ -45,5 +46,9 @@
     <Star class="-translate-x-1/2" />
     <a href="/teams" class="px-4">👪 teams</a>
     <Star class="translate-x-1/2" />
+  </div>
+  <div class="flex items-center gap-5">
+    <img src="/images/bhive.svg" alt="BHive Logo" class="h-20" />
+    <Logo />
   </div>
 </main>
