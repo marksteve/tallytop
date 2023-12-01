@@ -23,7 +23,7 @@
   class="relative flex h-screen w-screen flex-col items-center justify-center gap-4"
 >
   <div
-    class="text-brand-red bg-brand-peach rounded-tl-full rounded-tr-full border border-current p-6 text-center"
+    class="text-brand-red bg-brand-peach relative rounded-tl-full rounded-tr-full border border-current p-6 text-center"
   >
     <div class="text-3xl">2023</div>
     <div class="font-serif text-6xl">
@@ -38,6 +38,12 @@
       <br />
       pamaskomp
     </div>
+
+    <img
+      src="/images/bhive.svg"
+      alt="BHive Logo"
+      class="absolute left-full top-1/2 h-20 -translate-x-1/2 rotate-12"
+    />
   </div>
   <div
     class="bg-brand-peach text-brand-red relative rounded-full border border-current leading-10"
@@ -60,8 +66,5 @@
     <a href="/teams" class="px-4">👪 teams</a>
     <Star class="translate-x-1/2" />
   </div>
-  <div class="flex items-center gap-5">
-    <img src="/images/bhive.svg" alt="BHive Logo" class="h-20" />
-    <Logo />
-  </div>
+  <Logo />
 </main>
