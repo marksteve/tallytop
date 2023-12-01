@@ -1,8 +1,8 @@
 import { PUBLIC_REFLECT_URL } from '$env/static/public'
 import { Reflect } from '@rocicorp/reflect/client'
-import { mutators } from '../../reflect/mutators'
+import { mutators } from '../reflect/mutators'
 
-import type { LayoutLoad } from './$types'
+import type { LayoutLoad } from './(spa)/$types'
 
 export const load: LayoutLoad = async ({ data }) => {
   const r = new Reflect({
