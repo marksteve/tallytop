@@ -4,6 +4,12 @@
 
 <div class={variants.list()}>
   <a
+    href="./admin/manage"
+    class={variants.listItem({ class: 'text-3xl' })}
+  >
+    manage
+  </a>
+  <a
     href="./admin/judge"
     class={variants.listItem({ class: 'text-3xl' })}
   >
