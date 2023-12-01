@@ -91,7 +91,7 @@
     </div>
   </div>
   {#each competitors as competitor}
-    <div class="text-left text-xl">
+    <div class="col-start-1 text-left text-xl">
       #{competitor.number}
       {competitor.name}
     </div>
