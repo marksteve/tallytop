@@ -72,7 +72,7 @@
       </div>
       {#each team.members as member, i}
         <div
-          class="text-brand-red flex items-center gap-1 text-left leading-none"
+          class="text-brand-red flex items-center gap-1 text-left leading-none col-start-1"
         >
           <div class="relative text-3xl">
             {#if scoreMultiplier[member.category] > 1}
