@@ -97,7 +97,7 @@
         {/each}
         {#if team?.scores[member.id]?.total}
           <div class="text-brand-red hidden text-xl md:contents">
-            <div class="w-10">{team.scores[member.id].total.t}</div>
+            <div class="w-10 col-start-8">{team.scores[member.id].total.t}</div>
             <div class="w-10">{team.scores[member.id].total.z}</div>
             <div class="w-10">{team.scores[member.id].total.ta}</div>
             <div class="w-10">{team.scores[member.id].total.za}</div>
