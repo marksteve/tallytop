@@ -56,10 +56,10 @@ export const listTeamsWithScores = async (tx: ReadTransaction) => {
     scores[team][member] = scores[team][member] ?? {}
     scores[team][member][problem] = getScore(value as string)
   }
-  for (const team of Object.keys(scores)) {
-    for (const member of Object.keys(scores[team])) {
-      scores[team][member]['total'] = Object.values(
-        scores[team][member],
+  for (const team of teams) {
+    for (const member of team.members) {
+      scores[team.id][member.id]['total'] = Object.values(
+        scores[team.id][member.id],
       ).reduce((a, b) => {
         return {
           t: a.t + b.t,
